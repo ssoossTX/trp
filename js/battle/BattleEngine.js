@@ -133,8 +133,9 @@ export class BattleEngine {
       BattleUI.showLootModal(enemy.name, loot);
     }, 500);
     
-    // Обновляем полоски ресурсов в шапке игры
+    // Обновляем полоски ресурсов в шапке игры и профиль
     UIManager.updateResources();
+    UIManager.updatePlayerProfile();
 
     eventManager.emit(APP_EVENTS.BATTLE_ENDED, { result: 'win' });
   }
