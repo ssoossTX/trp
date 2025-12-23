@@ -347,4 +347,6 @@ export class UIManager {
     if (notification) {
       notification.style.display = 'none';
     }
-  }
+}
+
+export { UIManager };
