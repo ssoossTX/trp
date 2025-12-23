@@ -276,6 +276,37 @@ export class BattleEngine {
         setTimeout(() => this.enemyAttack(), GAME_CONSTANTS.BATTLE_DELAY);
         break;
 
+      case 'Щитовой удар':
+        const bashDamage = gameState.activateShieldBash();
+        if (bashDamage === null) {
+          BattleUI.addLog(`❌ Способность "Щитовой удар" на кулдауне`, 'error');
+          return;
+        }
+        enemy.currentHp -= bashDamage;
+        
+        BattleUI.addLog(`⚔️ Щитовой удар наносит ${bashDamage} урона!`, 'buff');
+        BattleUI.updateAbilityButtons();
+        BattleUI.update();
+
+        if (enemy.currentHp <= 0) {
+          this.playerWins();
+          return;
+        }
+
+        setTimeout(() => this.enemyAttack(), GAME_CONSTANTS.BATTLE_DELAY);
+        break;
+
+      case 'Последний рубеж':
+        const lastStandActive = gameState.activateLastStand();
+        if (!lastStandActive) {
+          BattleUI.addLog(`❌ Способность "Последний рубеж" на кулдауне`, 'error');
+          return;
+        }
+        BattleUI.addLog('🛡️ Вы активировали Последний рубеж!', 'buff');
+        BattleUI.updateAbilityButtons();
+        setTimeout(() => this.enemyAttack(), GAME_CONSTANTS.BATTLE_DELAY);
+        break;
+
       default:
         BattleUI.addLog(`❓ Неизвестная способность: ${abilityName}`, 'error');
     }

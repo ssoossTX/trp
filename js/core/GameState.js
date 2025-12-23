@@ -33,9 +33,9 @@ class GameState {
       abilityStates: {}, // { "abilityName": { cooldown: 0, isActive: false } }
       buffedAttacks: 0, // Кол-во усиленных атак (для Боевого клича)
       buffMultiplier: 1.5, // Множитель урона при усилении
-      shieldActive: false, // Магический щит активен
+      shieldActive: false, // Магический щит/Последний рубеж активен
       shieldTurnsLeft: 0, // Оставшиеся ходы щита
-      shieldDamageReduction: 0.25 // 25% снижение урона
+      shieldDamageReduction: 0.25 // Снижение урона (25% для Мага, 50% для Танка)
     };
 
     this.currentTab = GAME_CONSTANTS.TABS.WORLD;
@@ -325,6 +325,53 @@ class GameState {
       return reducedDamage;
     }
     return damage;
+  }
+
+  /**
+   * Активирует способность Щитовой удар (Танк)
+   * Наносит урон в зависимости от потеряного HP: потеря% × 2
+   */
+  activateShieldBash() {
+    const ability = this.battle.activeAbilities.find(a => a.name === 'Щитовой удар');
+    if (ability && !this.isAbilityAvailable('Щитовой удар')) {
+      return null; // На кулдауне
+    }
+    
+    // Вычисляем процент потеряного HP
+    const maxHp = this.player.maxHp;
+    const currentHp = this.player.hp;
+    const hpLost = maxHp - currentHp;
+    const hpLossPercent = hpLost / maxHp;
+    
+    // Урон = базовый урон × потеря% × 2
+    const baseDamage = 100; // Условный базовый урон
+    const damage = Math.round(baseDamage * hpLossPercent * 2);
+    
+    if (ability) {
+      this.setAbilityCooldown('Щитовой удар', ability.cooldown);
+    }
+    Logger.log(`⚔️ Щитовой удар! Урон: ${damage} (потеряно ${Math.round(hpLossPercent * 100)}% HP)`);
+    return damage;
+  }
+
+  /**
+   * Активирует способность Последний рубеж (Танк)
+   * Получает на 50% меньше урона в течение 2 ходов
+   */
+  activateLastStand() {
+    const ability = this.battle.activeAbilities.find(a => a.name === 'Последний рубеж');
+    if (ability && !this.isAbilityAvailable('Последний рубеж')) {
+      return false; // На кулдауне
+    }
+    
+    if (ability) {
+      this.setAbilityCooldown('Последний рубеж', ability.cooldown);
+    }
+    this.battle.shieldActive = true;
+    this.battle.shieldTurnsLeft = 2;
+    this.battle.shieldDamageReduction = 0.50; // 50% защиты
+    Logger.log('🛡️ Последний рубеж активирован! Урон снижен на 50% на 2 хода');
+    return true;
   }
 
   /**
