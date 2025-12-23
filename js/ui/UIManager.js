@@ -36,15 +36,10 @@ export class UIManager {
     DOMManager.setText('charName', player.class);
     DOMManager.setText('charClass', player.class);
     DOMManager.setText('charAbility', player.ability);
-    DOMManager.setText('charHp', player.hp);
-    DOMManager.setText('charMaxHp', player.maxHp);
     DOMManager.setText('charStrength', player.stats.strength);
     DOMManager.setText('charAgility', player.stats.agility);
     DOMManager.setText('charIntelligence', player.stats.intelligence);
     DOMManager.setText('charEndurance', player.stats.endurance);
-
-    // Обновляем опыт
-    this.updateExperienceUI();
 
     // Добавляем информацию об активных способностях
     const classData = dataLoader.getClassByName(player.class);
@@ -286,68 +281,4 @@ export class UIManager {
     };
     return names[rarity] || 'Неизвестно';
   }
-
-  /**
-   * Обновляет отображение опыта и уровня в профиле
-   */
-  static updateExperienceUI() {
-    const { level, currentExperience, requiredExperience } = gameState.player;
-    
-    // Обновляем текст уровня
-    const levelEl = document.getElementById('playerLevel');
-    if (levelEl) levelEl.textContent = level;
-    
-    // Обновляем полоску опыта
-    const xpBarFill = document.getElementById('xpBarFill');
-    if (xpBarFill) {
-      const percentage = (currentExperience / requiredExperience) * 100;
-      xpBarFill.style.width = percentage + '%';
-    }
-    
-    // Обновляем текст опыта
-    const currentXpEl = document.getElementById('currentXp');
-    const requiredXpEl = document.getElementById('requiredXp');
-    if (currentXpEl) currentXpEl.textContent = currentExperience;
-    if (requiredXpEl) requiredXpEl.textContent = requiredExperience;
-  }
-
-  /**
-   * Показывает модальное окно повышения уровня
-   * @param {Array} levelsGained - Массив повышенных уровней
-   */
-  static showLevelUpNotification(levelsGained) {
-    const notification = document.getElementById('levelUpNotification');
-    const newLevelEl = document.getElementById('newLevel');
-    const statsEl = document.getElementById('levelUpStats');
-    
-    if (!notification) return;
-    
-    // Показываем последний повышенный уровень
-    const finalLevel = levelsGained[levelsGained.length - 1];
-    newLevelEl.textContent = finalLevel;
-    
-    // Получаем последние улучшения характеристик
-    const player = gameState.player;
-    const hpBonus = 10 * levelsGained.length;
-    
-    statsEl.innerHTML = `
-      <div class="stat-item">❤️ HP: +${hpBonus}</div>
-      <div class="stat-item">📊 Максимальное HP: ${player.maxHp}</div>
-      <div class="stat-item">⭐ Характеристики повышены!</div>
-    `;
-    
-    notification.style.display = 'flex';
-  }
-
-  /**
-   * Закрывает уведомление повышения уровня
-   */
-  static closeLevelUpNotification() {
-    const notification = document.getElementById('levelUpNotification');
-    if (notification) {
-      notification.style.display = 'none';
-    }
-  }
 }
-
-export { UIManager };

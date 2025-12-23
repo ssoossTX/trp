@@ -113,26 +113,7 @@ export class BattleEngine {
 
     BattleUI.addLog(`Вы победили ${enemy.name}!`, 'player');
     BattleUI.disableAttackButton();
-    
-    // === НАЧИСЛЕНИЕ ОПЫТА ===
-    const experienceReward = gameState.calculateExperienceReward(
-      enemy,
-      gameState.battle.currentLocation
-    );
-    
-    const levelsGained = gameState.gainExperience(experienceReward);
-    
-    // Отображаем полученный опыт
-    BattleUI.addLog(`+${experienceReward} XP`, 'success');
-    
     BattleUI.update();
-    
-    // Если повышен уровень, показываем уведомление
-    if (levelsGained.length > 0) {
-      setTimeout(() => {
-        BattleUI.showLevelUpNotification(levelsGained);
-      }, 800);
-    }
     
     // Генерируем дроп
     const loot = this.generateLoot(enemy);
@@ -144,7 +125,6 @@ export class BattleEngine {
     
     // Обновляем полоски ресурсов в шапке игры
     UIManager.updateResources();
-    UIManager.updateExperienceUI();
 
     eventManager.emit(APP_EVENTS.BATTLE_ENDED, { result: 'win' });
   }
