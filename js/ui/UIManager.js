@@ -89,9 +89,6 @@ export class UIManager {
       this.renderActiveAbilities(classData.activeAbilities);
     }
 
-    // Обновляем отображение пассивной способности
-    this.updatePassiveAbilityDisplay();
-
     // Отрисовываем инвентарь
     this.renderInventory(player.inventory || []);
 
@@ -334,78 +331,5 @@ export class UIManager {
       'legendary': 'Легендарное'
     };
     return names[rarity] || 'Неизвестно';
-  }
-
-  /**
-   * Обновляет отображение пассивной способности в профиле
-   */
-  static updatePassiveAbilityDisplay() {
-    const noneElement = DOMManager.getElementById('passiveAbilityNone');
-    const contentElement = DOMManager.getElementById('passiveAbilityContent');
-    
-    if (!noneElement || !contentElement) return;
-
-    const passiveAbility = gameState.passiveAbility;
-
-    if (!passiveAbility) {
-      // Показываем "не выбрано"
-      noneElement.style.display = 'block';
-      contentElement.style.display = 'none';
-      return;
-    }
-
-    // Скрываем "не выбрано" и показываем информацию
-    noneElement.style.display = 'none';
-    contentElement.style.display = 'block';
-
-    // Обновляем информацию о способности
-    DOMManager.setText('passiveAbilityName', passiveAbility.name);
-    DOMManager.setText('passiveAbilityDesc', passiveAbility.description);
-    DOMManager.setText('passiveAbilityIcon', passiveAbility.icon);
-
-    // Формируем текст эффектов
-    const effects = passiveAbility.effects;
-    const effectsList = [];
-
-    if (effects.damageBuff) {
-      effectsList.push(`⚔️ Урон: +${Math.round(effects.damageBuff * 100)}%`);
-    }
-    if (effects.hpBuff) {
-      effectsList.push(`❤️ Здоровье: +${Math.round(effects.hpBuff * 100)}%`);
-    }
-    if (effects.manaBuff) {
-      effectsList.push(`✨ Мана: +${Math.round(effects.manaBuff * 100)}%`);
-    }
-    if (effects.defenceBuff) {
-      effectsList.push(`🛡️ Защита: -${Math.round(effects.defenceBuff * 100)}% урона`);
-    }
-    if (effects.agilityBuff) {
-      effectsList.push(`⚡ Ловкость: +${effects.agilityBuff}`);
-    }
-    if (effects.experienceBuff) {
-      effectsList.push(`📚 Опыт: +${Math.round(effects.experienceBuff * 100)}%`);
-    }
-
-    const effectsContainer = DOMManager.getElementById('passiveAbilityEffects');
-    if (effectsContainer) {
-      effectsContainer.innerHTML = effectsList.length > 0 
-        ? effectsList.map(effect => `<div>• ${effect}</div>`).join('')
-        : '<div style="color: #aaa;">Нет видимых эффектов</div>';
-    }
-
-    // Добавляем обработчик для кнопки изменения
-    const changeBtn = DOMManager.getElementById('changePassiveAbilityBtn');
-    if (changeBtn) {
-      changeBtn.onclick = () => this.showPassiveAbilitySelection();
-    }
-  }
-
-  /**
-   * Показывает окно выбора пассивной способности
-   */
-  static showPassiveAbilitySelection() {
-    // TODO: Реализовать модал выбора пассивной способности
-    Logger.log('Выбор пассивной способности - функция будет реализована');
-  }
   }
 }
