@@ -46,12 +46,14 @@
         "name": "Боевой клич",
         "description": "Усиливает следующие два удара на 50% урона",
         "cooldown": 3,
+        "manaCost": 8,
         "effect": "buffNextAttacks"
       },
       {
         "name": "Мощный удар",
         "description": "Наносит 200% урона",
         "cooldown": 2,
+        "manaCost": 5,
         "effect": "powerAttack"
       }
     ],
@@ -74,12 +76,14 @@
         "name": "Щитовой удар",
         "description": "Наносит урон в зависимости от потеряного HP ((потеряно% + 1.5) × 2)",
         "cooldown": 3,
+        "manaCost": 8,
         "effect": "shieldBash"
       },
       {
         "name": "Последний рубеж",
         "description": "Получает на 50% меньше урона в течение 2 ходов",
         "cooldown": 5,
+        "manaCost": 15,
         "effect": "lastStand"
       }
     ],
@@ -102,12 +106,14 @@
         "name": "Точный выстрел",
         "description": "Критический удар в голову с 500% урона",
         "cooldown": 5,
+        "manaCost": 12,
         "effect": "preciseShot"
       },
       {
         "name": "Скоростной залп",
         "description": "Наносит сразу 3 удара",
         "cooldown": 3,
+        "manaCost": 10,
         "effect": "rapidVolley"
       }
     ],
@@ -130,12 +136,14 @@
         "name": "Быстрая атака",
         "description": "Наносит 200% урона и получает ещё один ход",
         "cooldown": 3,
+        "manaCost": 5,
         "effect": "fastAttack"
       },
       {
         "name": "Уход в тень",
         "description": "На 2 хода враг не видит и не может ударить, но ты можешь атаковать",
         "cooldown": 5,
+        "manaCost": 10,
         "effect": "shadowEvasion"
       }
     ],
@@ -158,12 +166,14 @@
         "name": "Исцеление",
         "description": "Восстанавливает 25% HP",
         "cooldown": 4,
+        "manaCost": 15,
         "effect": "healing"
       },
       {
         "name": "Проклятие слабости",
         "description": "Враг наносит в 2 раза меньше урона на протяжении 4 ходов",
         "cooldown": 7,
+        "manaCost": 20,
         "effect": "weaknessCurse"
       }
     ],
