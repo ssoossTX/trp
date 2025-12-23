@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="styles/variables.css">
     <link rel="stylesheet" href="styles/components/buttons.css">
     <link rel="stylesheet" href="styles/components/battle.css">
+    <link rel="stylesheet" href="styles/components/experience.css">
     <link rel="stylesheet" href="styles/screens/class-selection.css">
     <link rel="stylesheet" href="styles/screens/game.css">
 </head>
@@ -174,12 +175,29 @@
 
             <!-- Profile Tab -->
             <div class="tab-content" data-tab="profile">
+                <!-- Уровень и опыт -->
+                <div class="profile-section">
+                    <h3>⭐ Уровень и опыт</h3>
+                    <div class="level-display">
+                        <div class="level-badge">Уровень <span id="playerLevel">1</span></div>
+                        <div class="xp-container">
+                            <div class="xp-bar-wrapper">
+                                <div class="xp-bar" id="xpBar">
+                                    <div class="xp-bar-fill" id="xpBarFill"></div>
+                                </div>
+                            </div>
+                            <div class="xp-text">
+                                <span id="currentXp">0</span> / <span id="requiredXp">246</span> XP
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="content-block">
                     <h2>🛡️ Профиль персонажа</h2>
                     <p><strong>Имя:</strong> <span id="charName">Герой</span></p>
                     <p><strong>Класс:</strong> <span id="charClass">-</span></p>
-                    <p><strong>Уровень:</strong> 1</p>
-                    <p><strong>Опыт:</strong> 0/100</p>
+                    <p><strong>HP:</strong> <span id="charHp">-</span> / <span id="charMaxHp">-</span></p>
                     <p><strong>Начальная способность:</strong> <span id="charAbility">-</span></p>
                 </div>
                 <div class="content-block">
@@ -197,6 +215,16 @@
                     <h2>🎒 Инвентарь</h2>
                     <div id="inventoryContainer" class="inventory-grid"></div>
                     <p id="inventoryEmpty" class="inventory-empty">Инвентарь пуст</p>
+                </div>
+            </div>
+
+            <!-- Level Up Notification -->
+            <div class="level-up-notification" id="levelUpNotification" style="display: none;">
+                <div class="notification-content">
+                    <h2>🎉 Уровень повышен!</h2>
+                    <p>Уровень: <strong id="newLevel">2</strong></p>
+                    <div id="levelUpStats"></div>
+                    <button class="btn-close" onclick="closeLevelUpNotification()">Закрыть</button>
                 </div>
             </div>
 
@@ -288,5 +316,15 @@
 
     <!-- JavaScript модули -->
     <script type="module" src="js/app.js"></script>
+    
+    <!-- Глобальная функция для закрытия уведомления повышения уровня -->
+    <script>
+      window.closeLevelUpNotification = function() {
+        const notification = document.getElementById('levelUpNotification');
+        if (notification) {
+          notification.style.display = 'none';
+        }
+      };
+    </script>
 </body>
 </html>

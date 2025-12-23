@@ -13,7 +13,9 @@ class GameState {
       ability: null,
       stats: {},
       level: 1,
-      experience: 0,
+      currentExperience: 0,
+      requiredExperience: 246,
+      totalExperienceGained: 0,
       hp: 0,
       maxHp: 0,
       mana: 50,
@@ -572,6 +574,118 @@ class GameState {
       this.player.inventory.push(item);
       Logger.log(`📦 Получен предмет: ${item.name}`);
     });
+  }
+
+  /**
+   * Начисляет опыт и проверяет повышение уровня
+   * @param {number} amount - Количество полученного опыта
+   * @returns {Array} Массив повышенных уровней
+   */
+  gainExperience(amount) {
+    const levelsGained = [];
+    
+    this.player.currentExperience += amount;
+    this.player.totalExperienceGained += amount;
+    Logger.log(`📈 Получено ${amount} опыта!`);
+    
+    // Проверяем, можем ли повысить уровень (может быть несколько раз)
+    while (this.player.currentExperience >= this.player.requiredExperience) {
+      // Сохраняем избыточный опыт
+      this.player.currentExperience -= this.player.requiredExperience;
+      
+      // Повышаем уровень
+      this.player.level += 1;
+      levelsGained.push(this.player.level);
+      
+      // Улучшаем характеристики
+      this.improveCharacteristicsOnLevelUp();
+      
+      // Вычисляем новое требуемое значение опыта
+      this.updateRequiredExperience();
+      
+      Logger.log(`🎉 Уровень повышен до ${this.player.level}!`);
+    }
+    
+    return levelsGained;
+  }
+
+  /**
+   * Вычисляет требуемый опыт для следующего уровня
+   */
+  updateRequiredExperience() {
+    const baseCost = 100;
+    const growthFactor = 1.3;
+    const levelupIndex = this.player.level + 1;
+    
+    this.player.requiredExperience = Math.round(
+      baseCost * Math.pow(levelupIndex, growthFactor)
+    );
+  }
+
+  /**
+   * Улучшает характеристики при повышении уровня
+   */
+  improveCharacteristicsOnLevelUp() {
+    const hpPerLevel = 10;
+    const statMin = 1;
+    const statMax = 3;
+    
+    // Увеличиваем HP
+    this.player.maxHp += hpPerLevel;
+    this.player.hp = this.player.maxHp; // Полное восстановление при уровне ап
+    
+    // Случайное увеличение одной характеристики
+    const stats = ['strength', 'agility', 'intelligence', 'endurance'];
+    const randomStat = stats[Math.floor(Math.random() * stats.length)];
+    const increment = Math.floor(Math.random() * (statMax - statMin + 1)) + statMin;
+    
+    this.player.stats[randomStat] += increment;
+    
+    Logger.log(`💪 ${randomStat.charAt(0).toUpperCase() + randomStat.slice(1)} +${increment}`);
+    
+    return {
+      stat: randomStat,
+      increment: increment,
+      hp: hpPerLevel
+    };
+  }
+
+  /**
+   * Рассчитывает опыт за врага
+   * @param {Object} enemy - Объект врага
+   * @param {string} locationId - ID локации
+   * @returns {number} Полученный опыт
+   */
+  calculateExperienceReward(enemy, locationId) {
+    const enemyExpMap = {
+      'weak': 10,
+      'normal': 25,
+      'strong': 50,
+      'boss': 100
+    };
+    
+    // Преобразуем ID в названия для модификаторов
+    const locationNameMap = {
+      'city': 'Деревня',
+      'forest': 'Лес',
+      'mountains': 'Горы',
+      'caves': 'Пещеры',
+      'castle': 'Замок'
+    };
+    
+    const locationMultipliers = {
+      'Деревня': 1.0,
+      'Лес': 1.3,
+      'Горы': 1.7,
+      'Пещеры': 1.5,
+      'Замок': 2.0
+    };
+    
+    const baseExp = enemy.baseExperience || enemyExpMap[enemy.difficulty || 'normal'];
+    const locationName = locationNameMap[locationId] || 'Деревня';
+    const multiplier = locationMultipliers[locationName] || 1.0;
+    
+    return Math.round(baseExp * multiplier);
   }
 }
 
