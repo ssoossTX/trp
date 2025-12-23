@@ -4,7 +4,7 @@
 export const GAME_CONSTANTS = {
   // Базовые характеристики
   BASE_HP_MULTIPLIER: 10,
-  BASE_MANA: 50,
+  BASE_MANA_MULTIPLIER: 5,
   BASE_GOLD: 100,
 
   // Боевая система

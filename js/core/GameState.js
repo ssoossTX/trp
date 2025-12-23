@@ -67,6 +67,10 @@ class GameState {
     this.player.maxHp = maxHp;
     this.player.hp = maxHp;
     
+    const maxMana = classData.stats.intelligence * GAME_CONSTANTS.BASE_MANA_MULTIPLIER;
+    this.player.maxMana = maxMana;
+    this.player.mana = maxMana;
+    
     // Инициализируем систему уровней
     this.player.level = 1;
     this.player.experience = 0;
@@ -654,6 +658,14 @@ class GameState {
       const hpGain = newMaxHp - this.player.maxHp;
       this.player.maxHp = newMaxHp;
       this.player.hp = Math.min(this.player.hp + hpGain, this.player.maxHp);
+    }
+    
+    // Обновляем Mana если увеличен интеллект
+    if (statName === 'intelligence') {
+      const newMaxMana = this.player.stats.intelligence * GAME_CONSTANTS.BASE_MANA_MULTIPLIER;
+      const manaGain = newMaxMana - this.player.maxMana;
+      this.player.maxMana = newMaxMana;
+      this.player.mana = Math.min(this.player.mana + manaGain, this.player.maxMana);
     }
     
     Logger.log(`⬆️ ${statName} увеличена до ${this.player.stats[statName]}! Осталось очков: ${this.player.abilityPoints}`);

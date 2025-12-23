@@ -40,7 +40,8 @@ export class StatsUI {
       this.updateStatsDisplay();
       
       // Если прокачана выносливость, обновляем HP в шапке
-      if (statName === 'endurance') {
+      // Если прокачан интеллект, обновляем Mana в шапке
+      if (statName === 'endurance' || statName === 'intelligence') {
         UIManager.updateResources();
       }
       
