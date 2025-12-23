@@ -56,6 +56,15 @@ class DataLoader {
   }
 
   /**
+   * Возвращает класс по названию
+   * @param {string} className - Название класса
+   * @returns {Object|null} Объект класса или null
+   */
+  getClassByName(className) {
+    return this.classes?.find(c => c.name === className) || null;
+  }
+
+  /**
    * Возвращает все локации
    * @returns {Object} Объект с локациями
    */
