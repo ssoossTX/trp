@@ -16,7 +16,7 @@
     "enemies": [
       { "name": "Воришка", "image": "воришка.jpg", "hp": 20, "attack": 3 },
       { "name": "Стражник-новичок", "image": "стражник.jpg", "hp": 30, "attack": 5 },
-      { "name": "Пьяный наёмник", "image": "наёмник.jpg", "hp": 25, "attack": 4 }
+      { "name": "Злой наёмник", "image": "наёмник.jpg", "hp": 25, "attack": 4 }
     ]
   },
   "forest": {
