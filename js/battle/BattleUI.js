@@ -31,6 +31,7 @@ export class BattleUI {
     const { playerHp, playerMaxHp } = gameState.battle;
 
     // Враг - обновляем имя и изображение
+    console.log(`[BattleUI] Обновляю интерфейс для врага: ${enemy.name}`);
     DOMManager.setText('enemyName', enemy.name);
     
     // Устанавливаем изображение врага
@@ -39,6 +40,7 @@ export class BattleUI {
       if (enemyImage) {
         enemyImage.src = `/trp/assets/img/enemies/${enemy.image}`;
         enemyImage.alt = enemy.name;
+        console.log(`[BattleUI] Изображение врага установлено: ${enemy.image}`);
       }
     }
     
