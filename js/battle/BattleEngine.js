@@ -105,6 +105,10 @@ export class BattleEngine {
    */
   static fleeBattle() {
     gameState.endBattle();
+    
+    // Восстанавливаем ресурсы при выходе с локации
+    gameState.restoreResources();
+    
     BattleUI.hide();
     BattleUI.enableAttackButton();
     

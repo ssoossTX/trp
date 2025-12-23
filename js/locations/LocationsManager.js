@@ -2,6 +2,7 @@
  * LocationsManager - управление локациями и исследованием
  */
 import { DOMManager } from '../core/DOMManager.js';
+import { gameState } from '../core/GameState.js';
 import { dataLoader } from '../data/DataLoader.js';
 import { BattleEngine } from '../battle/BattleEngine.js';
 import { getRandomElement } from '../utils/helpers.js';
@@ -59,6 +60,9 @@ export class LocationsManager {
       alert('Нет врагов в этой локации');
       return;
     }
+
+    // Восстанавливаем ресурсы при входе на локацию
+    gameState.restoreResources();
 
     const randomEnemy = getRandomElement(location.enemies);
     BattleEngine.initiateBattle(randomEnemy, locationId);

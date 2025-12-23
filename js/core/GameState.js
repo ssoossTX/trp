@@ -80,6 +80,15 @@ class GameState {
   }
 
   /**
+   * Восстанавливает HP и mana до максимума (при входе/выходе из локации)
+   */
+  restoreResources() {
+    this.player.hp = this.player.maxHp;
+    this.player.mana = this.player.maxMana;
+    Logger.log(`Ресурсы восстановлены: HP ${this.player.hp}/${this.player.maxHp}, Mana ${this.player.mana}/${this.player.maxMana}`);
+  }
+
+  /**
    * Возвращает дополнительный урон на основе характеристик
    * @returns {number} Урон
    */
