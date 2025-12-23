@@ -2,6 +2,7 @@
  * BattleEngine - логика боевой системы
  */
 import { gameState } from '../core/GameState.js';
+import { dataLoader } from '../data/DataLoader.js';
 import { eventManager } from '../core/EventManager.js';
 import { calculateDamage } from '../utils/helpers.js';
 import { GAME_CONSTANTS, APP_EVENTS } from '../utils/constants.js';
@@ -87,14 +88,82 @@ export class BattleEngine {
     const enemy = gameState.battle.currentEnemy;
 
     BattleUI.addLog(`Вы победили ${enemy.name}!`, 'player');
-    BattleUI.addLog('Нажмите "Покинуть локацию" для возвращения', 'neutral');
     BattleUI.disableAttackButton();
     BattleUI.update();
+    
+    // Генерируем дроп
+    const loot = this.generateLoot(enemy);
+    
+    // Показываем модальное окно дропа
+    setTimeout(() => {
+      BattleUI.showLootModal(enemy.name, loot);
+    }, 500);
     
     // Обновляем полоски ресурсов в шапке игры
     UIManager.updateResources();
 
     eventManager.emit(APP_EVENTS.BATTLE_ENDED, { result: 'win' });
+  }
+
+  /**
+   * Генерирует дроп от врага
+   * @param {Object} enemy - Враг
+   * @returns {Object} Объект с дропом
+   */
+  static generateLoot(enemy) {
+    // Золото
+    const goldDrop = Math.round(
+      (enemy.reward?.gold || 10) * (0.8 + Math.random() * 0.4)
+    );
+
+    // Предметы из локации
+    const locationId = gameState.battle.currentLocation;
+    const location = dataLoader.getLocationById(locationId);
+    const itemsDrop = [];
+
+    if (location && location.loot) {
+      // Выбираем случайные предметы из возможной добычи
+      const lootPool = location.loot;
+      
+      for (const item of lootPool) {
+        // Парсим шанс (может быть "10%", "25%" или число)
+        let chance = 0;
+        if (typeof item.chance === 'string') {
+          chance = parseInt(item.chance) / 100;
+        } else if (typeof item.chance === 'number') {
+          chance = item.chance / 100;
+        }
+
+        // Определяем редкость
+        let rarity = 'common';
+        if (item.rarity) {
+          rarity = item.rarity;
+        } else if (chance > 0.3) {
+          rarity = 'common';
+        } else if (chance > 0.1) {
+          rarity = 'uncommon';
+        } else if (chance > 0.05) {
+          rarity = 'rare';
+        } else {
+          rarity = 'legendary';
+        }
+
+        // Проверяем, выпал ли предмет
+        if (Math.random() < chance) {
+          itemsDrop.push({
+            name: item.name,
+            icon: item.icon || '📦',
+            image: item.image || null,
+            rarity: rarity
+          });
+        }
+      }
+    }
+
+    return {
+      gold: goldDrop,
+      items: itemsDrop
+    };
   }
 
   /**

@@ -258,6 +258,25 @@
         </div>
     </div>
 
+    <!-- Drop Modal -->
+    <div id="dropModal" class="modal">
+        <div class="modal__content drop-modal__content">
+            <button type="button" class="modal__close" id="dropCloseBtn" aria-label="Закрыть окно">&times;</button>
+            <h2 class="drop-modal__title">🎁 Добыча от <span id="dropEnemyName">Врага</span></h2>
+            
+            <div class="drop-modal__items" id="dropItems"></div>
+            
+            <div class="drop-modal__gold">
+                <p><strong>💰 Золото:</strong> <span id="dropGold">0</span></p>
+            </div>
+            
+            <div class="drop-modal__buttons">
+                <button class="btn btn-primary" id="takeLootBtn">✓ Забрать</button>
+                <button class="btn btn-secondary" id="dropCloseBtn2">✗ Отклонить</button>
+            </div>
+        </div>
+    </div>
+
     <!-- JavaScript модули -->
     <script type="module" src="js/app.js"></script>
 </body>

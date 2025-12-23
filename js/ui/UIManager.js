@@ -4,6 +4,7 @@
 import { DOMManager } from '../core/DOMManager.js';
 import { gameState } from '../core/GameState.js';
 import { BattleEngine } from '../battle/BattleEngine.js';
+import { BattleUI } from '../battle/BattleUI.js';
 import { dataLoader } from '../data/DataLoader.js';
 import { LocationsManager } from '../locations/LocationsManager.js';
 import { GAME_CONSTANTS } from '../utils/constants.js';
@@ -168,5 +169,38 @@ export class UIManager {
     if (fleeBtn) {
       fleeBtn.addEventListener('click', () => BattleEngine.fleeBattle());
     }
+
+    // Обработчики для модала дропа
+    const takeLootBtn = DOMManager.getElementById('takeLootBtn');
+    const dropCloseBtn = DOMManager.getElementById('dropCloseBtn');
+    const dropCloseBtn2 = DOMManager.getElementById('dropCloseBtn2');
+
+    if (takeLootBtn) {
+      takeLootBtn.addEventListener('click', () => this.takeLoot());
+    }
+
+    if (dropCloseBtn) {
+      dropCloseBtn.addEventListener('click', () => this.closeLootModal());
+    }
+
+    if (dropCloseBtn2) {
+      dropCloseBtn2.addEventListener('click', () => this.closeLootModal());
+    }
+  }
+
+  /**
+   * Забирает дроп и возвращает на карту
+   */
+  static takeLoot() {
+    // Здесь позже добавим добавление предметов в инвентарь
+    this.closeLootModal();
+    BattleEngine.fleeBattle();
+  }
+
+  /**
+   * Закрывает модал дропа
+   */
+  static closeLootModal() {
+    DOMManager.closeModal('dropModal');
   }
 }

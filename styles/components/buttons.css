@@ -263,3 +263,114 @@
   color: var(--info-color);
   font-weight: bold;
 }
+/* ===== МОДАЛЬНОЕ ОКНО ДРОПА ===== */
+.drop-modal__content {
+  min-width: 400px;
+}
+
+.drop-modal__title {
+  font-size: var(--font-size-xl);
+  margin: 0 0 var(--spacing-lg) 0;
+  color: var(--accent-color);
+  border-bottom: 2px solid var(--light-bg);
+  padding-bottom: var(--spacing-md);
+}
+
+.drop-modal__items {
+  margin-bottom: var(--spacing-lg);
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.drop-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  background-color: var(--light-bg);
+  border-radius: var(--radius-md);
+  border: 2px solid var(--border-color);
+  transition: all var(--transition-normal);
+  text-align: center;
+}
+
+.drop-item:hover {
+  border-color: var(--primary-color);
+  box-shadow: 0 2px 8px rgba(52, 152, 219, 0.2);
+  transform: translateY(-2px);
+}
+
+.drop-item__image {
+  width: 60px;
+  height: 60px;
+  border-radius: var(--radius-sm);
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-size: var(--font-size-xl);
+  border: 1px solid var(--border-color);
+}
+
+.drop-item__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.drop-item__name {
+  font-size: var(--font-size-sm);
+  font-weight: bold;
+  color: var(--text-primary);
+  word-break: break-word;
+}
+
+.drop-item__rarity {
+  font-size: var(--font-size-xs);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.drop-item__rarity--common {
+  color: #2ecc71;
+}
+
+.drop-item__rarity--uncommon {
+  color: #3498db;
+}
+
+.drop-item__rarity--rare {
+  color: #f39c12;
+}
+
+.drop-item__rarity--legendary {
+  color: #e74c3c;
+}
+
+.drop-modal__gold {
+  background-color: #fff9e6;
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  border-left: 4px solid #f39c12;
+  margin-bottom: var(--spacing-lg);
+  font-size: var(--font-size-lg);
+}
+
+.drop-modal__gold p {
+  margin: 0;
+}
+
+.drop-modal__buttons {
+  display: flex;
+  gap: var(--spacing-md);
+  justify-content: flex-end;
+}
+
+.drop-modal__buttons .btn {
+  flex: 1;
+  max-width: 150px;
+}

@@ -146,4 +146,56 @@ export class BattleUI {
       abilitiesContainer.innerHTML = '';
     }
   }
+
+  /**
+   * Показывает модальное окно с дропом
+   * @param {string} enemyName - Имя врага
+   * @param {Object} loot - Объект с дропом {gold, items}
+   */
+  static showLootModal(enemyName, loot) {
+    // Установка имени врага
+    DOMManager.setText('dropEnemyName', enemyName);
+    
+    // Установка золота
+    DOMManager.setText('dropGold', loot.gold);
+    
+    // Отрисовка предметов
+    const dropItemsContainer = DOMManager.getElementById('dropItems');
+    if (dropItemsContainer) {
+      dropItemsContainer.innerHTML = loot.items.map(item => `
+        <div class="drop-item">
+          <div class="drop-item__image">${item.image ? `<img src="/trp/assets/img/items/${item.image}" alt="${item.name}">` : item.icon}</div>
+          <div class="drop-item__name">${item.name}</div>
+          <div class="drop-item__rarity drop-item__rarity--${item.rarity}">
+            ${this.rarityName(item.rarity)}
+          </div>
+        </div>
+      `).join('');
+    }
+    
+    // Открытие модала
+    DOMManager.openModal('dropModal');
+  }
+
+  /**
+   * Возвращает название редкости
+   * @param {string} rarity - Редкость
+   * @returns {string} Название редкости
+   */
+  static rarityName(rarity) {
+    const names = {
+      'common': 'Обычное',
+      'uncommon': 'Редкое',
+      'rare': 'Очень редкое',
+      'legendary': 'Легендарное'
+    };
+    return names[rarity] || 'Неизвестно';
+  }
+
+  /**
+   * Скрывает модал дропа
+   */
+  static hideLootModal() {
+    DOMManager.closeModal('dropModal');
+  }
 }

@@ -6,17 +6,17 @@
     "description": "Оживлённый торговый центр, где можно отдохнуть, купить снаряжение и узнать слухи о мире. Опасность здесь минимальна, зато и добыча скромная.",
     "dangerLevel": 1,
     "loot": [
-      { "name": "Серебро", "chance": "40%" },
-      { "name": "Лечебная трава", "chance": "35%" },
-      { "name": "Карта местности", "chance": "20%" },
-      { "name": "Редкое серебряное кольцо", "chance": "5%" }
+      { "name": "Серебро", "icon": "💰", "chance": "40%", "rarity": "common" },
+      { "name": "Лечебная трава", "icon": "🌿", "chance": "35%", "rarity": "common" },
+      { "name": "Карта местности", "icon": "🗺️", "chance": "20%", "rarity": "uncommon" },
+      { "name": "Редкое серебряное кольцо", "icon": "💍", "chance": "5%", "rarity": "rare" }
     ],
     "rareLootChance": "5%",
     "requiredLevel": 1,
     "enemies": [
-      { "name": "Воришка", "image": "воришка.jpg", "hp": 20, "attack": 3 },
-      { "name": "Стражник-новичок", "image": "стражник.jpg", "hp": 30, "attack": 5 },
-      { "name": "Злой наёмник", "image": "наёмник.jpg", "hp": 25, "attack": 4 }
+      { "name": "Воришка", "image": "воришка.jpg", "hp": 20, "attack": 3, "reward": { "gold": 15 } },
+      { "name": "Стражник-новичок", "image": "стражник.jpg", "hp": 30, "attack": 5, "reward": { "gold": 25 } },
+      { "name": "Злой наёмник", "image": "наёмник.jpg", "hp": 25, "attack": 4, "reward": { "gold": 20 } }
     ]
   },
   "forest": {
@@ -26,18 +26,18 @@
     "description": "Густой и опасный лес, полный враждебных существ и ценных ресурсов. Волки, разбойники и древние проклятия скрываются между деревьев.",
     "dangerLevel": 3,
     "loot": [
-      { "name": "Волчья шкура", "chance": "35%" },
-      { "name": "Древесина редкого дерева", "chance": "30%" },
-      { "name": "Травы зелья мудрости", "chance": "20%" },
-      { "name": "Волшебный амулет", "chance": "10%" },
-      { "name": "Древний артефакт", "chance": "5%" }
+      { "name": "Волчья шкура", "icon": "🐺", "chance": "35%", "rarity": "common" },
+      { "name": "Древесина редкого дерева", "icon": "🪵", "chance": "30%", "rarity": "common" },
+      { "name": "Травы зелья мудрости", "icon": "🌿", "chance": "20%", "rarity": "uncommon" },
+      { "name": "Волшебный амулет", "icon": "✨", "chance": "10%", "rarity": "rare" },
+      { "name": "Древний артефакт", "icon": "🏺", "chance": "5%", "rarity": "legendary" }
     ],
     "rareLootChance": "15%",
     "requiredLevel": 3,
     "enemies": [
-      { "name": "Волк", "image": "волк.jpg", "hp": 50, "attack": 8 },
-      { "name": "Лесной разбойник", "image": "разбойник.jpg", "hp": 45, "attack": 10 },
-      { "name": "Тень леса", "image": "тень.jpg", "hp": 55, "attack": 12 }
+      { "name": "Волк", "image": "волк.jpg", "hp": 50, "attack": 8, "reward": { "gold": 50 } },
+      { "name": "Лесной разбойник", "image": "разбойник.jpg", "hp": 45, "attack": 10, "reward": { "gold": 75 } },
+      { "name": "Тень леса", "image": "тень.jpg", "hp": 55, "attack": 12, "reward": { "gold": 100 } }
     ]
   },
   "mountains": {
@@ -47,18 +47,15 @@
     "description": "Высокие неприступные горы, где обитают сильные враги и хранятся несметные сокровища. Одно неверное движение — и вы падёте в бездну.",
     "dangerLevel": 5,
     "loot": [
-      { "name": "Драгоценный кристалл", "chance": "25%" },
-      { "name": "Золотая руда", "chance": "25%" },
-      { "name": "Доспех древнего воина", "chance": "15%" },
-      { "name": "Магический кристалл силы", "chance": "20%" },
-      { "name": "Легендарный артефакт", "chance": "15%" }
+      { "name": "Драгоценный кристалл", "icon": "💎", "chance": "25%", "rarity": "uncommon" },
+      { "name": "Золотая руда", "icon": "⛏️", "chance": "25%", "rarity": "uncommon" },
+      { "name": "Доспех древнего воина", "icon": "🛡️", "chance": "15%", "rarity": "rare" },
+      { "name": "Магический кристалл силы", "icon": "🔮", "chance": "20%", "rarity": "rare" },
+      { "name": "Легендарный артефакт", "icon": "👑", "chance": "15%", "rarity": "legendary" }
     ],
     "rareLootChance": "50%",
     "requiredLevel": 7,
     "enemies": [
-      { "name": "Горный гигант", "image": "гигант.jpg", "hp": 100, "attack": 18 },
-      { "name": "Ледяной дух", "image": "ледяной_дух.jpg", "hp": 80, "attack": 15 },
-      { "name": "Дракончик", "image": "дракончик.jpg", "hp": 120, "attack": 20 }
-    ]
-  }
-}
+      { "name": "Горный гигант", "image": "гигант.jpg", "hp": 100, "attack": 18, "reward": { "gold": 200 } },
+      { "name": "Ледяной дух", "image": "ледяной_дух.jpg", "hp": 80, "attack": 15, "reward": { "gold": 180 } },
+      { "name": "Дракончик", "image": "дракончик.jpg", "hp": 120, "attack": 20, "reward": { "gold": 250 } }
