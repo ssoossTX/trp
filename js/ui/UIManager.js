@@ -4,6 +4,8 @@
 import { DOMManager } from '../core/DOMManager.js';
 import { gameState } from '../core/GameState.js';
 import { BattleEngine } from '../battle/BattleEngine.js';
+import { dataLoader } from '../data/DataLoader.js';
+import { LocationsManager } from '../locations/LocationsManager.js';
 import { GAME_CONSTANTS } from '../utils/constants.js';
 
 export class UIManager {
@@ -29,7 +31,6 @@ export class UIManager {
    */
   static updatePlayerProfile() {
     const player = gameState.getPlayerState();
-    const { dataLoader } = require('../data/DataLoader.js');
 
     DOMManager.setText('charName', player.class);
     DOMManager.setText('charClass', player.class);
@@ -120,7 +121,6 @@ export class UIManager {
 
     // Re-render локаций при переходе на вкладку Мир
     if (tabName === GAME_CONSTANTS.TABS.WORLD) {
-      const { LocationsManager } = require('../locations/LocationsManager.js');
       LocationsManager.renderLocations();
     }
   }
