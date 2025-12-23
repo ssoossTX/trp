@@ -67,10 +67,16 @@ export class BattleEngine {
     BattleUI.updateAbilityButtons();
 
     const enemy = gameState.battle.currentEnemy;
-    const damage = calculateDamage(enemy.attack, GAME_CONSTANTS.ENEMY_DAMAGE_VARIANCE);
+    let damage = calculateDamage(enemy.attack, GAME_CONSTANTS.ENEMY_DAMAGE_VARIANCE);
+
+    // Применяем защиту магического щита
+    damage = gameState.applyShieldProtection(damage);
 
     gameState.battle.playerHp -= damage;
     BattleUI.addLog(`${enemy.name} нанёс ${damage} урона!`, 'enemy');
+
+    // Уменьшаем длительность магического щита
+    gameState.decrementShieldTurns();
 
     if (gameState.battle.playerHp <= 0) {
       this.playerLoses();
@@ -241,6 +247,32 @@ export class BattleEngine {
           return;
         }
 
+        setTimeout(() => this.enemyAttack(), GAME_CONSTANTS.BATTLE_DELAY);
+        break;
+
+      case 'Огненный шар':
+        const firebaseDamage = gameState.getPlayerBaseDamage();
+        const fireballDamage = Math.round(calculateDamage(firebaseDamage, GAME_CONSTANTS.DAMAGE_RANDOMNESS) * 5);
+        
+        gameState.activateFireball();
+        enemy.currentHp -= fireballDamage;
+        
+        BattleUI.addLog(`🔥 Огненный шар наносит ${fireballDamage} урона!`, 'buff');
+        BattleUI.updateAbilityButtons();
+        BattleUI.update();
+
+        if (enemy.currentHp <= 0) {
+          this.playerWins();
+          return;
+        }
+
+        setTimeout(() => this.enemyAttack(), GAME_CONSTANTS.BATTLE_DELAY);
+        break;
+
+      case 'Магический щит':
+        gameState.activateMagicShield();
+        BattleUI.addLog('🛡️ Вы активировали Магический щит!', 'buff');
+        BattleUI.updateAbilityButtons();
         setTimeout(() => this.enemyAttack(), GAME_CONSTANTS.BATTLE_DELAY);
         break;
 

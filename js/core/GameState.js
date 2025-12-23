@@ -32,7 +32,10 @@ class GameState {
       activeAbilities: [],
       abilityStates: {}, // { "abilityName": { cooldown: 0, isActive: false } }
       buffedAttacks: 0, // Кол-во усиленных атак (для Боевого клича)
-      buffMultiplier: 1.5 // Множитель урона при усилении
+      buffMultiplier: 1.5, // Множитель урона при усилении
+      shieldActive: false, // Магический щит активен
+      shieldTurnsLeft: 0, // Оставшиеся ходы щита
+      shieldDamageReduction: 0.25 // 25% снижение урона
     };
 
     this.currentTab = GAME_CONSTANTS.TABS.WORLD;
@@ -139,9 +142,11 @@ class GameState {
       };
     });
     
-    // Сбрасываем усиления
+    // Сбрасываем усиления и защиту
     this.battle.buffedAttacks = 0;
     this.battle.buffMultiplier = 1.0;
+    this.battle.shieldActive = false;
+    this.battle.shieldTurnsLeft = 0;
 
     Logger.log(`Бой начался с ${enemy.name} в локации ${locationId}`);
     Logger.log(`Активные способности: ${activeAbilities.map(a => a.name).join(', ')}`);
@@ -158,6 +163,8 @@ class GameState {
     this.battle.abilityStates = {};
     this.battle.buffedAttacks = 0;
     this.battle.buffMultiplier = 1.0;
+    this.battle.shieldActive = false;
+    this.battle.shieldTurnsLeft = 0;
     Logger.log('Бой завершён');
   }
 
@@ -265,6 +272,59 @@ class GameState {
       }
     }
   }
+
+  /**
+   * Применяет Огненный шар (Маг)
+   * @returns {number} Множитель урона (500%)
+   */
+  activateFireball() {
+    const ability = this.battle.activeAbilities.find(a => a.name === 'Огненный шар');
+    if (ability) {
+      this.setAbilityCooldown('Огненный шар', ability.cooldown);
+    }
+    Logger.log('🔥 Огненный шар! Урон: 500%');
+    return 5.0; // 500% damage
+  }
+
+  /**
+   * Применяет Магический щит (Маг)
+   */
+  activateMagicShield() {
+    const ability = this.battle.activeAbilities.find(a => a.name === 'Магический щит');
+    if (ability) {
+      this.setAbilityCooldown('Магический щит', ability.cooldown);
+    }
+    this.battle.shieldActive = true;
+    this.battle.shieldTurnsLeft = 2;
+    Logger.log('🛡️ Магический щит активирован! Урон снижен на 25% на 2 хода');
+  }
+
+  /**
+   * Уменьшает длительность магического щита
+   */
+  decrementShieldTurns() {
+    if (this.battle.shieldTurnsLeft > 0) {
+      this.battle.shieldTurnsLeft--;
+      if (this.battle.shieldTurnsLeft === 0) {
+        this.battle.shieldActive = false;
+        Logger.log('Магический щит исчез');
+      }
+    }
+  }
+
+  /**
+   * Применяет защиту магического щита к урону
+   * @param {number} damage - Входящий урон
+   * @returns {number} Урон после защиты
+   */
+  applyShieldProtection(damage) {
+    if (this.battle.shieldActive) {
+      const reducedDamage = Math.round(damage * (1 - this.battle.shieldDamageReduction));
+      const blocked = damage - reducedDamage;
+      Logger.log(`🛡️ Магический щит заблокировал ${blocked} урона`);
+      return reducedDamage;
+    }
+    return damage;
 
   /**
    * Добавляет золото игроку
