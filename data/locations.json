@@ -36,7 +36,7 @@
     "requiredLevel": 3,
     "enemies": [
       { "name": "Волк", "image": "волк.jpg", "hp": 50, "attack": 8 },
-      { "name": "Разбойник лесной", "image": "разбойник.jpg", "hp": 45, "attack": 10 },
+      { "name": "Лесной разбойник", "image": "разбойник.jpg", "hp": 45, "attack": 10 },
       { "name": "Тень леса", "image": "тень.jpg", "hp": 55, "attack": 12 }
     ]
   },
