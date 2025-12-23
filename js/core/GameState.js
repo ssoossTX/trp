@@ -325,6 +325,7 @@ class GameState {
       return reducedDamage;
     }
     return damage;
+  }
 
   /**
    * Добавляет золото игроку
