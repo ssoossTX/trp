@@ -6,6 +6,7 @@ import { eventManager } from '../core/EventManager.js';
 import { calculateDamage } from '../utils/helpers.js';
 import { GAME_CONSTANTS, APP_EVENTS } from '../utils/constants.js';
 import { BattleUI } from './BattleUI.js';
+import { UIManager } from '../ui/UIManager.js';
 
 export class BattleEngine {
   /**
@@ -73,6 +74,9 @@ export class BattleEngine {
     BattleUI.addLog('Нажмите "Покинуть локацию" для возвращения', 'neutral');
     BattleUI.disableAttackButton();
     BattleUI.update();
+    
+    // Обновляем полоски ресурсов в шапке игры
+    UIManager.updateResources();
 
     eventManager.emit(APP_EVENTS.BATTLE_ENDED, { result: 'win' });
   }
@@ -89,6 +93,9 @@ export class BattleEngine {
     BattleUI.addLog('Нажмите "Покинуть локацию" для возвращения', 'neutral');
     BattleUI.disableAttackButton();
     BattleUI.update();
+    
+    // Обновляем полоски ресурсов в шапке игры
+    UIManager.updateResources();
 
     eventManager.emit(APP_EVENTS.BATTLE_ENDED, { result: 'loss' });
   }
@@ -100,6 +107,10 @@ export class BattleEngine {
     gameState.endBattle();
     BattleUI.hide();
     BattleUI.enableAttackButton();
+    
+    // Обновляем полоски ресурсов в шапке игры
+    UIManager.updateResources();
+    
     eventManager.emit(APP_EVENTS.BATTLE_ENDED, { result: 'fled' });
   }
 }
