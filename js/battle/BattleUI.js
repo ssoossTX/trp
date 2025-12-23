@@ -4,34 +4,23 @@
 import { DOMManager } from '../core/DOMManager.js';
 import { gameState } from '../core/GameState.js';
 import { calculatePercent } from '../utils/helpers.js';
+import { GAME_CONSTANTS } from '../utils/constants.js';
 
 export class BattleUI {
   /**
    * Показывает боевой экран
    */
   static show() {
-    const contentArea = document.querySelector('#main-game-ui .content-area');
-    const battleScreen = DOMManager.getElementById('battle-screen');
-    
-    if (contentArea) contentArea.style.display = 'none';
-    if (battleScreen) {
-      battleScreen.classList.remove('hidden');
-      battleScreen.classList.add('visible');
-    }
+    DOMManager.hideScreen(GAME_CONSTANTS.MAIN_GAME_SCREEN_ID);
+    DOMManager.showScreen(GAME_CONSTANTS.BATTLE_SCREEN_ID);
   }
 
   /**
    * Скрывает боевой экран
    */
   static hide() {
-    const contentArea = document.querySelector('#main-game-ui .content-area');
-    const battleScreen = DOMManager.getElementById('battle-screen');
-    
-    if (contentArea) contentArea.style.display = 'block';
-    if (battleScreen) {
-      battleScreen.classList.remove('visible');
-      battleScreen.classList.add('hidden');
-    }
+    DOMManager.hideScreen(GAME_CONSTANTS.BATTLE_SCREEN_ID);
+    DOMManager.showScreen(GAME_CONSTANTS.MAIN_GAME_SCREEN_ID);
   }
 
   /**

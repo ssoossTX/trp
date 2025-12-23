@@ -5,6 +5,7 @@ import { DOMManager } from '../core/DOMManager.js';
 import { gameState } from '../core/GameState.js';
 import { dataLoader } from '../data/DataLoader.js';
 import { BattleEngine } from '../battle/BattleEngine.js';
+import { BattleUI } from '../battle/BattleUI.js';
 import { getRandomElement } from '../utils/helpers.js';
 import { GAME_CONSTANTS } from '../utils/constants.js';
 
@@ -66,6 +67,9 @@ export class LocationsManager {
 
     const randomEnemy = getRandomElement(location.enemies);
     BattleEngine.initiateBattle(randomEnemy, locationId);
+    
+    // Показываем экран боя
+    BattleUI.show();
   }
 
   /**

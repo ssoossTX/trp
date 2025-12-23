@@ -17,6 +17,7 @@ export const GAME_CONSTANTS = {
   LOADING_SCREEN_ID: 'loadingScreen',
   CLASS_SELECTION_SCREEN_ID: 'class-selection-screen',
   MAIN_GAME_SCREEN_ID: 'main-game-ui',
+  BATTLE_SCREEN_ID: 'battle-screen',
 
   // Модали
   MODALS: {

@@ -213,46 +213,46 @@
                 <ul class="loot-modal__list" id="lootList"></ul>
             </div>
         </div>
+    </div>
 
-        <!-- Battle Interface -->
-        <div id="battle-screen" class="battle-screen hidden">
-            <div class="battle__container">
-                <!-- Enemy Info -->
-                <div class="battle__enemy">
-                    <div class="battle__enemy-image">
-                        <img id="enemyImage" src="" alt="враг" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22%3E%3Crect fill=%22%23888%22 width=%22200%22 height=%22200%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2248%22 fill=%22%23fff%22 text-anchor=%22middle%22 dy=%22.3em%22%3E👹%3C/text%3E%3C/svg%3E'">
+    <!-- ===== BATTLE SCREEN ===== -->
+    <div class="screen hidden" id="battle-screen">
+        <div class="battle__container">
+            <!-- Enemy Info -->
+            <div class="battle__enemy">
+                <div class="battle__enemy-image">
+                    <img id="enemyImage" src="" alt="враг" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22%3E%3Crect fill=%22%23888%22 width=%22200%22 height=%22200%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2248%22 fill=%22%23fff%22 text-anchor=%22middle%22 dy=%22.3em%22%3E👹%3C/text%3E%3C/svg%3E'">
+                </div>
+                <h2 class="battle__enemy-name">Враг</h2>
+                <div class="battle__hp-container">
+                    <span class="battle__hp-label">HP</span>
+                    <div class="battle__hp-bar">
+                        <div class="battle__hp-fill" id="enemyHpFill" style="width: 100%;"></div>
                     </div>
-                    <h2 class="battle__enemy-name">Враг</h2>
-                    <div class="battle__hp-container">
-                        <span class="battle__hp-label">HP</span>
-                        <div class="battle__hp-bar">
-                            <div class="battle__hp-fill" id="enemyHpFill" style="width: 100%;"></div>
-                        </div>
-                        <span class="battle__hp-text" id="enemyHpText">100/100</span>
+                    <span class="battle__hp-text" id="enemyHpText">100/100</span>
+                </div>
+            </div>
+
+            <!-- Player Info -->
+            <div class="battle__player">
+                <div class="battle__hp-container">
+                    <span class="battle__hp-label">Ваш HP</span>
+                    <div class="battle__hp-bar">
+                        <div class="battle__hp-fill battle__hp-fill--player" id="playerHpFill" style="width: 100%;"></div>
                     </div>
+                    <span class="battle__hp-text" id="playerHpText">100/100</span>
                 </div>
+            </div>
 
-                <!-- Player Info -->
-                <div class="battle__player">
-                    <div class="battle__hp-container">
-                        <span class="battle__hp-label">Ваш HP</span>
-                        <div class="battle__hp-bar">
-                            <div class="battle__hp-fill battle__hp-fill--player" id="playerHpFill" style="width: 100%;"></div>
-                        </div>
-                        <span class="battle__hp-text" id="playerHpText">100/100</span>
-                    </div>
-                </div>
+            <!-- Battle Actions -->
+            <div class="battle__actions">
+                <button class="battle__btn battle__btn--attack" id="attackBtn">⚔️ Атаковать</button>
+                <button class="battle__btn battle__btn--flee" id="fleeBtn">🚪 Покинуть локацию</button>
+            </div>
 
-                <!-- Battle Actions -->
-                <div class="battle__actions">
-                    <button class="battle__btn battle__btn--attack" id="attackBtn">⚔️ Атаковать</button>
-                    <button class="battle__btn battle__btn--flee" id="fleeBtn">🚪 Покинуть локацию</button>
-                </div>
-
-                <!-- Battle Log -->
-                <div class="battle__log">
-                    <div id="battleLog"></div>
-                </div>
+            <!-- Battle Log -->
+            <div class="battle__log">
+                <div id="battleLog"></div>
             </div>
         </div>
     </div>
