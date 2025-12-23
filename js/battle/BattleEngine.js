@@ -275,12 +275,23 @@ export class BattleEngine {
       case 'Мощный удар':
         gameState.spendMana(manaCost);
         const baseDamage = gameState.getPlayerBaseDamage();
-        const damage = Math.round(calculateDamage(baseDamage, GAME_CONSTANTS.DAMAGE_RANDOMNESS) * 2);
+        
+        // Проверяем наличие усиления от Боевого клича
+        let damageMultiplier = 2; // 200% по умолчанию
+        let logMessage = '💥 Мощный удар наносит';
+        
+        if (gameState.battle.buffedAttacks > 0 && gameState.battle.buffMultiplier > 1) {
+          damageMultiplier = 3; // 300% если есть усиление
+          logMessage = '⚡💥 Усиленный Мощный удар наносит';
+          gameState.decrementBuffedAttacks(); // Используем одно усиление
+        }
+        
+        const damage = Math.round(calculateDamage(baseDamage, GAME_CONSTANTS.DAMAGE_RANDOMNESS) * damageMultiplier);
         
         gameState.activatePowerAttack();
         enemy.currentHp -= damage;
         
-        BattleUI.addLog(`💥 Мощный удар наносит ${damage} урона!`, 'buff');
+        BattleUI.addLog(`${logMessage} ${damage} урона!`, 'buff');
         BattleUI.updateAbilityButtons();
         BattleUI.update();
 
