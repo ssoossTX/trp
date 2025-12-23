@@ -5,7 +5,8 @@
   background-attachment: fixed;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  min-height: 100vh;
+  overflow-y: auto;
 }
 
 /* Заголовок игры */
@@ -19,6 +20,7 @@
   align-items: center;
   gap: var(--spacing-lg);
   flex-wrap: wrap;
+  flex-shrink: 0;
 }
 
 .game__title {
@@ -76,6 +78,8 @@
   gap: 0;
   border-bottom: 2px solid var(--light-bg);
   overflow-x: auto;
+  flex-shrink: 0;
+  -webkit-overflow-scrolling: touch;
 }
 
 .tab {
@@ -115,28 +119,13 @@
 /* Контент */
 .content-area {
   flex: 1;
-  overflow-y: scroll;
+  overflow-y: auto;
+  overflow-x: hidden;
   padding: var(--spacing-lg);
-  scrollbar-width: thin;
-  scrollbar-color: var(--primary-color) var(--light-bg);
-}
-
-/* Стилизация скроллбара для WebKit браузеров */
-.content-area::-webkit-scrollbar {
-  width: 8px;
-}
-
-.content-area::-webkit-scrollbar-track {
-  background: var(--light-bg);
-}
-
-.content-area::-webkit-scrollbar-thumb {
-  background: var(--primary-color);
-  border-radius: 4px;
-}
-
-.content-area::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-color);
+  /* Плавная прокрутка для поддерживаемых браузеров */
+  scroll-behavior: smooth;
+  /* Инерционная прокрутка для мобильных устройств (iOS) */
+  -webkit-overflow-scrolling: touch;
 }
 
 .tab-content {
@@ -382,4 +371,28 @@
   .locations__grid {
     grid-template-columns: 1fr;
   }
+}
+/* Кастомный стиль скроллбара для Webkit браузеров */
+.content-area::-webkit-scrollbar {
+  width: 8px;
+}
+
+.content-area::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.content-area::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.content-area::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* Визуальная подсказка для прокрутки (тень внизу) */
+.content-area {
+  background: 
+    linear-gradient(to bottom, transparent 0%, transparent 95%, rgba(0, 0, 0, 0.05) 100%);
+  background-attachment: local, scroll;
 }
