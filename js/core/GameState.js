@@ -18,7 +18,8 @@ class GameState {
       maxHp: 0,
       mana: 50,
       maxMana: 50,
-      gold: 0
+      gold: 0,
+      inventory: []
     };
 
     this.battle = {

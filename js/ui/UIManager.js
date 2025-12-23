@@ -47,6 +47,9 @@ export class UIManager {
       this.renderActiveAbilities(classData.activeAbilities);
     }
 
+    // Отрисовываем инвентарь
+    this.renderInventory(player.inventory || []);
+
     // Обновляем ресурсы
     this.updateResources();
 
@@ -234,5 +237,47 @@ export class UIManager {
         </div>
       </div>
     `).join('');
+  }
+
+  /**
+   * Отрисовывает инвентарь игрока
+   * @param {Array} inventory - Массив предметов в инвентаре
+   */
+  static renderInventory(inventory) {
+    const container = DOMManager.getElementById('inventoryContainer');
+    const emptyMessage = DOMManager.getElementById('inventoryEmpty');
+    
+    if (!container) return;
+
+    if (!inventory || inventory.length === 0) {
+      container.innerHTML = '';
+      emptyMessage.classList.remove('hidden');
+      return;
+    }
+
+    emptyMessage.classList.add('hidden');
+
+    container.innerHTML = inventory.map((item, index) => `
+      <div class="inventory-item inventory-item--${item.rarity || 'common'}">
+        <div class="inventory-item__icon">${item.image ? `<img src="/trp/assets/img/items/${item.image}" alt="${item.name}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;">` : item.icon}</div>
+        <div class="inventory-item__name">${item.name}</div>
+        <div class="inventory-item__rarity">${this.rarityName(item.rarity || 'common')}</div>
+      </div>
+    `).join('');
+  }
+
+  /**
+   * Возвращает название редкости по-русски
+   * @param {string} rarity - Редкость
+   * @returns {string}
+   */
+  static rarityName(rarity) {
+    const names = {
+      'common': 'Обычное',
+      'uncommon': 'Редкое',
+      'rare': 'Очень редкое',
+      'legendary': 'Легендарное'
+    };
+    return names[rarity] || 'Неизвестно';
   }
 }
