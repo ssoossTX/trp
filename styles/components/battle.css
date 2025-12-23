@@ -1,4 +1,20 @@
 /* ===== БОЕВОЙ ЭКРАН ===== */
+#battle-screen {
+  background-image: url('../assets/img/фон.jpg');
+  background-size: cover;
+  background-attachment: fixed;
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-lg);
+  overflow-y: auto;
+}
+
+#battle-screen.hidden {
+  display: none !important;
+}
+
 .battle-screen {
   background-image: url('../assets/img/фон.jpg');
   background-size: cover;
