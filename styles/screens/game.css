@@ -1,0 +1,364 @@
+/* ===== ОСНОВНОЙ ЭКРАН ИГРЫ ===== */
+#main-game-ui {
+  background-image: url('../assets/img/фон.jpg');
+  background-size: cover;
+  background-attachment: fixed;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Заголовок игры */
+.game__header {
+  background: rgba(255, 255, 255, 0.95);
+  padding: var(--spacing-lg);
+  border-bottom: 2px solid var(--light-bg);
+  box-shadow: var(--shadow-md);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-lg);
+  flex-wrap: wrap;
+}
+
+.game__title {
+  font-size: var(--font-size-xl);
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.game__resources {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+  flex: 1;
+  flex-wrap: wrap;
+}
+
+.resource-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.resource-item span {
+  font-size: var(--font-size-lg);
+}
+
+.resource-bar {
+  width: 150px;
+  height: 20px;
+  background-color: var(--light-bg);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+
+.resource-fill {
+  height: 100%;
+  background: var(--hp-player);
+  transition: width var(--transition-normal);
+}
+
+.resource-fill.mana {
+  background: linear-gradient(90deg, #3498db, #2980b9);
+}
+
+.player-avatar {
+  font-size: 2em;
+}
+
+/* Вкладки */
+.tabs__container {
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  gap: 0;
+  border-bottom: 2px solid var(--light-bg);
+  overflow-x: auto;
+}
+
+.tab {
+  flex: 1;
+  min-width: 100px;
+  padding: var(--spacing-md);
+  text-align: center;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all var(--transition-normal);
+  color: var(--text-light);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.tab:hover {
+  background-color: var(--light-bg);
+  color: var(--primary-color);
+}
+
+.tab.active {
+  color: var(--accent-color);
+  border-bottom-color: var(--accent-color);
+}
+
+.tab__icon {
+  font-size: var(--font-size-xl);
+}
+
+.tab__label {
+  font-size: var(--font-size-sm);
+  font-weight: bold;
+}
+
+/* Контент */
+.content-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--spacing-lg);
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+  animation: fadeIn var(--transition-normal);
+}
+
+.content-block {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.content-block h2 {
+  color: var(--primary-color);
+  margin-bottom: var(--spacing-md);
+  font-size: var(--font-size-lg);
+}
+
+.content-block p {
+  color: var(--text-primary);
+  line-height: 1.6;
+  margin-bottom: var(--spacing-sm);
+}
+
+/* Вкладка Мир */
+.world__header {
+  text-align: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+.world__subtitle {
+  color: var(--text-light);
+  font-size: var(--font-size-sm);
+  font-style: italic;
+}
+
+.player-level-indicator {
+  display: inline-block;
+  background-color: var(--accent-color);
+  color: white;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: bold;
+  margin-top: var(--spacing-md);
+}
+
+.locations__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+/* Карточка локации */
+.location-card {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-normal);
+}
+
+.location-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-5px);
+}
+
+.location-card__icon {
+  font-size: 2.5em;
+  text-align: center;
+  margin-bottom: var(--spacing-md);
+}
+
+.location-card h3 {
+  color: var(--primary-color);
+  text-align: center;
+  margin-bottom: var(--spacing-md);
+}
+
+.location-card__description {
+  color: var(--text-light);
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+  margin-bottom: var(--spacing-lg);
+}
+
+.location-card__info {
+  background-color: var(--light-bg);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--spacing-lg);
+  font-size: var(--font-size-sm);
+}
+
+.location-card__info p {
+  margin-bottom: var(--spacing-sm);
+}
+
+.location-card__info p:last-child {
+  margin-bottom: 0;
+}
+
+.location-card__loot-list {
+  margin-bottom: var(--spacing-lg);
+  font-size: var(--font-size-sm);
+}
+
+.location-card__loot-list strong {
+  display: block;
+  margin-bottom: var(--spacing-sm);
+  color: var(--primary-color);
+}
+
+.location-card__loot-list p {
+  margin: var(--spacing-xs) 0;
+  color: var(--text-primary);
+}
+
+.location-card__buttons {
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.explore-btn,
+.loot-btn {
+  flex: 1;
+  padding: var(--spacing-md);
+  border: none;
+  border-radius: var(--radius-sm);
+  font-weight: bold;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  font-size: var(--font-size-sm);
+}
+
+.explore-btn {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+.explore-btn:hover {
+  background-color: #c0392b;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.loot-btn {
+  background-color: var(--info-color);
+  color: white;
+}
+
+.loot-btn:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.world-warning {
+  text-align: center;
+  color: var(--text-light);
+  font-size: var(--font-size-sm);
+  margin-top: var(--spacing-lg);
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid var(--light-bg);
+  font-style: italic;
+}
+
+/* Модаль добычи */
+.loot-modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  animation: fadeIn var(--transition-normal) ease;
+}
+
+.loot-modal.active {
+  display: block;
+}
+
+.loot-modal__title {
+  margin-bottom: var(--spacing-lg);
+}
+
+.loot-modal__list {
+  list-style: none;
+}
+
+.loot-modal__item {
+  padding: var(--spacing-md);
+  border-bottom: 1px solid var(--light-bg);
+  display: flex;
+  justify-content: space-between;
+}
+
+.loot-modal__item:last-child {
+  border-bottom: none;
+}
+
+.loot-modal__item-name {
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.loot-modal__item-chance {
+  color: var(--text-light);
+  font-size: var(--font-size-sm);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .game__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .game__resources {
+    width: 100%;
+  }
+
+  .tabs__container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .tab {
+    min-width: 80px;
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-size-sm);
+  }
+
+  .locations__grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Narrative RPG - Рассказовая ролевая игра</title>
+    
+    <!-- Стили -->
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/variables.css">
+    <link rel="stylesheet" href="styles/components/buttons.css">
+    <link rel="stylesheet" href="styles/components/battle.css">
+    <link rel="stylesheet" href="styles/screens/class-selection.css">
+    <link rel="stylesheet" href="styles/screens/game.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div style="text-align: center;">
+            <p>⚔️ Подготовка приключения...</p>
+        </div>
+    </div>
+
+    <!-- ===== CLASS SELECTION SCREEN ===== -->
+    <div class="screen visible" id="class-selection-screen">
+        <div class="selection__container">
+            <div class="selection__header">
+                <h1>Выберите свой путь</h1>
+                <h2>Ваш выбор определит судьбу в этом мире</h2>
+                <p class="note">В дальнейшем возможно добавление подклассов и специализаций</p>
+            </div>
+
+            <div class="selection__grid" id="classesGrid"></div>
+
+            <div class="selection__footer">
+                <p>Ваш выбор повлияет на диалоги, бои и концовку</p>
+            </div>
+        </div>
+
+        <!-- Ability Selection Modal -->
+        <div id="abilityModal" class="modal">
+            <div class="modal__content">
+                <button type="button" class="modal__close" id="abilityCloseBtn" aria-label="Закрыть окно">&times;</button>
+                <h2>Выберите начальную способность</h2>
+                <div class="ability__options" id="abilityOptions"></div>
+                <div class="modal__buttons">
+                    <button class="confirm-btn" id="confirmBtn" disabled>Подтвердить выбор</button>
+                    <button class="cancel-btn" id="cancelBtn">Отмена</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Class Details Modal -->
+        <div id="detailsModal" class="modal">
+            <div class="modal__content">
+                <button type="button" class="modal__close" id="detailsCloseBtn" aria-label="Закрыть окно">&times;</button>
+                <h2 id="detailsTitle">Подробнее</h2>
+                <div class="details__content" id="detailsContent"></div>
+                <div class="modal__buttons">
+                    <button class="cancel-btn" id="closeDetailsBtn">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MAIN GAME SCREEN ===== -->
+    <div class="screen hidden" id="main-game-ui">
+        <!-- Header with Resources -->
+        <div class="game__header">
+            <div class="game__title">⚔️ Путешествие начинается</div>
+            <div class="game__resources">
+                <div class="resource-item">
+                    <span>❤️</span>
+                    <div class="resource-bar">
+                        <div class="resource-fill" id="hpFill" style="width: 100%;"></div>
+                    </div>
+                    <span id="hpText">100/100</span>
+                </div>
+                <div class="resource-item">
+                    <span>✨</span>
+                    <div class="resource-bar">
+                        <div class="resource-fill mana" id="manaFill" style="width: 100%;"></div>
+                    </div>
+                    <span id="manaText">50/50</span>
+                </div>
+                <div class="resource-item">
+                    <span>💰</span>
+                    <span id="goldText">100</span>
+                </div>
+                <div class="player-avatar" id="playerAvatar">👤</div>
+            </div>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="tabs__container">
+            <div class="tab active" data-tab="world">
+                <div class="tab__icon">🗺️</div>
+                <div class="tab__label">Мир</div>
+            </div>
+            <div class="tab" data-tab="dungeons">
+                <div class="tab__icon">🏚️</div>
+                <div class="tab__label">Подземелья</div>
+            </div>
+            <div class="tab" data-tab="quests">
+                <div class="tab__icon">📜</div>
+                <div class="tab__label">Квесты</div>
+            </div>
+            <div class="tab" data-tab="craft">
+                <div class="tab__icon">🔨</div>
+                <div class="tab__label">Крафт</div>
+            </div>
+            <div class="tab" data-tab="profile">
+                <div class="tab__icon">🛡️</div>
+                <div class="tab__label">Профиль</div>
+            </div>
+            <div class="tab" data-tab="settings">
+                <div class="tab__icon">⚙️</div>
+                <div class="tab__label">Настройки</div>
+            </div>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content-area">
+            <!-- World Tab -->
+            <div class="tab-content active" data-tab="world">
+                <div class="content-block">
+                    <div class="world__header">
+                        <h2>Исследуемые земли</h2>
+                        <p class="subtitle world__subtitle">Выберите место для приключения</p>
+                        <div class="player-level-indicator">Ваш уровень: 1</div>
+                    </div>
+
+                    <div class="locations__grid" id="locationsGrid"></div>
+
+                    <p class="world-warning">
+                        ⚠️ Более опасные локации требуют более высокого уровня.
+                        Новичкам рекомендуется начать с Города.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Dungeons Tab -->
+            <div class="tab-content" data-tab="dungeons">
+                <div class="content-block">
+                    <h2>🏚️ Подземелья</h2>
+                    <p>Глубокие подземелья с опасными ловушками и сильными врагами. Здесь хранятся древние артефакты.</p>
+                </div>
+                <div class="content-block">
+                    <h2>Доступные подземелья</h2>
+                    <p><strong>⚔️ Заброшенный форт:</strong> Уровень 5+, сложность высокая.</p>
+                    <p><strong>🔮 Башня магов:</strong> Уровень 7+, сложность адская.</p>
+                </div>
+            </div>
+
+            <!-- Quests Tab -->
+            <div class="tab-content" data-tab="quests">
+                <div class="content-block">
+                    <h2>📜 Квесты</h2>
+                    <p>Различные задания от жителей мира. Выполняйте их для получения опыта, золота и репутации.</p>
+                </div>
+                <div class="content-block">
+                    <h2>Активные квесты</h2>
+                    <p><strong>⚔️ Истребитель волков:</strong> Уничтожить 10 волков в лесу. Награда: 50 золота.</p>
+                    <p><strong>🔍 Потерянное кольцо:</strong> Найти кольцо в склепе. Награда: 100 золота, редкий предмет.</p>
+                </div>
+            </div>
+
+            <!-- Craft Tab -->
+            <div class="tab-content" data-tab="craft">
+                <div class="content-block">
+                    <h2>🔨 Крафт и улучшение</h2>
+                    <p>Создавайте новые предметы и улучшайте своё снаряжение используя собранные материалы.</p>
+                </div>
+                <div class="content-block">
+                    <h2>Доступные рецепты</h2>
+                    <p><strong>🗡️ Железный меч:</strong> Требует 5 железо, 2 дерева. Урон: +10.</p>
+                    <p><strong>🛡️ Кольчуга:</strong> Требует 10 железо, 5 кожи. Защита: +15.</p>
+                </div>
+            </div>
+
+            <!-- Profile Tab -->
+            <div class="tab-content" data-tab="profile">
+                <div class="content-block">
+                    <h2>🛡️ Профиль персонажа</h2>
+                    <p><strong>Имя:</strong> <span id="charName">Герой</span></p>
+                    <p><strong>Класс:</strong> <span id="charClass">-</span></p>
+                    <p><strong>Уровень:</strong> 1</p>
+                    <p><strong>Опыт:</strong> 0/100</p>
+                    <p><strong>Начальная способность:</strong> <span id="charAbility">-</span></p>
+                </div>
+                <div class="content-block">
+                    <h2>Характеристики</h2>
+                    <p><strong>Сила:</strong> <span id="charStrength">-</span></p>
+                    <p><strong>Ловкость:</strong> <span id="charAgility">-</span></p>
+                    <p><strong>Интеллект:</strong> <span id="charIntelligence">-</span></p>
+                    <p><strong>Выносливость:</strong> <span id="charEndurance">-</span></p>
+                </div>
+            </div>
+
+            <!-- Settings Tab -->
+            <div class="tab-content" data-tab="settings">
+                <div class="content-block">
+                    <h2>⚙️ Настройки</h2>
+                    <p>Управление параметрами игры и аудио.</p>
+                </div>
+                <div class="content-block">
+                    <p><input type="checkbox" checked> Звук включен</p>
+                    <p><input type="checkbox" checked> Музыка включена</p>
+                    <p><input type="checkbox"> Сложный режим</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loot Modal -->
+        <div id="lootModal" class="modal">
+            <div class="modal__content">
+                <button type="button" class="modal__close" id="lootCloseBtn" aria-label="Закрыть окно">&times;</button>
+                <h2 class="loot-modal__title">Добыча локации: <span id="lootModalTitle">Неизвестная локация</span></h2>
+                <ul class="loot-modal__list" id="lootList"></ul>
+            </div>
+        </div>
+
+        <!-- Battle Interface -->
+        <div id="battle-screen" class="battle-screen hidden">
+            <div class="battle__container">
+                <!-- Enemy Info -->
+                <div class="battle__enemy">
+                    <div class="battle__enemy-image">
+                        <img id="enemyImage" src="" alt="враг" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22%3E%3Crect fill=%22%23888%22 width=%22200%22 height=%22200%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2248%22 fill=%22%23fff%22 text-anchor=%22middle%22 dy=%22.3em%22%3E👹%3C/text%3E%3C/svg%3E'">
+                    </div>
+                    <h2 class="battle__enemy-name">Враг</h2>
+                    <div class="battle__hp-container">
+                        <span class="battle__hp-label">HP</span>
+                        <div class="battle__hp-bar">
+                            <div class="battle__hp-fill" id="enemyHpFill" style="width: 100%;"></div>
+                        </div>
+                        <span class="battle__hp-text" id="enemyHpText">100/100</span>
+                    </div>
+                </div>
+
+                <!-- Player Info -->
+                <div class="battle__player">
+                    <div class="battle__hp-container">
+                        <span class="battle__hp-label">Ваш HP</span>
+                        <div class="battle__hp-bar">
+                            <div class="battle__hp-fill battle__hp-fill--player" id="playerHpFill" style="width: 100%;"></div>
+                        </div>
+                        <span class="battle__hp-text" id="playerHpText">100/100</span>
+                    </div>
+                </div>
+
+                <!-- Battle Actions -->
+                <div class="battle__actions">
+                    <button class="battle__btn battle__btn--attack" id="attackBtn">⚔️ Атаковать</button>
+                    <button class="battle__btn battle__btn--flee" id="fleeBtn">🚪 Покинуть локацию</button>
+                </div>
+
+                <!-- Battle Log -->
+                <div class="battle__log">
+                    <div id="battleLog"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript модули -->
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>

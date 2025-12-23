@@ -1,0 +1,48 @@
+/* ===== CSS ПЕРЕМЕННЫЕ ===== */
+:root {
+  /* Цвета */
+  --primary-color: #2c3e50;
+  --secondary-color: #34495e;
+  --accent-color: #e74c3c;
+  --success-color: #27ae60;
+  --warning-color: #f39c12;
+  --info-color: #3498db;
+  --light-bg: #ecf0f1;
+  --dark-bg: #2c3e50;
+  --text-primary: #333;
+  --text-light: #7f8c8d;
+  --border-color: #bdc3c7;
+  --hp-enemy: linear-gradient(90deg, #e74c3c, #c0392b);
+  --hp-player: linear-gradient(90deg, #27ae60, #229954);
+
+  /* Отступы */
+  --spacing-xs: 5px;
+  --spacing-sm: 10px;
+  --spacing-md: 15px;
+  --spacing-lg: 20px;
+  --spacing-xl: 30px;
+
+  /* Скругления */
+  --radius-sm: 5px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+
+  /* Переходы */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+
+  /* Тени */
+  --shadow-sm: 0 2px 5px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 4px 20px rgba(0, 0, 0, 0.3);
+
+  /* Размеры шрифтов */
+  --font-size-xs: 0.8em;
+  --font-size-sm: 0.9em;
+  --font-size-base: 1em;
+  --font-size-lg: 1.2em;
+  --font-size-xl: 1.5em;
+  --font-size-xxl: 1.8em;
+  --font-size-xxxl: 2.5em;
+}

@@ -1,0 +1,27 @@
+{
+  "name": "narrative-rpg",
+  "version": "1.0.0",
+  "description": "Текстовая ролевая игра в браузере с боевой системой",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 -m http.server 8000",
+    "deploy": "gh-pages -d .",
+    "test": "echo \"No tests specified\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ssoossTX/trp.git"
+  },
+  "keywords": [
+    "rpg",
+    "game",
+    "narrative",
+    "browser-game"
+  ],
+  "author": "ssoossTX",
+  "license": "MIT",
+  "devDependencies": {
+    "gh-pages": "^5.0.0"
+  },
+  "homepage": "https://ssoossTX.github.io/trp/"
+}

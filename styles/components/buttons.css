@@ -1,0 +1,265 @@
+/* ===== КНОПКИ ===== */
+.btn {
+  padding: var(--spacing-md) var(--spacing-lg);
+  font-size: var(--font-size-base);
+  font-weight: bold;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Варианты кнопок */
+.btn-primary {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #c0392b;
+}
+
+.btn-secondary {
+  background-color: var(--light-bg);
+  color: var(--primary-color);
+  border: 2px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+  background-color: #bdc3c7;
+}
+
+.btn-success {
+  background-color: var(--success-color);
+  color: white;
+}
+
+.btn-success:hover {
+  background-color: #229954;
+}
+
+.btn-danger {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: #c0392b;
+}
+
+.btn-info {
+  background-color: var(--info-color);
+  color: white;
+}
+
+.btn-info:hover {
+  background-color: #2980b9;
+}
+
+.btn-small {
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: var(--font-size-sm);
+}
+
+.btn-large {
+  padding: var(--spacing-lg) var(--spacing-xl);
+  font-size: var(--font-size-lg);
+}
+
+.btn-block {
+  width: 100%;
+}
+
+/* ===== КАРТОЧКИ ===== */
+.card {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-normal);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-5px);
+}
+
+.card__header {
+  margin-bottom: var(--spacing-md);
+  border-bottom: 2px solid var(--light-bg);
+  padding-bottom: var(--spacing-md);
+}
+
+.card__title {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  color: var(--primary-color);
+}
+
+.card__body {
+  margin-bottom: var(--spacing-md);
+}
+
+.card__footer {
+  display: flex;
+  gap: var(--spacing-md);
+  justify-content: space-between;
+}
+
+/* ===== МОДАЛЬНЫЕ ОКНА ===== */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn var(--transition-normal) ease;
+}
+
+.modal.active {
+  display: flex;
+}
+
+.modal__content {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  animation: slideDown var(--transition-normal) ease;
+}
+
+.modal__close {
+  position: absolute;
+  top: var(--spacing-md);
+  right: var(--spacing-md);
+  background: none;
+  border: none;
+  font-size: var(--font-size-xl);
+  cursor: pointer;
+  color: var(--text-light);
+  transition: color var(--transition-fast);
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal__close:hover {
+  color: var(--primary-color);
+}
+
+.modal__header {
+  margin-bottom: var(--spacing-lg);
+  border-bottom: 2px solid var(--light-bg);
+  padding-bottom: var(--spacing-md);
+}
+
+.modal__title {
+  margin: 0;
+  font-size: var(--font-size-xl);
+}
+
+.modal__body {
+  margin-bottom: var(--spacing-lg);
+}
+
+.modal__footer {
+  display: flex;
+  gap: var(--spacing-md);
+  justify-content: flex-end;
+}
+
+/* ===== ПОЛОСКИ РЕСУРСОВ ===== */
+.resource-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  background: var(--light-bg);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.resource-bar__label {
+  font-weight: bold;
+  min-width: 80px;
+  color: var(--primary-color);
+}
+
+.resource-bar__fill-container {
+  flex: 1;
+  height: 25px;
+  background-color: #f5f5f5;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+
+.resource-bar__fill {
+  height: 100%;
+  transition: width var(--transition-normal);
+  background: var(--hp-enemy);
+}
+
+.resource-bar__fill--hp {
+  background: var(--hp-player);
+}
+
+.resource-bar__fill--mana {
+  background: linear-gradient(90deg, #3498db, #2980b9);
+}
+
+.resource-bar__text {
+  min-width: 70px;
+  text-align: right;
+  font-weight: bold;
+  color: var(--primary-color);
+  font-size: var(--font-size-sm);
+}
+
+/* ===== УРОВНИ И ЗВЁЗДЫ ===== */
+.stars {
+  letter-spacing: 2px;
+}
+
+.danger-level {
+  color: var(--accent-color);
+  font-weight: bold;
+}
+
+.rare-loot {
+  color: var(--warning-color);
+  font-weight: bold;
+}
+
+.required-level {
+  color: var(--info-color);
+  font-weight: bold;
+}

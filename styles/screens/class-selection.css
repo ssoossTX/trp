@@ -1,0 +1,300 @@
+/* ===== ЭКРАН ВЫБОРА КЛАССА ===== */
+#class-selection-screen {
+  background-image: url('../assets/img/фон.jpg');
+  background-size: cover;
+  background-attachment: fixed;
+  padding: var(--spacing-lg);
+}
+
+.selection__container {
+  max-width: 90%;
+  margin: 0 auto;
+}
+
+.selection__header {
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+}
+
+.selection__header h1 {
+  margin-bottom: var(--spacing-md);
+  color: var(--primary-color);
+}
+
+.selection__header h2 {
+  color: var(--text-light);
+  margin-bottom: var(--spacing-md);
+  font-weight: normal;
+}
+
+.selection__header .note {
+  font-style: italic;
+  color: #95a5a6;
+  font-size: var(--font-size-sm);
+}
+
+.selection__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-xl);
+}
+
+@media (min-width: 768px) {
+  .selection__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.selection__footer {
+  text-align: center;
+  color: var(--text-light);
+  font-size: var(--font-size-sm);
+}
+
+/* Карточка класса */
+.class-card {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-normal);
+  cursor: pointer;
+}
+
+.class-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-5px);
+}
+
+.class-card__icon {
+  font-size: 3em;
+  text-align: center;
+  margin-bottom: var(--spacing-md);
+}
+
+.class-card h3 {
+  color: var(--primary-color);
+  margin-bottom: var(--spacing-sm);
+  text-align: center;
+}
+
+.class-card p {
+  color: var(--text-light);
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+  margin-bottom: var(--spacing-md);
+  text-align: center;
+}
+
+.class-card__stats {
+  margin-bottom: var(--spacing-lg);
+}
+
+.stat {
+  margin-bottom: var(--spacing-md);
+}
+
+.stat__label {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--spacing-xs);
+  color: var(--primary-color);
+  font-weight: bold;
+}
+
+.stat__bar {
+  height: 8px;
+  background-color: var(--light-bg);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.stat__fill {
+  height: 100%;
+  transition: width var(--transition-normal);
+}
+
+.stat__fill--strength {
+  background-color: #e74c3c;
+}
+
+.stat__fill--agility {
+  background-color: #f39c12;
+}
+
+.stat__fill--intelligence {
+  background-color: #3498db;
+}
+
+.stat__fill--endurance {
+  background-color: #27ae60;
+}
+
+.class-card__abilities {
+  margin-bottom: var(--spacing-lg);
+  padding: var(--spacing-md);
+  background-color: var(--light-bg);
+  border-radius: var(--radius-sm);
+}
+
+.class-card__abilities strong {
+  display: block;
+  margin-bottom: var(--spacing-sm);
+  color: var(--primary-color);
+  font-size: var(--font-size-sm);
+}
+
+.class-card__abilities p {
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
+  margin: 0;
+}
+
+.class-card__buttons {
+  display: flex;
+  gap: var(--spacing-md);
+  justify-content: center;
+}
+
+.class-card__btn {
+  padding: var(--spacing-md) var(--spacing-lg);
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-weight: bold;
+  transition: all var(--transition-normal);
+  font-size: var(--font-size-sm);
+}
+
+.class-card__btn:hover {
+  background-color: #c0392b;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.class-card__btn--info {
+  background-color: var(--info-color);
+  padding: var(--spacing-md) var(--spacing-md);
+  width: 40px;
+}
+
+.class-card__btn--info:hover {
+  background-color: #2980b9;
+}
+
+/* Модаль выбора способности */
+.ability__options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+}
+
+.ability-option {
+  padding: var(--spacing-lg);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  background-color: #f9f9f9;
+}
+
+.ability-option input[type="radio"] {
+  margin-right: var(--spacing-md);
+  cursor: pointer;
+}
+
+.ability-option:hover {
+  border-color: var(--accent-color);
+  background-color: var(--light-bg);
+}
+
+.ability-option.selected {
+  border-color: var(--accent-color);
+  background-color: var(--light-bg);
+}
+
+.ability__name {
+  font-weight: bold;
+  color: var(--primary-color);
+  margin-bottom: var(--spacing-sm);
+}
+
+.ability__description {
+  color: var(--text-light);
+  font-size: var(--font-size-sm);
+}
+
+/* Модальные кнопки */
+.modal__buttons {
+  display: flex;
+  gap: var(--spacing-md);
+  justify-content: flex-end;
+}
+
+.modal__buttons .btn {
+  flex: 1;
+}
+
+.confirm-btn {
+  background-color: var(--success-color);
+  color: white;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-weight: bold;
+  transition: all var(--transition-normal);
+}
+
+.confirm-btn:hover:not(:disabled) {
+  background-color: #229954;
+}
+
+.confirm-btn:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.cancel-btn {
+  background-color: var(--text-light);
+  color: white;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-weight: bold;
+  transition: all var(--transition-normal);
+}
+
+.cancel-btn:hover {
+  background-color: #7f8c8d;
+}
+
+/* Деталей контент */
+.details__content {
+  line-height: 1.8;
+  color: var(--text-primary);
+}
+
+.details__content h3 {
+  color: var(--primary-color);
+  margin-top: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
+  font-size: var(--font-size-lg);
+}
+
+.details__content h3:first-child {
+  margin-top: 0;
+}
+
+.details__content p {
+  color: var(--text-primary);
+  line-height: 1.6;
+  margin-bottom: var(--spacing-md);
+}

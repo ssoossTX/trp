@@ -1,0 +1,222 @@
+/* ===== БОЕВОЙ ЭКРАН ===== */
+.battle-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../assets/img/фон.jpg');
+  background-size: cover;
+  display: none;
+  z-index: 100;
+  overflow-y: auto;
+  padding: var(--spacing-lg);
+}
+
+.battle-screen.visible {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.battle-screen.hidden {
+  display: none;
+}
+
+.battle__container {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  background: rgba(255, 255, 255, 0.95);
+  padding: var(--spacing-xl);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Враг */
+.battle__enemy {
+  text-align: center;
+  padding-bottom: var(--spacing-lg);
+  border-bottom: 2px solid var(--light-bg);
+}
+
+.battle__enemy-image {
+  width: 150px;
+  height: 150px;
+  margin: 0 auto var(--spacing-md);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background-color: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.battle__enemy-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.battle__enemy-name {
+  font-size: var(--font-size-xxl);
+  color: var(--accent-color);
+  margin: 0 0 var(--spacing-md) 0;
+}
+
+.battle__hp-container {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.battle__hp-label {
+  font-weight: bold;
+  min-width: 60px;
+  color: var(--primary-color);
+  font-size: var(--font-size-sm);
+}
+
+.battle__hp-bar {
+  flex: 1;
+  height: 30px;
+  background-color: var(--light-bg);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 2px solid var(--border-color);
+}
+
+.battle__hp-fill {
+  height: 100%;
+  background: var(--hp-enemy);
+  transition: width var(--transition-normal);
+  width: 100%;
+}
+
+.battle__hp-fill--player {
+  background: var(--hp-player);
+}
+
+.battle__hp-text {
+  min-width: 70px;
+  text-align: right;
+  font-weight: bold;
+  color: var(--primary-color);
+  font-size: var(--font-size-sm);
+}
+
+/* Игрок */
+.battle__player {
+  padding: var(--spacing-lg);
+  background-color: var(--light-bg);
+  border-radius: var(--radius-md);
+}
+
+/* Действия */
+.battle__actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg);
+  background-color: #f8f9fa;
+  border-radius: var(--radius-md);
+}
+
+.battle__btn {
+  padding: var(--spacing-md) var(--spacing-lg);
+  font-size: var(--font-size-base);
+  font-weight: bold;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  color: white;
+}
+
+.battle__btn--attack {
+  background-color: var(--accent-color);
+}
+
+.battle__btn--attack:hover {
+  background-color: #c0392b;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+}
+
+.battle__btn--attack:active {
+  transform: translateY(0);
+}
+
+.battle__btn--flee {
+  background-color: var(--text-light);
+}
+
+.battle__btn--flee:hover {
+  background-color: #7f8c8d;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(149, 165, 166, 0.3);
+}
+
+.battle__btn--flee:active {
+  transform: translateY(0);
+}
+
+.battle__btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Лог боя */
+.battle__log {
+  max-height: 150px;
+  padding: var(--spacing-md);
+  background-color: var(--dark-bg);
+  color: var(--light-bg);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+  overflow-y: auto;
+  font-family: 'Courier New', monospace;
+}
+
+.battle__log-entry {
+  margin-bottom: var(--spacing-sm);
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 1px solid rgba(236, 240, 241, 0.2);
+  line-height: 1.6;
+}
+
+.battle__log-entry--player {
+  color: var(--success-color);
+}
+
+.battle__log-entry--enemy {
+  color: var(--accent-color);
+}
+
+.battle__log-entry--neutral {
+  color: var(--light-bg);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .battle__container {
+    padding: var(--spacing-lg);
+    max-width: 95%;
+  }
+
+  .battle__actions {
+    grid-template-columns: 1fr;
+  }
+
+  .battle__enemy-image {
+    width: 120px;
+    height: 120px;
+  }
+
+  .battle__enemy-name {
+    font-size: var(--font-size-xl);
+  }
+}
