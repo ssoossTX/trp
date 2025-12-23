@@ -40,6 +40,11 @@ export class UIManager {
     DOMManager.setText('charAgility', player.stats.agility);
     DOMManager.setText('charIntelligence', player.stats.intelligence);
     DOMManager.setText('charEndurance', player.stats.endurance);
+    
+    // Информация об уровне и опыте
+    DOMManager.setText('playerLevel', `Уровень: ${player.level}`);
+    DOMManager.setText('playerExp', `${player.experience} / ${player.requiredExperienceForLevel}`);
+    DOMManager.setText('playerAbilityPoints', `Очки способностей: ${player.abilityPoints}`);
 
     // Добавляем информацию об активных способностях
     const classData = dataLoader.getClassByName(player.class);
@@ -74,6 +79,11 @@ export class UIManager {
 
     // Gold
     DOMManager.setText('goldText', player.gold);
+    
+    // Level and Experience
+    DOMManager.setText('playerLevel', `Уровень: ${player.level}`);
+    DOMManager.setText('playerExp', `${player.experience} / ${player.requiredExperienceForLevel}`);
+    DOMManager.setText('playerAbilityPoints', `Очки способностей: ${player.abilityPoints}`);
   }
 
   /**

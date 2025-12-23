@@ -14,6 +14,8 @@ class GameState {
       stats: {},
       level: 1,
       experience: 0,
+      requiredExperienceForLevel: 100,
+      abilityPoints: 0,
       hp: 0,
       maxHp: 0,
       mana: 50,
@@ -64,6 +66,12 @@ class GameState {
     const maxHp = classData.stats.endurance * GAME_CONSTANTS.BASE_HP_MULTIPLIER;
     this.player.maxHp = maxHp;
     this.player.hp = maxHp;
+    
+    // Инициализируем систему уровней
+    this.player.level = 1;
+    this.player.experience = 0;
+    this.player.requiredExperienceForLevel = this.calculateRequiredExperience(1);
+    this.player.abilityPoints = 0;
 
     // Применяем бонусы от выбранной способности
     this.applyAbilityBonus(abilityName);
@@ -572,6 +580,48 @@ class GameState {
       this.player.inventory.push(item);
       Logger.log(`📦 Получен предмет: ${item.name}`);
     });
+  }
+
+  /**
+   * Рассчитывает требуемый опыт для достижения уровня
+   * @param {number} level - Уровень для расчета
+   * @returns {number} Требуемое количество опыта
+   */
+  calculateRequiredExperience(level) {
+    const baseCost = 100;
+    const growthFactor = 1.3;
+    return Math.round(baseCost * Math.pow(level, growthFactor));
+  }
+
+  /**
+   * Добавляет опыт игроку
+   * @param {number} amount - Количество опыта
+   */
+  addExperience(amount) {
+    this.player.experience += amount;
+    Logger.log(`⭐ Получено ${amount} опыта!`);
+    
+    // Проверяем, достаточно ли опыта для повышения уровня
+    while (this.player.experience >= this.player.requiredExperienceForLevel) {
+      this.levelUp();
+    }
+  }
+
+  /**
+   * Повышает уровень персонажа
+   */
+  levelUp() {
+    this.player.experience -= this.player.requiredExperienceForLevel;
+    this.player.level += 1;
+    this.player.abilityPoints += 3; // 3 очка способностей за уровень
+    
+    // Рассчитываем новое требуемое количество опыта
+    this.player.requiredExperienceForLevel = this.calculateRequiredExperience(this.player.level);
+    
+    // Восстанавливаем HP при повышении уровня
+    this.player.hp = this.player.maxHp;
+    
+    Logger.log(`🎉 Повышение уровня! Уровень: ${this.player.level}, очки способностей: +3`);
   }
 }
 

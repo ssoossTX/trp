@@ -115,6 +115,16 @@ export class BattleEngine {
     BattleUI.disableAttackButton();
     BattleUI.update();
     
+    // Добавляем опыт и золото
+    if (enemy.reward) {
+      if (enemy.reward.experience) {
+        gameState.addExperience(enemy.reward.experience);
+      }
+      if (enemy.reward.gold) {
+        gameState.addGold(enemy.reward.gold);
+      }
+    }
+    
     // Генерируем дроп
     const loot = this.generateLoot(enemy);
     
