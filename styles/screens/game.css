@@ -116,7 +116,30 @@
 .content-area {
   flex: 1;
   overflow-y: auto;
+  overflow-x: hidden;
   padding: var(--spacing-lg);
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-color) var(--light-bg);
+}
+
+/* Webkit browsers (Chrome, Safari, Edge) */
+.content-area::-webkit-scrollbar {
+  width: 8px;
+}
+
+.content-area::-webkit-scrollbar-track {
+  background: var(--light-bg);
+  border-radius: var(--radius-sm);
+}
+
+.content-area::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: var(--radius-sm);
+}
+
+.content-area::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-color);
 }
 
 .tab-content {

@@ -21,6 +21,7 @@ export class UIManager {
     console.log('[UIManager] Initializing game UI');
     this.updatePlayerProfile();
     this.initTabs();
+    this.initScrolling();
     this.attachGameEventListeners();
   }
 
@@ -65,9 +66,53 @@ export class UIManager {
   }
 
   /**
-   * Инициализирует табы
+   * Инициализирует навигацию по прокрутке контента
    */
-  static initTabs() {
+  static initScrolling() {
+    const contentArea = DOMManager.getElementById('content-area') || 
+                       document.querySelector('.content-area');
+    
+    if (!contentArea) return;
+
+    // Обработка клавиш для прокрутки
+    document.addEventListener('keydown', (e) => {
+      // Пропускаем, если пользователь печатает в input
+      if (document.activeElement.tagName === 'INPUT') return;
+
+      const scrollStep = 100; // пиксели для прокрутки
+      
+      switch(e.key) {
+        case 'ArrowUp':
+          e.preventDefault();
+          contentArea.scrollBy(0, -scrollStep);
+          break;
+        case 'ArrowDown':
+          e.preventDefault();
+          contentArea.scrollBy(0, scrollStep);
+          break;
+        case 'Home':
+          e.preventDefault();
+          contentArea.scrollTo(0, 0);
+          break;
+        case 'End':
+          e.preventDefault();
+          contentArea.scrollTo(0, contentArea.scrollHeight);
+          break;
+      }
+    });
+
+    // Поддержка сенсорного скроллинга (свайп)
+    let touchStartY = 0;
+    
+    contentArea.addEventListener('touchstart', (e) => {
+      touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+
+    contentArea.addEventListener('touchmove', (e) => {
+      // Сенсорный скроллинг обрабатывается браузером автоматически
+      // Это просто для информации
+    }, { passive: true });
+  }
     const tabs = DOMManager.querySelectorAll('#main-game-ui .tab');
     
     tabs.forEach(tab => {
