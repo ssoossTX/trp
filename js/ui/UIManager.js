@@ -44,21 +44,7 @@ export class UIManager {
     // Добавляем информацию об активных способностях
     const classData = dataLoader.getClassByName(player.class);
     if (classData && classData.activeAbilities) {
-      const abilityList = classData.activeAbilities
-        .map(a => `• ${a.name}: ${a.description}`)
-        .join('\n');
-      
-      const abilityElement = document.createElement('div');
-      abilityElement.innerHTML = `<strong>Активные способности:</strong><pre>${abilityList}</pre>`;
-      const profileContent = document.querySelector('.tab-content[data-tab="profile"]');
-      if (profileContent) {
-        const existingAbilities = profileContent.querySelector('.active-abilities-info');
-        if (existingAbilities) {
-          existingAbilities.remove();
-        }
-        abilityElement.className = 'active-abilities-info';
-        profileContent.appendChild(abilityElement);
-      }
+      this.renderActiveAbilities(classData.activeAbilities);
     }
 
     // Обновляем ресурсы
@@ -219,5 +205,34 @@ export class UIManager {
    */
   static closeLootModal() {
     DOMManager.closeModal('dropModal');
+  }
+
+  /**
+   * Отрисовывает активные способности в профиле
+   * @param {Array} abilities - Массив активных способностей
+   */
+  static renderActiveAbilities(abilities) {
+    const container = DOMManager.getElementById('activeAbilitiesContainer');
+    if (!container) return;
+
+    container.innerHTML = abilities.map(ability => `
+      <div class="ability-card ability-card--active">
+        <div class="ability-card__header">
+          <div class="ability-card__icon">⚡</div>
+          <h3 class="ability-card__title">${ability.name}</h3>
+        </div>
+        <p class="ability-card__description">${ability.description}</p>
+        <div class="ability-card__stats">
+          <div class="ability-stat">
+            <span class="ability-stat__label">Кулдаун</span>
+            <span class="ability-stat__value">${ability.cooldown} ход(а)</span>
+          </div>
+          <div class="ability-stat">
+            <span class="ability-stat__label">Эффект</span>
+            <span class="ability-stat__value">${ability.effect}</span>
+          </div>
+        </div>
+      </div>
+    `).join('');
   }
 }

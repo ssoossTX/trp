@@ -1,0 +1,145 @@
+/* ===== ПРОФИЛЬ ПЕРСОНАЖА ===== */
+
+.abilities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-lg);
+}
+
+.ability-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  color: white;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  transition: all var(--transition-normal);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.ability-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.ability-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100px;
+  height: 100px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  transform: translate(30%, -30%);
+}
+
+.ability-card__header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+  position: relative;
+  z-index: 1;
+}
+
+.ability-card__icon {
+  font-size: 2.5em;
+  min-width: 60px;
+  text-align: center;
+}
+
+.ability-card__title {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  font-weight: bold;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.ability-card__description {
+  margin: var(--spacing-md) 0;
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+  opacity: 0.95;
+  position: relative;
+  z-index: 1;
+}
+
+.ability-card__stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-lg);
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  z-index: 1;
+}
+
+.ability-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ability-stat__label {
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.8;
+  font-weight: bold;
+}
+
+.ability-stat__value {
+  font-size: var(--font-size-base);
+  font-weight: bold;
+  color: #ffd700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.ability-card--active {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  box-shadow: 0 4px 15px rgba(245, 87, 108, 0.3);
+}
+
+.ability-card--active:hover {
+  box-shadow: 0 8px 25px rgba(245, 87, 108, 0.4);
+}
+
+.ability-card--passive {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  box-shadow: 0 4px 15px rgba(79, 172, 254, 0.3);
+}
+
+.ability-card--passive:hover {
+  box-shadow: 0 8px 25px rgba(79, 172, 254, 0.4);
+}
+
+.ability-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-xs);
+  font-weight: bold;
+  background-color: rgba(255, 255, 255, 0.2);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: var(--spacing-md);
+}
+
+@media (max-width: 768px) {
+  .abilities-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ability-card {
+    padding: var(--spacing-md);
+  }
+
+  .ability-card__stats {
+    grid-template-columns: 1fr;
+  }
+}

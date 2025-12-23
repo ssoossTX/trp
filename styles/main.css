@@ -1,5 +1,8 @@
 /* ===== ОСНОВНЫЕ СТИЛИ ===== */
 @import url('variables.css');
+@import url('components/profile.css');
+@import url('components/battle.css');
+@import url('components/buttons.css');
 
 * {
   margin: 0;
