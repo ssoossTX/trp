@@ -62,10 +62,18 @@ export class BattleEngine {
   static enemyAttack() {
     if (!gameState.battle.isInBattle) return;
 
-    // Уменьшаем кулдауны способностей в конце хода врага
-    gameState.decrementAbilityCooldowns();
-    BattleUI.updateAbilityButtons();
+    // Проверяем, находится ли игрок в режиме эвазии
+    if (gameState.battle.isEvading) {
+      gameState.decrementEvadingTurns();
+      if (gameState.battle.evadingTurnsLeft > 0) {
+        BattleUI.addLog('🌫️ Враг не может найти тебя в тени!', 'success');
+      }
+      gameState.decrementAbilityCooldowns();
+      BattleUI.updateAbilityButtons();
+      return; // Враг не атакует
+    }
 
+    // Стандартная вражеская атака
     const enemy = gameState.battle.currentEnemy;
     let damage = calculateDamage(enemy.attack, GAME_CONSTANTS.ENEMY_DAMAGE_VARIANCE);
 
@@ -77,6 +85,9 @@ export class BattleEngine {
 
     // Уменьшаем длительность магического щита
     gameState.decrementShieldTurns();
+    
+    // Уменьшаем кулдауны способностей в конце хода врага
+    gameState.decrementAbilityCooldowns();
 
     if (gameState.battle.playerHp <= 0) {
       this.playerLoses();
@@ -84,6 +95,7 @@ export class BattleEngine {
     }
 
     BattleUI.update();
+    BattleUI.updateAbilityButtons();
   }
 
   /**
@@ -344,6 +356,47 @@ export class BattleEngine {
           return;
         }
 
+        if (gameState.battle.hasExtraTurn) {
+          gameState.battle.hasExtraTurn = false;
+          BattleUI.addLog('⚡ Ты получил ещё один ход!', 'buff');
+        } else {
+          setTimeout(() => this.enemyAttack(), GAME_CONSTANTS.BATTLE_DELAY);
+        }
+        break;
+
+      case 'Быстрая атака':
+        const fastDamage = gameState.activateFastAttack();
+        if (fastDamage === null) {
+          BattleUI.addLog(`❌ Способность "Быстрая атака" на кулдауне`, 'error');
+          return;
+        }
+        enemy.currentHp -= fastDamage;
+        
+        BattleUI.addLog(`⚡ Быстрая атака наносит ${fastDamage} урона!`, 'buff');
+        BattleUI.updateAbilityButtons();
+        BattleUI.update();
+
+        if (enemy.currentHp <= 0) {
+          this.playerWins();
+          return;
+        }
+
+        if (gameState.battle.hasExtraTurn) {
+          gameState.battle.hasExtraTurn = false;
+          BattleUI.addLog('⚡ Ты получил ещё один ход!', 'buff');
+        } else {
+          setTimeout(() => this.enemyAttack(), GAME_CONSTANTS.BATTLE_DELAY);
+        }
+        break;
+
+      case 'Уход в тень':
+        const evadeSuccess = gameState.activateShadowEvasion();
+        if (!evadeSuccess) {
+          BattleUI.addLog(`❌ Способность "Уход в тень" на кулдауне`, 'error');
+          return;
+        }
+        BattleUI.addLog('🌫️ Ты скрылась в тени!', 'buff');
+        BattleUI.updateAbilityButtons();
         setTimeout(() => this.enemyAttack(), GAME_CONSTANTS.BATTLE_DELAY);
         break;
 

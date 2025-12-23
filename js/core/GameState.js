@@ -35,7 +35,11 @@ class GameState {
       buffMultiplier: 1.5, // Множитель урона при усилении
       shieldActive: false, // Магический щит/Последний рубеж активен
       shieldTurnsLeft: 0, // Оставшиеся ходы щита
-      shieldDamageReduction: 0.25 // Снижение урона (25% для Мага, 50% для Танка)
+      shieldDamageReduction: 0.25, // Снижение урона (25% для Мага, 50% для Танка)
+      // Состояния для Вора
+      hasExtraTurn: false, // Есть ли дополнительный ход после Быстрой атаки
+      isEvading: false, // Находится ли в режиме Ухода в тень
+      evadingTurnsLeft: 0 // Оставшиеся ходы невидимости
     };
 
     this.currentTab = GAME_CONSTANTS.TABS.WORLD;
@@ -147,6 +151,11 @@ class GameState {
     this.battle.buffMultiplier = 1.0;
     this.battle.shieldActive = false;
     this.battle.shieldTurnsLeft = 0;
+    
+    // Сбрасываем состояния Вора
+    this.battle.hasExtraTurn = false;
+    this.battle.isEvading = false;
+    this.battle.evadingTurnsLeft = 0;
 
     Logger.log(`Бой начался с ${enemy.name} в локации ${locationId}`);
     Logger.log(`Активные способности: ${activeAbilities.map(a => a.name).join(', ')}`);
@@ -165,6 +174,9 @@ class GameState {
     this.battle.buffMultiplier = 1.0;
     this.battle.shieldActive = false;
     this.battle.shieldTurnsLeft = 0;
+    this.battle.hasExtraTurn = false;
+    this.battle.isEvading = false;
+    this.battle.evadingTurnsLeft = 0;
     Logger.log('Бой завершён');
   }
 
@@ -412,6 +424,59 @@ class GameState {
     }
     Logger.log(`🏹 Скоростной залп! 3 быстрых удара: ${damage} урона!`);
     return damage;
+  }
+
+  /**
+   * Активирует способность Быстрая атака (Вор)
+   * Наносит 200% урона и получает ещё один ход
+   */
+  activateFastAttack() {
+    const ability = this.battle.activeAbilities.find(a => a.name === 'Быстрая атака');
+    if (ability && !this.isAbilityAvailable('Быстрая атака')) {
+      return null; // На кулдауне
+    }
+    
+    const baseDamage = this.getPlayerBaseDamage();
+    const damage = Math.round(baseDamage * 2); // 200% урона
+    
+    if (ability) {
+      this.setAbilityCooldown('Быстрая атака', ability.cooldown);
+    }
+    this.battle.hasExtraTurn = true;
+    Logger.log(`⚡ Быстрая атака! Урон: ${damage}. Получен ещё один ход!`);
+    return damage;
+  }
+
+  /**
+   * Активирует способность Уход в тень (Вор)
+   * На 2 хода враг не видит и не может ударить
+   */
+  activateShadowEvasion() {
+    const ability = this.battle.activeAbilities.find(a => a.name === 'Уход в тень');
+    if (ability && !this.isAbilityAvailable('Уход в тень')) {
+      return false; // На кулдауне
+    }
+    
+    if (ability) {
+      this.setAbilityCooldown('Уход в тень', ability.cooldown);
+    }
+    this.battle.isEvading = true;
+    this.battle.evadingTurnsLeft = 2;
+    Logger.log('🌫️ Уход в тень! Враг тебя не видит 2 хода!');
+    return true;
+  }
+
+  /**
+   * Декрементирует длительность ухода в тень
+   */
+  decrementEvadingTurns() {
+    if (this.battle.isEvading && this.battle.evadingTurnsLeft > 0) {
+      this.battle.evadingTurnsLeft--;
+      if (this.battle.evadingTurnsLeft === 0) {
+        this.battle.isEvading = false;
+        Logger.log('🌫️ Уход в тень закончился!');
+      }
+    }
   }
 
   /**
