@@ -1,7 +1,7 @@
 /* ===== ЭКРАН ВЫБОРА КЛАССА ===== */
 #class-selection-screen {
   /* Фоновое изображение */
-  background-image: url('../assets/img/background.jpg');
+  background-image: url('/trp/assets/img/background.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
