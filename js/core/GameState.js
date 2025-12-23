@@ -338,8 +338,8 @@ class GameState {
     }
     
     // Вычисляем процент потеряного HP
-    const maxHp = this.player.maxHp;
-    const currentHp = this.player.hp;
+    const maxHp = this.battle.playerMaxHp;
+    const currentHp = this.battle.playerHp;
     const hpLost = maxHp - currentHp;
     const hpLossPercent = hpLost / maxHp;
     
