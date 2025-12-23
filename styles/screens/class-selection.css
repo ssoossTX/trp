@@ -1,6 +1,6 @@
 /* ===== ЭКРАН ВЫБОРА КЛАССА ===== */
 #class-selection-screen {
-  background-image: url('../assets/img/фон.jpg');
+  background-image: url('../assets/img/background.jpg');
   background-size: cover;
   background-attachment: fixed;
   padding: var(--spacing-lg);

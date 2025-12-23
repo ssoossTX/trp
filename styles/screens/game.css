@@ -1,6 +1,6 @@
 /* ===== ОСНОВНОЙ ЭКРАН ИГРЫ ===== */
 #main-game-ui {
-  background-image: url('../assets/img/фон.jpg');
+  background-image: url('../assets/img/background.jpg');
   background-size: cover;
   background-attachment: fixed;
   display: flex;
