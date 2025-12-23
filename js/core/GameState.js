@@ -35,20 +35,74 @@ class GameState {
   /**
    * Инициализирует нового игрока с выбранным классом
    * @param {Object} classData - Данные класса
-   * @param {string} ability - Выбранная способность
+   * @param {string} abilityName - Выбранная способность
    */
-  initializePlayer(classData, ability) {
+  initializePlayer(classData, abilityName) {
     this.player.classId = classData.id;
     this.player.class = classData.name;
     this.player.classData = classData;
-    this.player.ability = ability;
+    this.player.ability = abilityName;
     this.player.stats = { ...classData.stats };
 
     const maxHp = classData.stats.endurance * GAME_CONSTANTS.BASE_HP_MULTIPLIER;
     this.player.maxHp = maxHp;
     this.player.hp = maxHp;
 
-    Logger.log(`Игрок инициализирован: ${classData.name}, способность: ${ability}`);
+    // Применяем бонусы от выбранной способности
+    this.applyAbilityBonus(abilityName);
+
+    Logger.log(`Игрок инициализирован: ${classData.name}, способность: ${abilityName}`);
+  }
+
+  /**
+   * Применяет бонусы от способности к характеристикам игрока
+   * @param {string} abilityName - Имя способности
+   */
+  applyAbilityBonus(abilityName) {
+    if (!abilityName) return;
+
+    switch (abilityName) {
+      case 'Усиленный удар':
+        // +10% к урону всех атак (применяется через модификатор силы)
+        this.player.stats.strength = Math.round(this.player.stats.strength * 1.1);
+        Logger.log(`✓ Способность применена: Усиленный удар (+10% урон)`);
+        break;
+
+      case 'Крепкое тело':
+        // +10% к максимальному HP
+        this.player.maxHp = Math.round(this.player.maxHp * 1.1);
+        this.player.hp = this.player.maxHp;
+        Logger.log(`✓ Способность применена: Крепкое тело (+10% HP: ${this.player.maxHp})`);
+        break;
+
+      case 'Магический резерв':
+        // +10% к максимальной мане
+        this.player.maxMana = Math.round(this.player.maxMana * 1.1);
+        this.player.mana = this.player.maxMana;
+        Logger.log(`✓ Способность применена: Магический резерв (+10% мана: ${this.player.maxMana})`);
+        break;
+
+      case 'Боевая хватка':
+        // +5% к ловкости
+        this.player.stats.agility = Math.round(this.player.stats.agility * 1.05);
+        Logger.log(`✓ Способность применена: Боевая хватка (+5% ловкость)`);
+        break;
+
+      case 'Древний артефакт':
+        // +15% к выносливости (как защита от магии)
+        this.player.stats.endurance = Math.round(this.player.stats.endurance * 1.15);
+        Logger.log(`✓ Способность применена: Древний артефакт (+15% выносливость)`);
+        break;
+
+      case 'Боевой опыт':
+        // +5% к интеллекту (как улучшение опыта)
+        this.player.stats.intelligence = Math.round(this.player.stats.intelligence * 1.05);
+        Logger.log(`✓ Способность применена: Боевой опыт (+5% интеллект)`);
+        break;
+
+      default:
+        Logger.log(`Неизвестная способность: ${abilityName}`);
+    }
   }
 
   /**
