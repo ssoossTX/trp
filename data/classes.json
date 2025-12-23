@@ -70,8 +70,8 @@
     "activeAbilities": [
       {
         "name": "Щитовой удар",
-        "description": "Наносит урон в зависимости от потеряного HP (потеряно% × 2)",
-        "cooldown": 4,
+        "description": "Наносит урон в зависимости от потеряного HP ((потеряно% + 1.5) × 2)",
+        "cooldown": 3,
         "effect": "shieldBash"
       },
       {

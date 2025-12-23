@@ -343,9 +343,9 @@ class GameState {
     const hpLost = maxHp - currentHp;
     const hpLossPercent = hpLost / maxHp;
     
-    // Урон = базовый урон × потеря% × 2
+    // Урон = базовый урон × (потеря% + 1.5) × 2
     const baseDamage = this.getPlayerBaseDamage();
-    const damage = Math.round(baseDamage * hpLossPercent * 2);
+    const damage = Math.round(baseDamage * (hpLossPercent + 1.5) * 2);
     
     if (ability) {
       this.setAbilityCooldown('Щитовой удар', ability.cooldown);
