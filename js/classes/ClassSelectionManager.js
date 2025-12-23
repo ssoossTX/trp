@@ -28,23 +28,41 @@ export class ClassSelectionManager {
     const classes = dataLoader.getClasses();
 
     classesGrid.innerHTML = classes.map(classData => `
-      <div class="card">
-        <div class="card__icon" style="font-size: 3em; text-align: center;">${classData.icon}</div>
-        <h3 class="card__title">${classData.name}</h3>
-        <p>${classData.description}</p>
+      <div class="class-card">
+        <div class="class-card__header">
+          <div class="class-card__icon">${classData.icon}</div>
+          <h3 class="class-card__title">${classData.name}</h3>
+        </div>
         
-        <div class="card__stats">
+        <div class="class-card__description">
+          <p class="class-card__main-desc">${classData.description}</p>
+        </div>
+        
+        <div class="class-card__stats">
+          <h4>Характеристики</h4>
           ${this.renderStats(classData.stats)}
         </div>
         
-        <div class="card__abilities">
-          <strong>Уникальные навыки:</strong>
-          <p>${classData.abilities.join(', ')}</p>
+        <div class="class-card__abilities">
+          <h4>Боевые способности</h4>
+          ${classData.activeAbilities.map(ability => `
+            <div class="ability-item">
+              <div class="ability-item__name">${ability.name}</div>
+              <div class="ability-item__info">
+                <span class="ability-item__mana">💙 ${ability.manaCost}</span>
+                <span class="ability-item__cooldown">⏱️ ${ability.cooldown}</span>
+              </div>
+              <div class="ability-item__desc">${ability.description}</div>
+            </div>
+          `).join('')}
         </div>
         
-        <div class="card__footer">
-          <button class="btn btn-primary select-btn" onclick="window.classSelectionManager.openAbilityModal('${classData.id}')">Выбрать</button>
-          <button class="btn btn-info" onclick="window.classSelectionManager.openDetailsModal('${classData.id}')">ℹ️</button>
+        <div class="class-card__details">
+          ${classData.details}
+        </div>
+        
+        <div class="class-card__actions">
+          <button class="btn btn-primary" onclick="window.classSelectionManager.openAbilityModal('${classData.id}')">Выбрать класс</button>
         </div>
       </div>
     `).join('');
