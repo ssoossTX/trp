@@ -375,6 +375,46 @@ class GameState {
   }
 
   /**
+   * Активирует способность Точный выстрел (Лучник)
+   * Критический удар в голову с 500% урона
+   */
+  activatePreciseShot() {
+    const ability = this.battle.activeAbilities.find(a => a.name === 'Точный выстрел');
+    if (ability && !this.isAbilityAvailable('Точный выстрел')) {
+      return null; // На кулдауне
+    }
+    
+    const baseDamage = this.getPlayerBaseDamage();
+    const damage = Math.round(baseDamage * 5); // 500% = 5x
+    
+    if (ability) {
+      this.setAbilityCooldown('Точный выстрел', ability.cooldown);
+    }
+    Logger.log(`🎯 Точный выстрел! Критический удар в голову: ${damage} урона!`);
+    return damage;
+  }
+
+  /**
+   * Активирует способность Скоростной залп (Лучник)
+   * Наносит сразу 3 удара
+   */
+  activateRapidVolley() {
+    const ability = this.battle.activeAbilities.find(a => a.name === 'Скоростной залп');
+    if (ability && !this.isAbilityAvailable('Скоростной залп')) {
+      return null; // На кулдауне
+    }
+    
+    const baseDamage = this.getPlayerBaseDamage();
+    const damage = Math.round(baseDamage * 3); // 3 удара
+    
+    if (ability) {
+      this.setAbilityCooldown('Скоростной залп', ability.cooldown);
+    }
+    Logger.log(`🏹 Скоростной залп! 3 быстрых удара: ${damage} урона!`);
+    return damage;
+  }
+
+  /**
    * Добавляет золото игроку
    * @param {number} amount - Количество золота
    */

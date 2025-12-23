@@ -307,6 +307,46 @@ export class BattleEngine {
         setTimeout(() => this.enemyAttack(), GAME_CONSTANTS.BATTLE_DELAY);
         break;
 
+      case 'Точный выстрел':
+        const preciseDamage = gameState.activatePreciseShot();
+        if (preciseDamage === null) {
+          BattleUI.addLog(`❌ Способность "Точный выстрел" на кулдауне`, 'error');
+          return;
+        }
+        enemy.currentHp -= preciseDamage;
+        
+        BattleUI.addLog(`🎯 Точный выстрел наносит ${preciseDamage} урона!`, 'buff');
+        BattleUI.updateAbilityButtons();
+        BattleUI.update();
+
+        if (enemy.currentHp <= 0) {
+          this.playerWins();
+          return;
+        }
+
+        setTimeout(() => this.enemyAttack(), GAME_CONSTANTS.BATTLE_DELAY);
+        break;
+
+      case 'Скоростной залп':
+        const volleyDamage = gameState.activateRapidVolley();
+        if (volleyDamage === null) {
+          BattleUI.addLog(`❌ Способность "Скоростной залп" на кулдауне`, 'error');
+          return;
+        }
+        enemy.currentHp -= volleyDamage;
+        
+        BattleUI.addLog(`🏹 Скоростной залп наносит ${volleyDamage} урона!`, 'buff');
+        BattleUI.updateAbilityButtons();
+        BattleUI.update();
+
+        if (enemy.currentHp <= 0) {
+          this.playerWins();
+          return;
+        }
+
+        setTimeout(() => this.enemyAttack(), GAME_CONSTANTS.BATTLE_DELAY);
+        break;
+
       default:
         BattleUI.addLog(`❓ Неизвестная способность: ${abilityName}`, 'error');
     }
