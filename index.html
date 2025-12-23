@@ -71,11 +71,16 @@
             <div class="game__resources">
                 <div class="resource-item">
                     <span>⭐</span>
-                    <span id="playerLevel">Уровень: 1</span>
+                    <span id="header-level">Уровень: 1</span>
                 </div>
                 <div class="resource-item">
                     <span>📊</span>
-                    <span id="playerExp">0/100</span>
+                    <div id="header-xp-container" style="display: flex; flex-direction: column; gap: 4px;">
+                        <span id="header-xp">0/100</span>
+                        <div id="header-xp-bar" style="width: 100px; height: 8px; background: #333; border-radius: 4px; overflow: hidden;">
+                            <div id="header-xp-progress" style="height: 100%; background: linear-gradient(90deg, #4CAF50, #8BC34A); width: 0%; transition: width 0.3s ease;"></div>
+                        </div>
+                    </div>
                 </div>
                 <div class="resource-item">
                     <span>❤️</span>
@@ -186,8 +191,15 @@
                     <h2>🛡️ Профиль персонажа</h2>
                     <p><strong>Имя:</strong> <span id="charName">Герой</span></p>
                     <p><strong>Класс:</strong> <span id="charClass">-</span></p>
-                    <p><strong>Уровень:</strong> <span id="playerLevel">Уровень: 1</span></p>
-                    <p><strong>Опыт:</strong> <span id="playerExp">0/100</span></p>
+                    <p><strong>Уровень:</strong> <span id="profile-level">Уровень: 1</span></p>
+                    <p><strong>Опыт:</strong>
+                        <div id="profile-xp-container" style="margin-top: 8px;">
+                            <span id="profile-xp" style="display: block; margin-bottom: 4px;">0/100</span>
+                            <div id="profile-xp-bar" style="width: 100%; height: 12px; background: #333; border-radius: 6px; overflow: hidden;">
+                                <div id="profile-xp-progress" style="height: 100%; background: linear-gradient(90deg, #4CAF50, #8BC34A); width: 0%; transition: width 0.3s ease;"></div>
+                            </div>
+                        </div>
+                    </p>
                     <p><strong>Очки способностей:</strong> <span id="playerAbilityPoints">Очки способностей: 0</span></p>
                     <p><strong>Начальная способность:</strong> <span id="charAbility">-</span></p>
                 </div>

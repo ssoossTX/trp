@@ -8,6 +8,7 @@ import { BattleUI } from '../battle/BattleUI.js';
 import { dataLoader } from '../data/DataLoader.js';
 import { LocationsManager } from '../locations/LocationsManager.js';
 import { GAME_CONSTANTS } from '../utils/constants.js';
+import { Logger } from '../utils/helpers.js';
 
 export class UIManager {
   /**
@@ -28,6 +29,37 @@ export class UIManager {
   }
 
   /**
+   * Синхронизирует отображение уровня и опыта в шапке и профиле
+   * Обновляет оба места одновременно для избежания рассинхронизации
+   */
+  static renderLevelAndXP() {
+    const player = gameState.getPlayerState();
+    
+    // Данные для отображения
+    const levelText = `Уровень: ${player.level}`;
+    const xpText = `${player.experience} / ${player.requiredExperienceForLevel}`;
+    const xpPercent = Math.min((player.experience / player.requiredExperienceForLevel) * 100, 100);
+    
+    // Обновление шапки меню
+    DOMManager.setText('header-level', levelText);
+    DOMManager.setText('header-xp', xpText);
+    const headerXpProgress = DOMManager.getElementById('header-xp-progress');
+    if (headerXpProgress) {
+      headerXpProgress.style.width = `${xpPercent}%`;
+    }
+    
+    // Обновление профиля
+    DOMManager.setText('profile-level', levelText);
+    DOMManager.setText('profile-xp', xpText);
+    const profileXpProgress = DOMManager.getElementById('profile-xp-progress');
+    if (profileXpProgress) {
+      profileXpProgress.style.width = `${xpPercent}%`;
+    }
+    
+    Logger.log(`[UIManager] Уровень и опыт синхронизированы: ${levelText}, ${xpText}`);
+  }
+
+  /**
    * Обновляет профиль игрока
    */
   static updatePlayerProfile() {
@@ -41,9 +73,9 @@ export class UIManager {
     DOMManager.setText('charIntelligence', player.stats.intelligence);
     DOMManager.setText('charEndurance', player.stats.endurance);
     
-    // Информация об уровне и опыте
-    DOMManager.setText('playerLevel', `Уровень: ${player.level}`);
-    DOMManager.setText('playerExp', `${player.experience} / ${player.requiredExperienceForLevel}`);
+    // Синхронизированное обновление уровня и опыта
+    this.renderLevelAndXP();
+    
     DOMManager.setText('playerAbilityPoints', `Очки способностей: ${player.abilityPoints}`);
 
     // Добавляем информацию об активных способностях
@@ -80,10 +112,8 @@ export class UIManager {
     // Gold
     DOMManager.setText('goldText', player.gold);
     
-    // Level and Experience
-    DOMManager.setText('playerLevel', `Уровень: ${player.level}`);
-    DOMManager.setText('playerExp', `${player.experience} / ${player.requiredExperienceForLevel}`);
-    DOMManager.setText('playerAbilityPoints', `Очки способностей: ${player.abilityPoints}`);
+    // Синхронизированное обновление уровня и опыта
+    this.renderLevelAndXP();
   }
 
   /**
