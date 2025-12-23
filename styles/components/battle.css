@@ -107,6 +107,48 @@
   font-size: var(--font-size-sm);
 }
 
+.battle__mana-container {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-bottom: 0;
+}
+
+.battle__mana-label {
+  font-weight: bold;
+  min-width: 60px;
+  color: #4a90e2;
+  font-size: var(--font-size-sm);
+}
+
+.battle__mana-bar {
+  flex: 1;
+  height: 20px;
+  background-color: var(--light-bg);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 2px solid var(--border-color);
+}
+
+.battle__mana-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4a90e2, #357abd);
+  transition: width var(--transition-normal);
+  width: 100%;
+}
+
+.battle__mana-fill--player {
+  background: linear-gradient(90deg, #4a90e2, #357abd);
+}
+
+.battle__mana-text {
+  min-width: 70px;
+  text-align: right;
+  font-weight: bold;
+  color: #4a90e2;
+  font-size: var(--font-size-sm);
+}
+
 /* Игрок */
 .battle__player {
   padding: var(--spacing-lg);

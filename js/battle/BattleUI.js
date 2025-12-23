@@ -33,7 +33,7 @@ export class BattleUI {
    */
   static update() {
     const enemy = gameState.battle.currentEnemy;
-    const { playerHp, playerMaxHp } = gameState.battle;
+    const { playerHp, playerMaxHp, playerMana, playerMaxMana } = gameState.battle;
 
     // Враг - обновляем имя и изображение
     console.log(`[BattleUI] Обновляю интерфейс для врага: ${enemy.name}`);
@@ -53,10 +53,15 @@ export class BattleUI {
     DOMManager.setWidth('enemyHpFill', enemyPercent + '%');
     DOMManager.setText('enemyHpText', `${Math.max(0, enemy.currentHp)}/${enemy.hp}`);
 
-    // Игрок
+    // Игрок - HP
     const playerPercent = calculatePercent(playerHp, playerMaxHp);
     DOMManager.setWidth('playerHpFill', playerPercent + '%');
     DOMManager.setText('playerHpText', `${playerHp}/${playerMaxHp}`);
+    
+    // Игрок - Мана
+    const playerManaPercent = calculatePercent(playerMana, playerMaxMana);
+    DOMManager.setWidth('playerManaFill', playerManaPercent + '%');
+    DOMManager.setText('playerManaText', `${playerMana}/${playerMaxMana}`);
   }
 
   /**

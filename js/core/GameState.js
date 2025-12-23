@@ -148,6 +148,8 @@ class GameState {
     this.battle.currentLocation = locationId;
     this.battle.playerHp = this.player.hp;
     this.battle.playerMaxHp = this.player.maxHp;
+    this.battle.playerMana = this.player.mana;
+    this.battle.playerMaxMana = this.player.maxMana;
     this.battle.isInBattle = true;
     
     // Загружаем активные способности
