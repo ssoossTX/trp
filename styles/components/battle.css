@@ -168,6 +168,70 @@
   cursor: not-allowed;
 }
 
+/* Способности */
+.battle__abilities {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  grid-column: 1 / -1;
+}
+
+.btn-ability {
+  padding: var(--spacing-md) var(--spacing-lg);
+  font-size: var(--font-size-sm);
+  font-weight: bold;
+  border: 2px solid var(--primary-color);
+  background-color: #3498db;
+  color: white;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+}
+
+.btn-ability:hover:not(:disabled) {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+}
+
+.btn-ability:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn-ability:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: #95a5a6;
+}
+
+.btn-ability.ability--cooldown {
+  background-color: #7f8c8d;
+  border-color: #95a5a6;
+}
+
+.ability-name {
+  flex: 1;
+  text-align: left;
+}
+
+.ability-cooldown {
+  min-width: 24px;
+  height: 24px;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-xs);
+  font-weight: bold;
+  color: white;
+}
+
 /* Лог боя */
 .battle__log {
   max-height: 150px;
@@ -197,6 +261,15 @@
 
 .battle__log-entry--neutral {
   color: var(--light-bg);
+}
+
+.battle__log-entry--buff {
+  color: #f39c12;
+  font-weight: bold;
+}
+
+.battle__log-entry--error {
+  color: #e74c3c;
 }
 
 /* Responsive */

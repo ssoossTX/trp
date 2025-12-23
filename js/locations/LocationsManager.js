@@ -66,7 +66,13 @@ export class LocationsManager {
     gameState.restoreResources();
 
     const randomEnemy = getRandomElement(location.enemies);
-    BattleEngine.initiateBattle(randomEnemy, locationId);
+    
+    // Получаем активные способности класса
+    const playerClass = gameState.player.class;
+    const classData = dataLoader.getClassByName(playerClass);
+    const activeAbilities = classData && classData.activeAbilities ? classData.activeAbilities : [];
+    
+    BattleEngine.initiateBattle(randomEnemy, locationId, activeAbilities);
     
     // Показываем экран боя
     BattleUI.show();

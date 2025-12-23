@@ -23,6 +23,7 @@ export class BattleUI {
   static hide() {
     // Очищаем логи боя при выходе из локации
     this.clearLog();
+    this.clearAbilityButtons();
     DOMManager.hideScreen(GAME_CONSTANTS.BATTLE_SCREEN_ID);
     DOMManager.showScreen(GAME_CONSTANTS.MAIN_GAME_SCREEN_ID);
   }
@@ -93,5 +94,56 @@ export class BattleUI {
    */
   static enableAttackButton() {
     DOMManager.enableButton('attackBtn');
+  }
+
+  /**
+   * Отрисовывает кнопки активных способностей
+   */
+  static renderAbilityButtons(abilities) {
+    const abilitiesContainer = DOMManager.getElementById('abilitiesContainer');
+    if (!abilitiesContainer) return;
+
+    abilitiesContainer.innerHTML = abilities.map(ability => `
+      <button class="btn btn-ability" id="ability-${ability.name}" onclick="window.BattleEngine.useActiveAbility('${ability.name}')">
+        <span class="ability-name">${ability.name}</span>
+        <span class="ability-cooldown" id="cooldown-${ability.name}"></span>
+      </button>
+    `).join('');
+  }
+
+  /**
+   * Обновляет состояние кнопок способностей
+   */
+  static updateAbilityButtons() {
+    const abilities = gameState.battle.activeAbilities;
+    
+    abilities.forEach(ability => {
+      const btn = DOMManager.getElementById(`ability-${ability.name}`);
+      const cooldownText = DOMManager.getElementById(`cooldown-${ability.name}`);
+      
+      if (btn && cooldownText) {
+        const cooldown = gameState.battle.abilityStates[ability.name].cooldown;
+        
+        if (cooldown > 0) {
+          btn.disabled = true;
+          btn.classList.add('ability--cooldown');
+          cooldownText.textContent = cooldown;
+        } else {
+          btn.disabled = false;
+          btn.classList.remove('ability--cooldown');
+          cooldownText.textContent = '';
+        }
+      }
+    });
+  }
+
+  /**
+   * Скрывает кнопки способностей при завершении боя
+   */
+  static clearAbilityButtons() {
+    const abilitiesContainer = DOMManager.getElementById('abilitiesContainer');
+    if (abilitiesContainer) {
+      abilitiesContainer.innerHTML = '';
+    }
   }
 }

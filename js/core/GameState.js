@@ -26,7 +26,12 @@ class GameState {
       currentEnemy: null,
       currentLocation: null,
       playerHp: 0,
-      playerMaxHp: 0
+      playerMaxHp: 0,
+      // Активные способности и их состояние
+      activeAbilities: [],
+      abilityStates: {}, // { "abilityName": { cooldown: 0, isActive: false } }
+      buffedAttacks: 0, // Кол-во усиленных атак (для Боевого клича)
+      buffMultiplier: 1.5 // Множитель урона при усилении
     };
 
     this.currentTab = GAME_CONSTANTS.TABS.WORLD;
@@ -109,8 +114,9 @@ class GameState {
    * Инициализирует боевое состояние
    * @param {Object} enemy - Враг
    * @param {string} locationId - ID локации
+   * @param {Array} activeAbilities - Активные способности персонажа
    */
-  initializeBattle(enemy, locationId) {
+  initializeBattle(enemy, locationId, activeAbilities = []) {
     this.battle.currentEnemy = {
       ...enemy,
       currentHp: enemy.hp
@@ -119,8 +125,25 @@ class GameState {
     this.battle.playerHp = this.player.hp;
     this.battle.playerMaxHp = this.player.maxHp;
     this.battle.isInBattle = true;
+    
+    // Загружаем активные способности
+    this.battle.activeAbilities = [...activeAbilities];
+    
+    // Инициализируем состояние способностей (все доступны в начале боя)
+    this.battle.abilityStates = {};
+    activeAbilities.forEach(ability => {
+      this.battle.abilityStates[ability.name] = {
+        cooldown: 0,
+        isActive: false
+      };
+    });
+    
+    // Сбрасываем усиления
+    this.battle.buffedAttacks = 0;
+    this.battle.buffMultiplier = 1.0;
 
     Logger.log(`Бой начался с ${enemy.name} в локации ${locationId}`);
+    Logger.log(`Активные способности: ${activeAbilities.map(a => a.name).join(', ')}`);
   }
 
   /**
@@ -130,6 +153,10 @@ class GameState {
     this.player.hp = this.battle.playerHp;
     this.battle.isInBattle = false;
     this.battle.currentEnemy = null;
+    this.battle.activeAbilities = [];
+    this.battle.abilityStates = {};
+    this.battle.buffedAttacks = 0;
+    this.battle.buffMultiplier = 1.0;
     Logger.log('Бой завершён');
   }
 
@@ -164,6 +191,78 @@ class GameState {
    */
   getBattleState() {
     return { ...this.battle };
+  }
+
+  /**
+   * Проверяет, доступна ли способность
+   * @param {string} abilityName - Название способности
+   * @returns {boolean} Доступна ли способность
+   */
+  isAbilityAvailable(abilityName) {
+    if (!this.battle.abilityStates[abilityName]) return false;
+    return this.battle.abilityStates[abilityName].cooldown === 0;
+  }
+
+  /**
+   * Устанавливает кулдаун способности
+   * @param {string} abilityName - Название способности
+   * @param {number} cooldown - Количество ходов
+   */
+  setAbilityCooldown(abilityName, cooldown) {
+    if (this.battle.abilityStates[abilityName]) {
+      this.battle.abilityStates[abilityName].cooldown = cooldown;
+      Logger.log(`Способность "${abilityName}" на кулдауне: ${cooldown} ход(а)`);
+    }
+  }
+
+  /**
+   * Уменьшает кулдауны способностей на 1
+   */
+  decrementAbilityCooldowns() {
+    Object.keys(this.battle.abilityStates).forEach(abilityName => {
+      if (this.battle.abilityStates[abilityName].cooldown > 0) {
+        this.battle.abilityStates[abilityName].cooldown--;
+      }
+    });
+  }
+
+  /**
+   * Применяет усиление Боевой клич
+   */
+  activateBattleCry() {
+    this.battle.buffedAttacks = 2;
+    this.battle.buffMultiplier = 1.5;
+    const ability = this.battle.activeAbilities.find(a => a.name === 'Боевой клич');
+    if (ability) {
+      this.setAbilityCooldown('Боевой клич', ability.cooldown);
+    }
+    Logger.log('⚡ Боевой клич! Следующие 2 удара усилены на 50%');
+  }
+
+  /**
+   * Применяет Мощный удар
+   * @returns {number} Множитель урона (200%)
+   */
+  activatePowerAttack() {
+    const ability = this.battle.activeAbilities.find(a => a.name === 'Мощный удар');
+    if (ability) {
+      this.setAbilityCooldown('Мощный удар', ability.cooldown);
+    }
+    Logger.log('💥 Мощный удар! Урон: 200%');
+    return 2.0; // 200% damage
+  }
+
+  /**
+   * Уменьшает счётчик усиленных ударов
+   */
+  decrementBuffedAttacks() {
+    if (this.battle.buffedAttacks > 0) {
+      this.battle.buffedAttacks--;
+      if (this.battle.buffedAttacks === 0) {
+        this.battle.buffMultiplier = 1.0;
+        Logger.log('Усиление закончилось');
+      }
+    }
   }
 }
 

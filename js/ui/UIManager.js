@@ -29,6 +29,7 @@ export class UIManager {
    */
   static updatePlayerProfile() {
     const player = gameState.getPlayerState();
+    const { dataLoader } = require('../data/DataLoader.js');
 
     DOMManager.setText('charName', player.class);
     DOMManager.setText('charClass', player.class);
@@ -37,6 +38,26 @@ export class UIManager {
     DOMManager.setText('charAgility', player.stats.agility);
     DOMManager.setText('charIntelligence', player.stats.intelligence);
     DOMManager.setText('charEndurance', player.stats.endurance);
+
+    // Добавляем информацию об активных способностях
+    const classData = dataLoader.getClassByName(player.class);
+    if (classData && classData.activeAbilities) {
+      const abilityList = classData.activeAbilities
+        .map(a => `• ${a.name}: ${a.description}`)
+        .join('\n');
+      
+      const abilityElement = document.createElement('div');
+      abilityElement.innerHTML = `<strong>Активные способности:</strong><pre>${abilityList}</pre>`;
+      const profileContent = document.querySelector('.tab-content[data-tab="profile"]');
+      if (profileContent) {
+        const existingAbilities = profileContent.querySelector('.active-abilities-info');
+        if (existingAbilities) {
+          existingAbilities.remove();
+        }
+        abilityElement.className = 'active-abilities-info';
+        profileContent.appendChild(abilityElement);
+      }
+    }
 
     // Обновляем ресурсы
     this.updateResources();
