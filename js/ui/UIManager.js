@@ -9,6 +9,7 @@ import { dataLoader } from '../data/DataLoader.js';
 import { LocationsManager } from '../locations/LocationsManager.js';
 import { GAME_CONSTANTS } from '../utils/constants.js';
 import { Logger } from '../utils/helpers.js';
+import { StatsUI } from './StatsUI.js';
 
 export class UIManager {
   /**
@@ -26,6 +27,7 @@ export class UIManager {
     this.updatePlayerProfile();
     this.initTabs();
     this.attachGameEventListeners();
+    StatsUI.init();
   }
 
   /**
@@ -77,6 +79,9 @@ export class UIManager {
     this.renderLevelAndXP();
     
     DOMManager.setText('playerAbilityPoints', `Очки способностей: ${player.abilityPoints}`);
+
+    // Обновляем интерфейс прокачки характеристик
+    StatsUI.updateStatsDisplay();
 
     // Добавляем информацию об активных способностях
     const classData = dataLoader.getClassByName(player.class);

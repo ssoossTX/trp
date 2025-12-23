@@ -243,3 +243,149 @@
     font-size: var(--font-size-xs);
   }
 }
+/* ===== СИСТЕМА ПРОКАЧКИ ХАРАКТЕРИСТИК ===== */
+
+.stats-upgrade-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-lg);
+  padding: var(--spacing-lg);
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: var(--radius-lg);
+  border-left: 4px solid var(--color-accent);
+}
+
+.stat-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-md);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-normal);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat-row:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--color-accent);
+}
+
+.stat-name {
+  font-weight: 600;
+  min-width: 100px;
+  color: var(--color-text);
+}
+
+.stat-value {
+  font-size: 1.2em;
+  font-weight: bold;
+  min-width: 50px;
+  text-align: center;
+  color: var(--color-accent);
+  transition: color var(--transition-fast);
+}
+
+.stat-value.boosted {
+  animation: stat-boost 0.6s ease-out;
+  color: #4CAF50;
+}
+
+@keyframes stat-boost {
+  0% {
+    transform: scale(1.3);
+    color: #FFD700;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.btn-stat-add {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-accent), #764ba2);
+  color: white;
+  border: none;
+  font-size: 1.2em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.btn-stat-add:hover:not(:disabled) {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.5);
+}
+
+.btn-stat-add:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.btn-stat-add:disabled {
+  background: linear-gradient(135deg, #999, #666);
+  cursor: not-allowed;
+  opacity: 0.6;
+  box-shadow: none;
+}
+
+.btn-stat-add.error {
+  animation: button-error 0.4s ease-out;
+}
+
+@keyframes button-error {
+  0%, 100% {
+    background: linear-gradient(135deg, var(--color-accent), #764ba2);
+  }
+  50% {
+    background: linear-gradient(135deg, #ff6b6b, #c92a2a);
+  }
+}
+
+.points-left {
+  padding: var(--spacing-md);
+  text-align: center;
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.2), rgba(139, 195, 74, 0.2));
+  border-radius: var(--radius-md);
+  border: 2px solid rgba(76, 175, 80, 0.3);
+  font-weight: 600;
+  font-size: 1.1em;
+  color: var(--color-text);
+}
+
+#ability-points-left {
+  color: #4CAF50;
+  font-weight: bold;
+  font-size: 1.3em;
+}
+
+/* Состояние при отсутствии очков */
+.stats-upgrade-container.no-points .btn-stat-add:disabled {
+  cursor: not-allowed;
+}
+
+/* Подсказка при наведении */
+.btn-stat-add[title] {
+  cursor: help;
+}
+
+.stat-row.maxed {
+  opacity: 0.6;
+}
+
+.stat-row.maxed .btn-stat-add {
+  background: linear-gradient(135deg, #999, #666);
+  cursor: not-allowed;
+}
+
+.stat-row.maxed .btn-stat-add::after {
+  content: '★';
+  font-size: 0.6em;
+}

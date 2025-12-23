@@ -623,6 +623,42 @@ class GameState {
     
     Logger.log(`🎉 Повышение уровня! Уровень: ${this.player.level}, очки способностей: +3`);
   }
+
+  /**
+   * Увеличивает характеристику на 1
+   * @param {string} statName - Название характеристики (strength, agility, intelligence, endurance)
+   * @returns {boolean} Успешно ли распределено очко
+   */
+  increaseStat(statName) {
+    const MAX_STAT_VALUE = 100;
+    
+    // Проверяем, хватает ли очков
+    if (this.player.abilityPoints <= 0) {
+      Logger.log(`❌ Недостаточно очков способностей!`);
+      return false;
+    }
+    
+    // Проверяем, не превышен ли максимум
+    if (this.player.stats[statName] >= MAX_STAT_VALUE) {
+      Logger.log(`❌ Максимальное значение характеристики ${statName} достигнуто!`);
+      return false;
+    }
+    
+    // Увеличиваем характеристику
+    this.player.stats[statName] += 1;
+    this.player.abilityPoints -= 1;
+    
+    // Обновляем HP если увеличена выносливость
+    if (statName === 'endurance') {
+      const newMaxHp = this.player.stats.endurance * GAME_CONSTANTS.BASE_HP_MULTIPLIER;
+      const hpGain = newMaxHp - this.player.maxHp;
+      this.player.maxHp = newMaxHp;
+      this.player.hp = Math.min(this.player.hp + hpGain, this.player.maxHp);
+    }
+    
+    Logger.log(`⬆️ ${statName} увеличена до ${this.player.stats[statName]}! Осталось очков: ${this.player.abilityPoints}`);
+    return true;
+  }
 }
 
 export const gameState = new GameState();
