@@ -36,10 +36,15 @@ export class UIManager {
     DOMManager.setText('charName', player.class);
     DOMManager.setText('charClass', player.class);
     DOMManager.setText('charAbility', player.ability);
+    DOMManager.setText('charHp', player.hp);
+    DOMManager.setText('charMaxHp', player.maxHp);
     DOMManager.setText('charStrength', player.stats.strength);
     DOMManager.setText('charAgility', player.stats.agility);
     DOMManager.setText('charIntelligence', player.stats.intelligence);
     DOMManager.setText('charEndurance', player.stats.endurance);
+
+    // Обновляем опыт
+    this.updateExperienceUI();
 
     // Добавляем информацию об активных способностях
     const classData = dataLoader.getClassByName(player.class);
