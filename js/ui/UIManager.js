@@ -195,8 +195,9 @@ export class UIManager {
         gameState.addItems(loot.items);
       }
       
-      // Обновляем отображение ресурсов
+      // Обновляем отображение ресурсов и инвентаря
       this.updateResources();
+      this.renderInventory(gameState.player.inventory || []);
     }
     
     this.closeLootModal();
