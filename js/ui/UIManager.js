@@ -5,7 +5,6 @@ import { DOMManager } from '../core/DOMManager.js';
 import { gameState } from '../core/GameState.js';
 import { BattleEngine } from '../battle/BattleEngine.js';
 import { GAME_CONSTANTS } from '../utils/constants.js';
-import { calculatePercent } from '../utils/helpers.js';
 
 export class UIManager {
   /**
@@ -55,17 +54,11 @@ export class UIManager {
   static updateResources() {
     const player = gameState.getPlayerState();
 
-    // HP
-    const hpPercent = calculatePercent(player.hp, player.maxHp);
-    console.log(`[UIManager] Updating HP: ${player.hp}/${player.maxHp} = ${hpPercent}%`);
-    DOMManager.setWidth('hpFill', hpPercent + '%');
-    DOMManager.setText('hpText', `${Math.max(0, player.hp)}/${player.maxHp}`);
+    // Max HP
+    DOMManager.setText('maxHpText', `Max HP: ${player.maxHp}`);
 
-    // Mana
-    const manaPercent = calculatePercent(player.mana, player.maxMana);
-    console.log(`[UIManager] Updating Mana: ${player.mana}/${player.maxMana} = ${manaPercent}%`);
-    DOMManager.setWidth('manaFill', manaPercent + '%');
-    DOMManager.setText('manaText', `${player.mana}/${player.maxMana}`);
+    // Max Mana
+    DOMManager.setText('maxManaText', `Max MP: ${player.maxMana}`);
 
     // Gold
     DOMManager.setText('goldText', player.gold);
