@@ -205,8 +205,9 @@ export class UIManager {
         gameState.addItems(loot.items);
       }
       
-      // Обновляем отображение ресурсов и инвентаря
+      // Обновляем отображение ресурсов, профиля и инвентаря
       this.updateResources();
+      this.updatePlayerProfile();
       this.renderInventory(gameState.player.inventory || []);
     }
     
