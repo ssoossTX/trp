@@ -123,6 +123,11 @@ export class UIManager {
     if (tabName === GAME_CONSTANTS.TABS.WORLD) {
       LocationsManager.renderLocations();
     }
+    
+    // Обновляем профиль при переходе на вкладку Профиля
+    if (tabName === 'profile') {
+      this.updatePlayerProfile();
+    }
   }
 
   /**
