@@ -76,6 +76,9 @@ export class BattleEngine {
     // Стандартная вражеская атака
     const enemy = gameState.battle.currentEnemy;
     let damage = calculateDamage(enemy.attack, GAME_CONSTANTS.ENEMY_DAMAGE_VARIANCE);
+    
+    // Применяем проклятие слабости (враг наносит в 2 раза меньше урона)
+    damage = gameState.applyWeaknessCurse(damage);
 
     // Применяем защиту магического щита
     damage = gameState.applyShieldProtection(damage);
@@ -85,6 +88,9 @@ export class BattleEngine {
 
     // Уменьшаем длительность магического щита
     gameState.decrementShieldTurns();
+    
+    // Уменьшаем длительность проклятия слабости
+    gameState.decrementWeaknessTurns();
     
     // Уменьшаем кулдауны способностей в конце хода врага
     gameState.decrementAbilityCooldowns();
@@ -396,6 +402,30 @@ export class BattleEngine {
           return;
         }
         BattleUI.addLog('🌫️ Ты скрылась в тени!', 'buff');
+        BattleUI.updateAbilityButtons();
+        setTimeout(() => this.enemyAttack(), GAME_CONSTANTS.BATTLE_DELAY);
+        break;
+
+      case 'Исцеление':
+        const healAmount = gameState.activateHealing();
+        if (healAmount === null) {
+          BattleUI.addLog(`❌ Способность "Исцеление" на кулдауне`, 'error');
+          return;
+        }
+        BattleUI.addLog(`✨ Исцеление восстанавливает ${healAmount} HP!`, 'buff');
+        BattleUI.updateAbilityButtons();
+        BattleUI.update();
+        
+        setTimeout(() => this.enemyAttack(), GAME_CONSTANTS.BATTLE_DELAY);
+        break;
+
+      case 'Проклятие слабости':
+        const curseSuccess = gameState.activateWeaknessCurse();
+        if (!curseSuccess) {
+          BattleUI.addLog(`❌ Способность "Проклятие слабости" на кулдауне`, 'error');
+          return;
+        }
+        BattleUI.addLog('😵 Враг проклят слабостью! Его урон снизился на 50%!', 'buff');
         BattleUI.updateAbilityButtons();
         setTimeout(() => this.enemyAttack(), GAME_CONSTANTS.BATTLE_DELAY);
         break;

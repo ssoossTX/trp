@@ -39,7 +39,11 @@ class GameState {
       // Состояния для Вора
       hasExtraTurn: false, // Есть ли дополнительный ход после Быстрой атаки
       isEvading: false, // Находится ли в режиме Ухода в тень
-      evadingTurnsLeft: 0 // Оставшиеся ходы невидимости
+      evadingTurnsLeft: 0, // Оставшиеся ходы невидимости
+      // Состояния для врага (Целитель)
+      enemyWeakened: false, // Враг под проклятием слабости
+      weaknessTurnsLeft: 0, // Оставшиеся ходы проклятия
+      weaknessDamageReduction: 0.5 // Враг наносит 50% урона
     };
 
     this.currentTab = GAME_CONSTANTS.TABS.WORLD;
@@ -156,6 +160,10 @@ class GameState {
     this.battle.hasExtraTurn = false;
     this.battle.isEvading = false;
     this.battle.evadingTurnsLeft = 0;
+    
+    // Сбрасываем состояния врага (Целитель)
+    this.battle.enemyWeakened = false;
+    this.battle.weaknessTurnsLeft = 0;
 
     Logger.log(`Бой начался с ${enemy.name} в локации ${locationId}`);
     Logger.log(`Активные способности: ${activeAbilities.map(a => a.name).join(', ')}`);
@@ -177,6 +185,8 @@ class GameState {
     this.battle.hasExtraTurn = false;
     this.battle.isEvading = false;
     this.battle.evadingTurnsLeft = 0;
+    this.battle.enemyWeakened = false;
+    this.battle.weaknessTurnsLeft = 0;
     Logger.log('Бой завершён');
   }
 
@@ -477,6 +487,68 @@ class GameState {
         Logger.log('🌫️ Уход в тень закончился!');
       }
     }
+  }
+
+  /**
+   * Активирует способность Исцеление (Целитель)
+   * Восстанавливает 25% HP
+   */
+  activateHealing() {
+    const ability = this.battle.activeAbilities.find(a => a.name === 'Исцеление');
+    if (ability && !this.isAbilityAvailable('Исцеление')) {
+      return null; // На кулдауне
+    }
+    
+    const healAmount = Math.round(this.battle.playerMaxHp * 0.25); // 25% HP
+    this.battle.playerHp = Math.min(this.battle.playerHp + healAmount, this.battle.playerMaxHp);
+    
+    if (ability) {
+      this.setAbilityCooldown('Исцеление', ability.cooldown);
+    }
+    Logger.log(`✨ Исцеление! Восстановлено ${healAmount} HP!`);
+    return healAmount;
+  }
+
+  /**
+   * Активирует способность Проклятие слабости (Целитель)
+   * Враг наносит в 2 раза меньше урона на 4 хода
+   */
+  activateWeaknessCurse() {
+    const ability = this.battle.activeAbilities.find(a => a.name === 'Проклятие слабости');
+    if (ability && !this.isAbilityAvailable('Проклятие слабости')) {
+      return false; // На кулдауне
+    }
+    
+    if (ability) {
+      this.setAbilityCooldown('Проклятие слабости', ability.cooldown);
+    }
+    this.battle.enemyWeakened = true;
+    this.battle.weaknessTurnsLeft = 4;
+    Logger.log('😵 Проклятие слабости! Враг наносит в 2 раза меньше урона на 4 хода!');
+    return true;
+  }
+
+  /**
+   * Декрементирует длительность проклятия слабости
+   */
+  decrementWeaknessTurns() {
+    if (this.battle.enemyWeakened && this.battle.weaknessTurnsLeft > 0) {
+      this.battle.weaknessTurnsLeft--;
+      if (this.battle.weaknessTurnsLeft === 0) {
+        this.battle.enemyWeakened = false;
+        Logger.log('😵 Проклятие слабости закончилось!');
+      }
+    }
+  }
+
+  /**
+   * Применяет проклятие слабости к урону врага
+   */
+  applyWeaknessCurse(damage) {
+    if (this.battle.enemyWeakened) {
+      return Math.round(damage * this.battle.weaknessDamageReduction); // 50% урона
+    }
+    return damage;
   }
 
   /**
