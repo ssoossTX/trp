@@ -4,6 +4,7 @@
 import { DOMManager } from '../core/DOMManager.js';
 import { gameState } from '../core/GameState.js';
 import { Logger } from '../utils/helpers.js';
+import { UIManager } from './UIManager.js';
 
 export class StatsUI {
   /**
@@ -37,6 +38,11 @@ export class StatsUI {
     if (success) {
       // Обновляем отображение
       this.updateStatsDisplay();
+      
+      // Если прокачана выносливость, обновляем HP в шапке
+      if (statName === 'endurance') {
+        UIManager.updateResources();
+      }
       
       // Анимация успеха
       const valueElement = DOMManager.getElementById(`stat-${statName}-value`);
