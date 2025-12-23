@@ -11,6 +11,8 @@ export class BattleUI {
    * Показывает боевой экран
    */
   static show() {
+    // Очищаем старые логи боя перед новым боем
+    this.clearLog();
     DOMManager.hideScreen(GAME_CONSTANTS.MAIN_GAME_SCREEN_ID);
     DOMManager.showScreen(GAME_CONSTANTS.BATTLE_SCREEN_ID);
   }
@@ -19,6 +21,8 @@ export class BattleUI {
    * Скрывает боевой экран
    */
   static hide() {
+    // Очищаем логи боя при выходе из локации
+    this.clearLog();
     DOMManager.hideScreen(GAME_CONSTANTS.BATTLE_SCREEN_ID);
     DOMManager.showScreen(GAME_CONSTANTS.MAIN_GAME_SCREEN_ID);
   }
