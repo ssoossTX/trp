@@ -11,6 +11,7 @@ class GameState {
       classId: null,
       classData: null,
       ability: null,
+      passiveAbility: null,
       stats: {},
       level: 1,
       experience: 0,
@@ -23,6 +24,10 @@ class GameState {
       gold: 0,
       inventory: []
     };
+
+    // Хранение исходных значений для отката баффов
+    this.passiveAbility = null;
+    this.passiveAbilityBases = null;
 
     this.battle = {
       isInBattle: false,
@@ -408,7 +413,12 @@ class GameState {
     
     // Урон = базовый урон × (потеря% + 1.5) × 2
     const baseDamage = this.getPlayerBaseDamage();
-    const damage = Math.round(baseDamage * (hpLossPercent + 1.5) * 2);
+    let damage = Math.round(baseDamage * (hpLossPercent + 1.5) * 2);
+    
+    // Применяем бонус урона от пассивной способности
+    if (this.passiveAbility && this.passiveAbility.effects.damageBuff) {
+      damage = Math.round(damage * (1 + this.passiveAbility.effects.damageBuff));
+    }
     
     if (ability) {
       this.setAbilityCooldown('Щитовой удар', ability.cooldown);
@@ -448,7 +458,12 @@ class GameState {
     }
     
     const baseDamage = this.getPlayerBaseDamage();
-    const damage = Math.round(baseDamage * 5); // 500% = 5x
+    let damage = Math.round(baseDamage * 5); // 500% = 5x
+    
+    // Применяем бонус урона от пассивной способности
+    if (this.passiveAbility && this.passiveAbility.effects.damageBuff) {
+      damage = Math.round(damage * (1 + this.passiveAbility.effects.damageBuff));
+    }
     
     if (ability) {
       this.setAbilityCooldown('Точный выстрел', ability.cooldown);
@@ -468,7 +483,12 @@ class GameState {
     }
     
     const baseDamage = this.getPlayerBaseDamage();
-    const damage = Math.round(baseDamage * 3); // 3 удара
+    let damage = Math.round(baseDamage * 3); // 3 удара
+    
+    // Применяем бонус урона от пассивной способности
+    if (this.passiveAbility && this.passiveAbility.effects.damageBuff) {
+      damage = Math.round(damage * (1 + this.passiveAbility.effects.damageBuff));
+    }
     
     if (ability) {
       this.setAbilityCooldown('Скоростной залп', ability.cooldown);
@@ -488,7 +508,12 @@ class GameState {
     }
     
     const baseDamage = this.getPlayerBaseDamage();
-    const damage = Math.round(baseDamage * 2); // 200% урона
+    let damage = Math.round(baseDamage * 2); // 200% урона
+    
+    // Применяем бонус урона от пассивной способности
+    if (this.passiveAbility && this.passiveAbility.effects.damageBuff) {
+      damage = Math.round(damage * (1 + this.passiveAbility.effects.damageBuff));
+    }
     
     if (ability) {
       this.setAbilityCooldown('Быстрая атака', ability.cooldown);
@@ -631,8 +656,18 @@ class GameState {
    * @param {number} amount - Количество опыта
    */
   addExperience(amount) {
-    this.player.experience += amount;
-    Logger.log(`⭐ Получено ${amount} опыта!`);
+    // Применяем бонус от пассивной способности
+    let finalAmount = amount;
+    if (this.passiveAbility && this.passiveAbility.effects.experienceBuff) {
+      finalAmount = Math.round(amount * (1 + this.passiveAbility.effects.experienceBuff));
+      if (finalAmount > amount) {
+        Logger.log(`⭐ Получено ${amount} опыта (+${finalAmount - amount} от "${this.passiveAbility.name}")!`);
+      }
+    } else {
+      Logger.log(`⭐ Получено ${amount} опыта!`);
+    }
+
+    this.player.experience += finalAmount;
     
     // Проверяем, достаточно ли опыта для повышения уровня
     while (this.player.experience >= this.player.requiredExperienceForLevel) {

@@ -1,8 +1,62 @@
 [
-  { "name": "Усиленный удар", "description": "+10% к урону всех атак" },
-  { "name": "Крепкое тело", "description": "+10% к максимальному запасу HP" },
-  { "name": "Магический резерв", "description": "+10% к максимальному запасу маны" },
-  { "name": "Боевая хватка", "description": "+5% к ловкости в боевых условиях" },
-  { "name": "Древний артефакт", "description": "+15% к сопротивлению магии" },
-  { "name": "Боевой опыт", "description": "+5% к получению опыта после боёв" }
+  {
+    "id": "reinforced_strike",
+    "name": "Усиленный удар",
+    "description": "Повышает урон всех атак",
+    "type": "passive",
+    "icon": "⚡",
+    "effects": {
+      "damageBuff": 0.10
+    }
+  },
+  {
+    "id": "tough_body",
+    "name": "Крепкое тело",
+    "description": "Повышает максимальное здоровье",
+    "type": "passive",
+    "icon": "💪",
+    "effects": {
+      "hpBuff": 0.10
+    }
+  },
+  {
+    "id": "magical_reserve",
+    "name": "Магический резерв",
+    "description": "Повышает максимальную ману",
+    "type": "passive",
+    "icon": "🔮",
+    "effects": {
+      "manaBuff": 0.10
+    }
+  },
+  {
+    "id": "battle_grip",
+    "name": "Боевая хватка",
+    "description": "Повышает ловкость в боевых условиях",
+    "type": "passive",
+    "icon": "🎯",
+    "effects": {
+      "agilityBuff": 5
+    }
+  },
+  {
+    "id": "ancient_artifact",
+    "name": "Древний артефакт",
+    "description": "Снижает получаемый урон",
+    "type": "passive",
+    "icon": "📿",
+    "effects": {
+      "defenceBuff": 0.05
+    }
+  },
+  {
+    "id": "battle_experience",
+    "name": "Боевой опыт",
+    "description": "Повышает получение опыта после боёв",
+    "type": "passive",
+    "icon": "📈",
+    "effects": {
+      "experienceBuff": 0.15
+    }
+  }
 ]

@@ -36,6 +36,11 @@ export class BattleEngine {
     const baseDamage = gameState.getPlayerBaseDamage();
     let damage = calculateDamage(baseDamage, GAME_CONSTANTS.DAMAGE_RANDOMNESS);
 
+    // Применяем бонус урона от пассивной способности
+    if (gameState.passiveAbility && gameState.passiveAbility.effects.damageBuff) {
+      damage = Math.round(damage * (1 + gameState.passiveAbility.effects.damageBuff));
+    }
+
     // Применяем усиления от Боевого клича
     if (gameState.battle.buffedAttacks > 0 && gameState.battle.buffMultiplier > 1) {
       damage = Math.round(damage * gameState.battle.buffMultiplier);
@@ -82,6 +87,12 @@ export class BattleEngine {
 
     // Применяем защиту магического щита
     damage = gameState.applyShieldProtection(damage);
+
+    // Применяем защиту от пассивной способности
+    if (gameState.passiveAbility && gameState.passiveAbility.effects.defenceBuff) {
+      const defenceReduction = Math.round(damage * gameState.passiveAbility.effects.defenceBuff);
+      damage = Math.max(1, damage - defenceReduction);
+    }
 
     gameState.battle.playerHp -= damage;
     BattleUI.addLog(`${enemy.name} нанёс ${damage} урона!`, 'enemy');
@@ -286,7 +297,12 @@ export class BattleEngine {
           gameState.decrementBuffedAttacks(); // Используем одно усиление
         }
         
-        const damage = Math.round(calculateDamage(baseDamage, GAME_CONSTANTS.DAMAGE_RANDOMNESS) * damageMultiplier);
+        let damage = Math.round(calculateDamage(baseDamage, GAME_CONSTANTS.DAMAGE_RANDOMNESS) * damageMultiplier);
+        
+        // Применяем бонус урона от пассивной способности
+        if (gameState.passiveAbility && gameState.passiveAbility.effects.damageBuff) {
+          damage = Math.round(damage * (1 + gameState.passiveAbility.effects.damageBuff));
+        }
         
         gameState.activatePowerAttack();
         enemy.currentHp -= damage;
@@ -306,7 +322,12 @@ export class BattleEngine {
       case 'Огненный шар':
         gameState.spendMana(manaCost);
         const firebaseDamage = gameState.getPlayerMagicDamage();
-        const fireballDamage = Math.round(calculateDamage(firebaseDamage, GAME_CONSTANTS.DAMAGE_RANDOMNESS) * 5);
+        let fireballDamage = Math.round(calculateDamage(firebaseDamage, GAME_CONSTANTS.DAMAGE_RANDOMNESS) * 5);
+        
+        // Применяем бонус урона от пассивной способности
+        if (gameState.passiveAbility && gameState.passiveAbility.effects.damageBuff) {
+          fireballDamage = Math.round(fireballDamage * (1 + gameState.passiveAbility.effects.damageBuff));
+        }
         
         gameState.activateFireball();
         enemy.currentHp -= fireballDamage;
