@@ -19,6 +19,7 @@ export class UIManager {
    * Инициализирует UI основной игры
    */
   static initGameUI() {
+    console.log('[UIManager] Initializing game UI');
     this.updatePlayerProfile();
     this.initTabs();
     this.attachGameEventListeners();
@@ -56,11 +57,13 @@ export class UIManager {
 
     // HP
     const hpPercent = calculatePercent(player.hp, player.maxHp);
+    console.log(`[UIManager] Updating HP: ${player.hp}/${player.maxHp} = ${hpPercent}%`);
     DOMManager.setWidth('hpFill', hpPercent + '%');
     DOMManager.setText('hpText', `${Math.max(0, player.hp)}/${player.maxHp}`);
 
     // Mana
     const manaPercent = calculatePercent(player.mana, player.maxMana);
+    console.log(`[UIManager] Updating Mana: ${player.mana}/${player.maxMana} = ${manaPercent}%`);
     DOMManager.setWidth('manaFill', manaPercent + '%');
     DOMManager.setText('manaText', `${player.mana}/${player.maxMana}`);
 
