@@ -108,12 +108,16 @@ export class BattleUI {
     const abilitiesContainer = DOMManager.getElementById('abilitiesContainer');
     if (!abilitiesContainer) return;
 
-    abilitiesContainer.innerHTML = abilities.map(ability => `
+    abilitiesContainer.innerHTML = abilities.map(ability => {
+      const manaCostText = ability.manaCost ? `<span class="ability-mana">${ability.manaCost}💙</span>` : '';
+      return `
       <button class="btn btn-ability" id="ability-${ability.name}" onclick="window.BattleEngine.useActiveAbility('${ability.name}')">
         <span class="ability-name">${ability.name}</span>
+        ${manaCostText}
         <span class="ability-cooldown" id="cooldown-${ability.name}"></span>
       </button>
-    `).join('');
+    `;
+    }).join('');
   }
 
   /**

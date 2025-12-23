@@ -250,17 +250,30 @@ export class BattleEngine {
       return;
     }
 
+    // Получаем информацию о способности
+    const ability = gameState.battle.activeAbilities.find(a => a.name === abilityName);
+    const manaCost = ability?.manaCost || 0;
+
+    // Проверяем ману
+    if (manaCost > 0 && !gameState.hasEnoughMana(manaCost)) {
+      BattleUI.addLog(`❌ Недостаточно маны! Нужно ${manaCost}, а у вас ${gameState.battle.playerMana}`, 'error');
+      return;
+    }
+
     const enemy = gameState.battle.currentEnemy;
 
     switch (abilityName) {
       case 'Боевой клич':
+        gameState.spendMana(manaCost);
         gameState.activateBattleCry();
         BattleUI.addLog('⚡ Вы применили Боевой клич!', 'buff');
         BattleUI.updateAbilityButtons();
+        BattleUI.update();
         setTimeout(() => this.enemyAttack(), GAME_CONSTANTS.BATTLE_DELAY);
         break;
 
       case 'Мощный удар':
+        gameState.spendMana(manaCost);
         const baseDamage = gameState.getPlayerBaseDamage();
         const damage = Math.round(calculateDamage(baseDamage, GAME_CONSTANTS.DAMAGE_RANDOMNESS) * 2);
         
@@ -280,6 +293,7 @@ export class BattleEngine {
         break;
 
       case 'Огненный шар':
+        gameState.spendMana(manaCost);
         const firebaseDamage = gameState.getPlayerBaseDamage();
         const fireballDamage = Math.round(calculateDamage(firebaseDamage, GAME_CONSTANTS.DAMAGE_RANDOMNESS) * 5);
         
@@ -299,13 +313,16 @@ export class BattleEngine {
         break;
 
       case 'Магический щит':
+        gameState.spendMana(manaCost);
         gameState.activateMagicShield();
         BattleUI.addLog('🛡️ Вы активировали Магический щит!', 'buff');
         BattleUI.updateAbilityButtons();
+        BattleUI.update();
         setTimeout(() => this.enemyAttack(), GAME_CONSTANTS.BATTLE_DELAY);
         break;
 
       case 'Щитовой удар':
+        gameState.spendMana(manaCost);
         const bashDamage = gameState.activateShieldBash();
         if (bashDamage === null) {
           BattleUI.addLog(`❌ Способность "Щитовой удар" на кулдауне`, 'error');
@@ -326,6 +343,7 @@ export class BattleEngine {
         break;
 
       case 'Последний рубеж':
+        gameState.spendMana(manaCost);
         const lastStandActive = gameState.activateLastStand();
         if (!lastStandActive) {
           BattleUI.addLog(`❌ Способность "Последний рубеж" на кулдауне`, 'error');
@@ -333,10 +351,12 @@ export class BattleEngine {
         }
         BattleUI.addLog('🛡️ Вы активировали Последний рубеж!', 'buff');
         BattleUI.updateAbilityButtons();
+        BattleUI.update();
         setTimeout(() => this.enemyAttack(), GAME_CONSTANTS.BATTLE_DELAY);
         break;
 
       case 'Точный выстрел':
+        gameState.spendMana(manaCost);
         const preciseDamage = gameState.activatePreciseShot();
         if (preciseDamage === null) {
           BattleUI.addLog(`❌ Способность "Точный выстрел" на кулдауне`, 'error');
@@ -357,6 +377,7 @@ export class BattleEngine {
         break;
 
       case 'Скоростной залп':
+        gameState.spendMana(manaCost);
         const volleyDamage = gameState.activateRapidVolley();
         if (volleyDamage === null) {
           BattleUI.addLog(`❌ Способность "Скоростной залп" на кулдауне`, 'error');
@@ -382,6 +403,7 @@ export class BattleEngine {
         break;
 
       case 'Быстрая атака':
+        gameState.spendMana(manaCost);
         const fastDamage = gameState.activateFastAttack();
         if (fastDamage === null) {
           BattleUI.addLog(`❌ Способность "Быстрая атака" на кулдауне`, 'error');
@@ -407,6 +429,7 @@ export class BattleEngine {
         break;
 
       case 'Уход в тень':
+        gameState.spendMana(manaCost);
         const evadeSuccess = gameState.activateShadowEvasion();
         if (!evadeSuccess) {
           BattleUI.addLog(`❌ Способность "Уход в тень" на кулдауне`, 'error');
@@ -414,10 +437,12 @@ export class BattleEngine {
         }
         BattleUI.addLog('🌫️ Ты скрылась в тени!', 'buff');
         BattleUI.updateAbilityButtons();
+        BattleUI.update();
         setTimeout(() => this.enemyAttack(), GAME_CONSTANTS.BATTLE_DELAY);
         break;
 
       case 'Исцеление':
+        gameState.spendMana(manaCost);
         const healAmount = gameState.activateHealing();
         if (healAmount === null) {
           BattleUI.addLog(`❌ Способность "Исцеление" на кулдауне`, 'error');
@@ -431,6 +456,7 @@ export class BattleEngine {
         break;
 
       case 'Проклятие слабости':
+        gameState.spendMana(manaCost);
         const curseSuccess = gameState.activateWeaknessCurse();
         if (!curseSuccess) {
           BattleUI.addLog(`❌ Способность "Проклятие слабости" на кулдауне`, 'error');
@@ -438,6 +464,7 @@ export class BattleEngine {
         }
         BattleUI.addLog('😵 Враг проклят слабостью! Его урон снизился на 50%!', 'buff');
         BattleUI.updateAbilityButtons();
+        BattleUI.update();
         setTimeout(() => this.enemyAttack(), GAME_CONSTANTS.BATTLE_DELAY);
         break;
 

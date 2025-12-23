@@ -16,12 +16,14 @@
         "name": "Огненный шар",
         "description": "Наносит мощный удар огнём силой 500% урона",
         "cooldown": 3,
+        "manaCost": 15,
         "effect": "fireball"
       },
       {
         "name": "Магический щит",
         "description": "Получает на 25% меньше урона в течение 2 ходов",
         "cooldown": 3,
+        "manaCost": 10,
         "effect": "magicShield"
       }
     ],

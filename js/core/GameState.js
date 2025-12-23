@@ -238,6 +238,25 @@ class GameState {
   }
 
   /**
+   * Проверяет хватает ли маны для использования способности
+   * @param {number} manaCost - Стоимость маны
+   * @returns {boolean} Есть ли достаточно маны
+   */
+  hasEnoughMana(manaCost) {
+    return this.battle.playerMana >= manaCost;
+  }
+
+  /**
+   * Вычитает ману при использовании способности
+   * @param {number} manaCost - Стоимость маны
+   */
+  spendMana(manaCost) {
+    if (this.hasEnoughMana(manaCost)) {
+      this.battle.playerMana -= manaCost;
+    }
+  }
+
+  /**
    * Проверяет, доступна ли способность
    * @param {string} abilityName - Название способности
    * @returns {boolean} Доступна ли способность
