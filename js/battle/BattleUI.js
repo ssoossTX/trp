@@ -30,8 +30,18 @@ export class BattleUI {
     const enemy = gameState.battle.currentEnemy;
     const { playerHp, playerMaxHp } = gameState.battle;
 
-    // Враг
+    // Враг - обновляем имя и изображение
     DOMManager.setText('enemyName', enemy.name);
+    
+    // Устанавливаем изображение врага
+    if (enemy.image) {
+      const enemyImage = DOMManager.getElementById('enemyImage');
+      if (enemyImage) {
+        enemyImage.src = `/trp/assets/img/enemies/${enemy.image}`;
+        enemyImage.alt = enemy.name;
+      }
+    }
+    
     const enemyPercent = calculatePercent(enemy.currentHp, enemy.hp);
     DOMManager.setWidth('enemyHpFill', enemyPercent + '%');
     DOMManager.setText('enemyHpText', `${Math.max(0, enemy.currentHp)}/${enemy.hp}`);
