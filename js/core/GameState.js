@@ -344,7 +344,7 @@ class GameState {
     const hpLossPercent = hpLost / maxHp;
     
     // Урон = базовый урон × потеря% × 2
-    const baseDamage = 100; // Условный базовый урон
+    const baseDamage = this.getPlayerBaseDamage();
     const damage = Math.round(baseDamage * hpLossPercent * 2);
     
     if (ability) {

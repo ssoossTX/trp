@@ -71,7 +71,7 @@
       {
         "name": "Щитовой удар",
         "description": "Наносит урон в зависимости от потеряного HP (потеряно% × 2)",
-        "cooldown": 3,
+        "cooldown": 4,
         "effect": "shieldBash"
       },
       {
