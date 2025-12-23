@@ -18,7 +18,7 @@ class GameState {
       maxHp: 0,
       mana: 50,
       maxMana: 50,
-      gold: 100
+      gold: 0
     };
 
     this.battle = {
@@ -263,6 +263,29 @@ class GameState {
         Logger.log('Усиление закончилось');
       }
     }
+  }
+
+  /**
+   * Добавляет золото игроку
+   * @param {number} amount - Количество золота
+   */
+  addGold(amount) {
+    this.player.gold += amount;
+    Logger.log(`💰 Получено ${amount} золота! Всего: ${this.player.gold}`);
+  }
+
+  /**
+   * Добавляет предметы в инвентарь (будет реализовано позже)
+   * @param {Array} items - Массив предметов
+   */
+  addItems(items) {
+    if (!this.player.inventory) {
+      this.player.inventory = [];
+    }
+    items.forEach(item => {
+      this.player.inventory.push(item);
+      Logger.log(`📦 Получен предмет: ${item.name}`);
+    });
   }
 }
 

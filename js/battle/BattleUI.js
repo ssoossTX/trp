@@ -153,6 +153,9 @@ export class BattleUI {
    * @param {Object} loot - Объект с дропом {gold, items}
    */
   static showLootModal(enemyName, loot) {
+    // Сохраняем текущий дроп для последующей обработки
+    this.currentLoot = loot;
+    
     // Установка имени врага
     DOMManager.setText('dropEnemyName', enemyName);
     

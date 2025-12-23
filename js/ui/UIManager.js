@@ -192,7 +192,24 @@ export class UIManager {
    * Забирает дроп и возвращает на карту
    */
   static takeLoot() {
-    // Здесь позже добавим добавление предметов в инвентарь
+    // Получаем сохранённый дроп из BattleUI
+    if (BattleUI.currentLoot) {
+      const loot = BattleUI.currentLoot;
+      
+      // Добавляем золото
+      if (loot.gold > 0) {
+        gameState.addGold(loot.gold);
+      }
+      
+      // Добавляем предметы
+      if (loot.items && loot.items.length > 0) {
+        gameState.addItems(loot.items);
+      }
+      
+      // Обновляем отображение ресурсов
+      this.updateResources();
+    }
+    
     this.closeLootModal();
     BattleEngine.fleeBattle();
   }
