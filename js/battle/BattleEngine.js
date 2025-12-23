@@ -305,7 +305,7 @@ export class BattleEngine {
 
       case 'Огненный шар':
         gameState.spendMana(manaCost);
-        const firebaseDamage = gameState.getPlayerBaseDamage();
+        const firebaseDamage = gameState.getPlayerMagicDamage();
         const fireballDamage = Math.round(calculateDamage(firebaseDamage, GAME_CONSTANTS.DAMAGE_RANDOMNESS) * 5);
         
         gameState.activateFireball();

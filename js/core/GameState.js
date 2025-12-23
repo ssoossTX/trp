@@ -222,6 +222,14 @@ class GameState {
   }
 
   /**
+   * Возвращает магический урон (для Мага и Целителя)
+   * @returns {number} Магический урон
+   */
+  getPlayerMagicDamage() {
+    return (this.player.stats.intelligence + this.player.stats.agility) * 0.5;
+  }
+
+  /**
    * Возвращает текущее состояние игрока
    * @returns {Object} Состояние
    */
