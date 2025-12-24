@@ -354,13 +354,16 @@ export class DungeonsManager {
       const hpMultiplier = isBoss ? 1.5 : 1;
       const damageMultiplier = isBoss ? 1.3 : 1;
       
+      const maxHp = Math.round(30 * baseMultiplier * hpMultiplier);
+      
       return {
         id: `${dungeon.id}_${cleanName.toLowerCase().replace(/\s+/g, '_')}`,
         name: cleanName,
         level: enemyLevel,
         isBoss: isBoss,
-        maxHp: Math.round(30 * baseMultiplier * hpMultiplier),
-        currentHp: Math.round(30 * baseMultiplier * hpMultiplier),
+        maxHp: maxHp,
+        hp: maxHp,
+        currentHp: maxHp,
         attack: Math.round(5 * baseMultiplier * damageMultiplier),
         defense: Math.round(2 * baseMultiplier),
         reward: {
