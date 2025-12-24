@@ -743,4 +743,7 @@ class GameState {
     const restored = this.battle.playerMana - oldMana;
     
     Logger.log(`💙 Использовано зелье Маны! Восстановлено ${restored} маны`);
-    return restored;
+    return restored;  }
+}
+
+export const gameState = new GameState();
