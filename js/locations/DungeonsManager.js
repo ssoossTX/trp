@@ -452,9 +452,7 @@ export class DungeonsManager {
     
     Logger.log(`💀 Вы были повергнуты! Подземелье не пройдено.`);
     
-    setTimeout(() => {
-      this.completeDungeonBattle(false);
-    }, 2000);
+    this.completeDungeonBattle(false);
   }
 
   /**

@@ -297,9 +297,7 @@ export class BattleEngine {
       modal.style.display = 'none';
       
       // Обрабатываем поражение в подземелье
-      setTimeout(() => {
-        DungeonsManager.onDungeonPlayerDefeated();
-      }, 100);
+      DungeonsManager.onDungeonPlayerDefeated();
 
       // Удаляем обработчики
       confirmBtn.removeEventListener('click', handleConfirm);
