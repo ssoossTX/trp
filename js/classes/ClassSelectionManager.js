@@ -90,7 +90,7 @@ export class ClassSelectionManager {
                 <div class="ability-card__name">${ability.name}</div>
                 <div class="ability-card__meta">
                   <span class="ability-card__meta-item">💙 ${ability.manaCost} мана</span>
-                  <span class="ability-card__meta-item">⏱️ ${ability.cooldown}с кулдаун</span>
+                  <span class="ability-card__meta-item">⏱️ ${ability.cooldown} ходов кулдаун</span>
                 </div>
                 <div class="ability-card__desc">${ability.description}</div>
               </div>
