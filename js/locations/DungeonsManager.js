@@ -507,10 +507,8 @@ export class DungeonsManager {
         if (chance <= reward.chance) {
           if (reward.type === 'gold') {
             gameState.addGold(reward.value);
-            Logger.log(`💰 +${reward.value} золота`);
           } else if (reward.type === 'experience') {
             gameState.addExperience(reward.value);
-            Logger.log(`⭐ +${reward.value} опыта`);
           }
         }
       });
