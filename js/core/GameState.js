@@ -125,14 +125,11 @@ class GameState {
     };
     this.battle.currentLocation = locationId;
     
-    // Применяем бонусы HP и Mana от выбранной способности
-    const hpMultiplier = this.getAbilityBonus('hp');
-    const manaMultiplier = this.getAbilityBonus('mana');
-    
-    this.battle.playerMaxHp = Math.round(this.player.maxHp * hpMultiplier);
-    this.battle.playerHp = this.battle.playerMaxHp;
-    this.battle.playerMaxMana = Math.round(this.player.maxMana * manaMultiplier);
-    this.battle.playerMana = this.battle.playerMaxMana;
+    // Копируем уже рассчитанные (с бонусами) значения ресурсов
+    this.battle.playerMaxHp = this.player.maxHp;
+    this.battle.playerHp = this.player.hp;
+    this.battle.playerMaxMana = this.player.maxMana;
+    this.battle.playerMana = this.player.mana;
     this.battle.isInBattle = true;
     
     // Загружаем активные способности
