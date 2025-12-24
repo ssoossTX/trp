@@ -91,7 +91,7 @@
 
 /* Описание квеста */
 .quest-card__description {
-  color: #c0c0c0;
+  color: #d3d3d3 !important;
   font-size: 0.9rem;
   margin: 0 0 var(--spacing-md) 0;
   line-height: 1.5;
