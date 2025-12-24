@@ -240,8 +240,10 @@ export class BattleEngine {
         gameState.battle.isInBattle = false;
         gameState.battle.playerHp = 0;
         
-        // Обрабатываем поражение в подземелье
-        DungeonsManager.onDungeonPlayerDefeated();
+        // Обрабатываем поражение в подземелье с небольшой задержкой
+        setTimeout(() => {
+          DungeonsManager.onDungeonPlayerDefeated();
+        }, 100);
       }
       return;
     }

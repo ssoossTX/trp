@@ -6,6 +6,8 @@ import { gameState } from '../core/GameState.js';
 import { dataLoader } from '../data/DataLoader.js';
 import { Logger } from '../utils/helpers.js';
 import { BattleEngine } from '../battle/BattleEngine.js';
+import { BattleUI } from '../battle/BattleUI.js';
+import { UIManager } from '../ui/UIManager.js';
 
 export class DungeonsManager {
   static dungeons = [];
@@ -398,8 +400,13 @@ export class DungeonsManager {
     
     Logger.log(`⚔️ Враг в подземелье: ${enemy.name} (${currentEnemyIndex + 1}/${gameState.dungeonState.dungeonEnemies.length})`);
     
+    // Получаем активные способности класса
+    const playerClass = gameState.player.class;
+    const classData = dataLoader.getClassByName(playerClass);
+    const activeAbilities = classData && classData.activeAbilities ? classData.activeAbilities : [];
+    
     // Инициализируем боевую сессию
-    BattleEngine.initiateBattle(enemy, dungeonId, gameState.player.activeAbilities);
+    BattleEngine.initiateBattle(enemy, dungeonId, activeAbilities);
     
     // Переопределяем обработчик победы для обработки логики подземелья
     const originalPlayerWins = BattleEngine.playerWins;
@@ -594,18 +601,12 @@ export class DungeonsManager {
    * Возвращает игрока на экран подземелий из боевой системы
    */
   static returnToDungeons() {
-    // Скрываем боевой интерфейс
-    const battleScreen = DOMManager.getElementById('battle');
-    if (battleScreen) {
-      battleScreen.style.display = 'none';
-    }
-
-    // Показываем экран подземелий
-    const dungeonsTab = DOMManager.getElementById('dungeons');
-    if (dungeonsTab) {
-      dungeonsTab.style.display = 'block';
-    }
-
+    // Скрываем боевой интерфейс используя BattleUI
+    BattleUI.hide();
+    
+    // Переключаемся на вкладку подземелий
+    UIManager.switchTab('dungeons');
+    
     // Обновляем список подземелий и статистику
     this.renderDungeonsList();
     this.updateStats();

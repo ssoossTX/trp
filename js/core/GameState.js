@@ -125,9 +125,13 @@ class GameState {
    * @param {Array} activeAbilities - Активные способности персонажа
    */
   initializeBattle(enemy, locationId, activeAbilities = []) {
+    // Определяем правильный параметр HP (hp или maxHp)
+    const enemyMaxHp = enemy.hp || enemy.maxHp;
+    
     this.battle.currentEnemy = {
       ...enemy,
-      currentHp: enemy.hp
+      hp: enemyMaxHp,
+      currentHp: enemyMaxHp
     };
     this.battle.currentLocation = locationId;
     
