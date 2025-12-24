@@ -471,7 +471,7 @@
 .modal__content--reward {
   position: relative;
   width: 90%;
-  max-width: 500px;
+  max-width: 450px;
   background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
   border-radius: 12px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
@@ -482,15 +482,15 @@
 
 .modal__header--victory {
   background: linear-gradient(135deg, #27ae60 0%, #16a085 100%);
-  padding: var(--spacing-lg);
+  padding: var(--spacing-md) var(--spacing-lg);
   text-align: center;
   border-left: 4px solid #f39c12;
 }
 
 .modal__header--victory h2 {
   color: white;
-  font-size: 1.8rem;
-  margin: 0 0 var(--spacing-sm) 0;
+  font-size: 1.4rem;
+  margin: 0 0 4px 0;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
@@ -501,38 +501,39 @@
 }
 
 .modal__body {
-  padding: var(--spacing-lg);
+  padding: var(--spacing-md);
 }
 
 .rewards-container {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md);
+  gap: 8px;
 }
 
 .reward-item {
-  padding: var(--spacing-md);
+  padding: 8px var(--spacing-md);
   border-radius: 8px;
   font-weight: bold;
   text-align: center;
   animation: slideIn 0.4s ease-out;
+  font-size: 0.95rem;
 }
 
 .reward-gold {
   background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
   color: white;
-  font-size: 1.1rem;
+  font-size: 0.95rem;
 }
 
 .reward-xp {
   background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
   color: white;
-  font-size: 1.1rem;
+  font-size: 0.95rem;
 }
 
 .reward-items {
   background: rgba(0, 0, 0, 0.2);
-  padding: var(--spacing-md);
+  padding: 8px var(--spacing-md);
   border-radius: 8px;
 }
 
@@ -547,8 +548,9 @@
 .reward-item-drop {
   background: rgba(52, 152, 219, 0.2);
   color: #3498db;
-  margin-bottom: var(--spacing-sm);
-  font-size: 1rem;
+  margin-bottom: 4px;
+  padding: 6px 8px;
+  font-size: 0.9rem;
   border-left: 3px solid #3498db;
 }
 
@@ -568,7 +570,7 @@
 }
 
 .modal__footer {
-  padding: var(--spacing-lg);
+  padding: var(--spacing-md);
   text-align: center;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -577,8 +579,8 @@
   background: linear-gradient(135deg, #27ae60 0%, #16a085 100%);
   color: white;
   border: 2px solid #229954;
-  padding: var(--spacing-md) var(--spacing-xl);
-  font-size: 1rem;
+  padding: 8px 16px;
+  font-size: 0.9rem;
   font-weight: bold;
   border-radius: 6px;
   cursor: pointer;
