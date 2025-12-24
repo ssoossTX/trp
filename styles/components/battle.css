@@ -196,7 +196,8 @@
 
 .battle__btn--flee {
   background-color: var(--text-light);
-  margin-left: auto;
+  flex-basis: 100%;
+  order: 20;
 }
 
 .battle__btn--flee:hover {
