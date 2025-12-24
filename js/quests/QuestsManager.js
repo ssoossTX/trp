@@ -18,6 +18,8 @@ export class QuestsManager {
     
     // Загружаем данные квестов
     this.quests = await dataLoader.loadQuests();
+    Logger.log(`Загружено квестов: ${this.quests.length}`);
+    this.quests.forEach(q => Logger.log(`  - ${q.id}: ${q.title} (требует: ${q.requiredDungeonId})`));
     
     // Инициализируем прогресс квестов в состоянии игрока если его нет
     if (!gameState.player.questsProgress) {
@@ -63,8 +65,10 @@ export class QuestsManager {
    * Проверяет и выполняет условия квестов
    */
   static checkQuestConditions() {
+    Logger.log('🔍 Проверка условий квестов...');
     this.quests.forEach(quest => {
       const status = this.getQuestStatus(quest.id);
+      Logger.log(`  Квест ${quest.id}: completed=${status.completed}`);
       
       // Если квест уже выполнен, не проверяем
       if (status.completed) return;
@@ -74,6 +78,7 @@ export class QuestsManager {
       // Проверяем различные типы квестов
       if (quest.type === 'dungeon') {
         const dungeonProgress = gameState.player.dungeonsProgress[quest.requiredDungeonId];
+        Logger.log(`    Требуемое подземелье: ${quest.requiredDungeonId}, progress:`, dungeonProgress);
         if (dungeonProgress && dungeonProgress.completed) {
           isCompleted = true;
         }
@@ -81,6 +86,7 @@ export class QuestsManager {
 
       // Если квест выполнен, обновляем статус
       if (isCompleted) {
+        Logger.log(`✅ Условие выполнено для квеста: ${quest.id}`);
         this.completeQuest(quest.id);
       }
     });
