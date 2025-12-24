@@ -337,28 +337,28 @@
                     </div>
                 </div>
 
-                <!-- Attack Button -->
-                <button class="battle__btn battle__btn--attack" id="attackBtn">⚔️ Атаковать</button>
-
-                <!-- Potions Row -->
-                <div class="battle__potions-row">
-                    <button class="battle__btn battle__btn--potion battle__btn--potion-hp" id="hpPotionBtn" title="Восстановить HP">
-                      <img src="/trp/assets/img/здоровья.png" alt="HP" loading="eager">
-                      <span class="potion-cooldown" id="hpCooldownText"></span>
-                    </button>
-                    <button class="battle__btn battle__btn--potion battle__btn--potion-mana" id="manaPotionBtn" title="Восстановить Ману">
-                      <img src="/trp/assets/img/маны.png" alt="Мана" loading="eager">
-                      <span class="potion-cooldown" id="manaCooldownText"></span>
-                    </button>
+                    <!-- Controls Row: Attack + Abilities -->
+                <div class="battle__controls-row">
+                    <button class="battle__btn battle__btn--attack" id="attackBtn">⚔️ Атаковать</button>
+                    <div class="battle__abilities" id="abilitiesContainer"></div>
                 </div>
 
-                <!-- Active Abilities -->
-                <div class="battle__abilities" id="abilitiesContainer"></div>
-
-                <!-- Bottom Actions -->
-                <div class="battle__bottom-actions">
-                    <button class="battle__btn battle__btn--logs" id="battleLogsBtn">📋 Логи боя</button>
-                    <button class="battle__btn battle__btn--flee" id="fleeBtn">🚪 Выход</button>
+                <!-- Bottom Row: Actions + Potions -->
+                <div class="battle__bottom-row">
+                    <div class="battle__bottom-left">
+                        <button class="battle__btn battle__btn--logs" id="battleLogsBtn">📋 Логи боя</button>
+                        <button class="battle__btn battle__btn--flee" id="fleeBtn">🚪 Выход</button>
+                    </div>
+                    <div class="battle__potions-column">
+                        <button class="battle__btn battle__btn--potion battle__btn--potion-hp" id="hpPotionBtn" title="Восстановить HP">
+                          <img src="/trp/assets/img/здоровья.png" alt="HP" loading="eager">
+                          <span class="potion-cooldown" id="hpCooldownText"></span>
+                        </button>
+                        <button class="battle__btn battle__btn--potion battle__btn--potion-mana" id="manaPotionBtn" title="Восстановить Ману">
+                          <img src="/trp/assets/img/маны.png" alt="Мана" loading="eager">
+                          <span class="potion-cooldown" id="manaCooldownText"></span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

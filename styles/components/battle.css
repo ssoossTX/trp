@@ -165,14 +165,22 @@
   font-size: 0.85em;
 }
 
+/* Controls Row: Attack + Abilities */
+.battle__controls-row {
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: flex-start;
+  width: 100%;
+  margin: var(--spacing-md) 0;
+}
+
 /* Attack Button */
 .battle__btn--attack {
-  width: auto;
-  max-width: 300px;
-  margin: 0 auto;
+  flex: 0 0 auto;
   padding: var(--spacing-md) var(--spacing-lg);
   font-size: 1em;
   background-color: var(--accent-color);
+  white-space: nowrap;
 }
 
 .battle__btn--attack:hover:not(:disabled) {
@@ -181,13 +189,12 @@
   box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
 }
 
-/* Potions Row */
-.battle__potions-row {
+/* Potions Column (Right side) */
+.battle__potions-column {
   display: flex;
+  flex-direction: column;
   gap: var(--spacing-sm);
-  width: auto;
-  margin: 0 auto;
-  justify-content: center;
+  margin-left: auto;
 }
 
 .battle__btn--potion {
@@ -267,9 +274,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--spacing-xs);
-  width: auto;
-  max-width: 300px;
-  margin: 0 auto;
+  flex: 1;
 }
 
 .btn-ability {
@@ -325,14 +330,19 @@
   color: white;
 }
 
-/* Bottom Actions */
-.battle__bottom-actions {
+/* Bottom Row: Actions + Potions */
+.battle__bottom-row {
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: flex-end;
+  width: 100%;
+  padding-top: var(--spacing-md);
+  border-top: 1px solid #ecf0f1;
+}
+
+.battle__bottom-left {
   display: flex;
   gap: var(--spacing-sm);
-  width: auto;
-  margin: var(--spacing-sm) auto 0;
-  padding-top: var(--spacing-sm);
-  border-top: 1px solid #ecf0f1;
 }
 
 .battle__btn--logs,
