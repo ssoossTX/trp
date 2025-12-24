@@ -337,7 +337,7 @@
   color: white;
 }
 
-/* Bottom Row: Actions + Potions */
+/* Bottom Row: Actions */
 .battle__bottom-row {
   display: flex;
   gap: var(--spacing-md);
@@ -345,6 +345,7 @@
   width: 100%;
   padding-top: var(--spacing-md);
   border-top: 1px solid #ecf0f1;
+  margin-top: auto;
 }
 
 .battle__bottom-left {
