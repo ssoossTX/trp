@@ -263,10 +263,8 @@ export class UIManager {
         gameState.addItems(loot.items);
       }
       
-      // Обновляем отображение ресурсов, профиля и инвентаря
+      // Обновляем только ресурсы на боевом экране
       this.updateResources();
-      this.updatePlayerProfile();
-      this.renderInventory(gameState.player.inventory || []);
     }
     
     this.closeLootModal();

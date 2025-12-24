@@ -22,6 +22,7 @@ export class BattleEngine {
     BattleUI.show();
     BattleUI.update();
     BattleUI.renderAbilityButtons(activeAbilities);
+    BattleUI.enableAttackButton();
     BattleUI.addLog('Боевая встреча началась!', 'neutral');
     BattleUI.addLog(`Вы встретили ${enemy.name}!`, 'neutral');
     eventManager.emit(APP_EVENTS.BATTLE_STARTED);
