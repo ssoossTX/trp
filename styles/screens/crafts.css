@@ -1,0 +1,247 @@
+/* ===== СИСТЕМА КРАФТОВ ===== */
+
+.craft-card {
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  border: 2px solid #34495e;
+  border-radius: 12px;
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
+  transition: all var(--transition-normal);
+  animation: slideIn 0.4s ease-out;
+}
+
+.craft-card:hover {
+  border-color: #3498db;
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.2);
+  transform: translateY(-2px);
+}
+
+.craft-card__header {
+  margin-bottom: var(--spacing-lg);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: var(--spacing-md);
+}
+
+.craft-card__title {
+  color: white;
+  font-size: 1.1rem;
+  margin: 0;
+  font-weight: bold;
+}
+
+.craft-card__content {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+  flex-wrap: wrap;
+}
+
+.craft-card__ingredients {
+  flex: 1;
+  min-width: 150px;
+}
+
+.craft-card__section-label {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.85rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: var(--spacing-sm);
+  display: block;
+}
+
+.craft-ingredient {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: 8px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  margin-bottom: 6px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+}
+
+.craft-ingredient__icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.craft-ingredient__name {
+  flex: 1;
+}
+
+.craft-ingredient__quantity {
+  background: rgba(52, 152, 219, 0.2);
+  color: #3498db;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 0.85rem;
+}
+
+.craft-card__arrow {
+  color: #f39c12;
+  font-size: 1.5rem;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.craft-card__output {
+  flex: 1;
+  min-width: 150px;
+}
+
+.craft-card__output-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: 12px;
+  background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+  border-radius: 8px;
+  border: 2px solid #1e8449;
+}
+
+.craft-card__output-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.craft-card__output-info {
+  color: white;
+}
+
+.craft-card__output-name {
+  font-weight: bold;
+  font-size: 0.95rem;
+  margin-bottom: 2px;
+}
+
+.craft-card__output-quantity {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.85rem;
+}
+
+.craft-card__cost {
+  margin-bottom: var(--spacing-md);
+  padding: var(--spacing-md);
+  background: rgba(243, 156, 18, 0.1);
+  border-left: 3px solid #f39c12;
+  border-radius: 4px;
+}
+
+.craft-cost__gold {
+  color: #f39c12;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.craft-card .btn {
+  width: 100%;
+  transition: all var(--transition-normal);
+}
+
+.craft-card .btn-primary {
+  background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+}
+
+.craft-card .btn-primary:hover {
+  background: linear-gradient(135deg, #2980b9 0%, #1f618d 100%);
+  box-shadow: 0 6px 20px rgba(52, 152, 219, 0.3);
+  transform: translateY(-2px);
+}
+
+.craft-card .btn-secondary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ===== УВЕДОМЛЕНИЕ О ЗАВЕРШЕНИИ КРАФТА ===== */
+
+.craft-notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+  border: 2px solid #2475a8;
+  border-left: 4px solid #f39c12;
+  border-radius: 12px;
+  padding: var(--spacing-lg);
+  max-width: 350px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  z-index: 3000;
+  animation: slideInFromRight 0.4s ease-out;
+  transform: translateX(400px);
+}
+
+.craft-notification--show {
+  transform: translateX(0);
+  transition: transform 0.3s ease-out;
+}
+
+.craft-notification__content {
+  color: white;
+}
+
+.craft-notification__header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.craft-notification__icon {
+  font-size: 1.6rem;
+  animation: pulse 0.6s ease-in-out infinite;
+}
+
+.craft-notification__header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.craft-notification__item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+}
+
+.craft-notification__item-icon {
+  font-size: 1.8rem;
+  flex-shrink: 0;
+}
+
+.craft-notification__item-name {
+  margin: 0;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .craft-notification {
+    right: 10px;
+    left: 10px;
+    max-width: none;
+    transform: translateX(500px);
+  }
+
+  .craft-card__content {
+    flex-direction: column;
+  }
+
+  .craft-card__ingredients,
+  .craft-card__output {
+    width: 100%;
+  }
+
+  .craft-card__arrow {
+    transform: rotate(90deg);
+  }
+}

@@ -9,6 +9,7 @@ import { dataLoader } from '../data/DataLoader.js';
 import { LocationsManager } from '../locations/LocationsManager.js';
 import { DungeonsManager } from '../locations/DungeonsManager.js';
 import { QuestsManager } from '../quests/QuestsManager.js';
+import { CraftsManager } from '../crafts/CraftsManager.js';
 import { InventoryManager } from './InventoryManager.js';
 import { GAME_CONSTANTS } from '../utils/constants.js';
 import { Logger } from '../utils/helpers.js';
@@ -173,6 +174,13 @@ export class UIManager {
     if (tabName === 'quests') {
       QuestsManager.init().then(() => {
         QuestsManager.renderQuestsList();
+      });
+    }
+
+    // Инициализируем крафты при первом открытии вкладки
+    if (tabName === 'craft') {
+      CraftsManager.init().then(() => {
+        CraftsManager.renderCraftsList();
       });
     }
     

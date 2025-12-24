@@ -10,6 +10,7 @@ class DataLoader {
     this.abilities = null;
     this.dungeons = null;
     this.quests = null;
+    this.crafts = null;
     this.loaded = false;
   }
 
@@ -21,12 +22,13 @@ class DataLoader {
     try {
       Logger.log('Начинаю загрузку данных...');
       
-      const [classesData, locationsData, abilitiesData, dungeonsData, questsData] = await Promise.all([
+      const [classesData, locationsData, abilitiesData, dungeonsData, questsData, craftsData] = await Promise.all([
         loadJSON('data/classes.json'),
         loadJSON('data/locations.json'),
         loadJSON('data/abilities.json'),
         loadJSON('data/dungeons.json'),
-        loadJSON('data/quests.json')
+        loadJSON('data/quests.json'),
+        loadJSON('data/crafts.json')
       ]);
 
       this.classes = classesData;
@@ -34,6 +36,7 @@ class DataLoader {
       this.abilities = abilitiesData;
       this.dungeons = dungeonsData;
       this.quests = questsData;
+      this.crafts = craftsData;
       this.loaded = true;
 
       Logger.log('Все данные успешно загружены');
@@ -151,6 +154,26 @@ class DataLoader {
    */
   getQuestById(questId) {
     return this.quests?.find(q => q.id === questId) || null;
+  }
+
+  /**
+   * Загружает все крафты
+   * @returns {Promise<Array>} Массив крафтов
+   */
+  async loadCrafts() {
+    if (!this.crafts) {
+      this.crafts = await loadJSON('data/crafts.json');
+    }
+    return this.crafts || [];
+  }
+
+  /**
+   * Возвращает крафт по ID
+   * @param {string} craftId - ID крафта
+   * @returns {Object|null} Данные крафта или null
+   */
+  getCraftById(craftId) {
+    return this.crafts?.find(c => c.id === craftId) || null;
   }
 }
 

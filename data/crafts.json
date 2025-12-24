@@ -1,0 +1,28 @@
+[
+  {
+    "id": "craft_hp_potion",
+    "name": "Зелье восстановления HP",
+    "description": "Восстанавливает 100 HP при использовании",
+    "icon": "🧪",
+    "output": {
+      "name": "Зелье восстановления HP",
+      "quantity": 1,
+      "rarity": "uncommon",
+      "icon": "🧪",
+      "type": "consumable",
+      "hp": 100
+    },
+    "ingredients": [
+      {
+        "name": "Лечебная трава",
+        "quantity": 2,
+        "icon": "🌿"
+      }
+    ],
+    "cost": {
+      "gold": 100
+    },
+    "craftTime": 5,
+    "order": 1
+  }
+]

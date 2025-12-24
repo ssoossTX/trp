@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="styles/screens/class-selection.css">
     <link rel="stylesheet" href="styles/screens/game.css">
     <link rel="stylesheet" href="styles/screens/quests.css">
+    <link rel="stylesheet" href="styles/screens/crafts.css">
     <link rel="stylesheet" href="styles/screens/dungeons.css">
 </head>
 <body>
@@ -220,8 +221,9 @@
                 </div>
                 <div class="content-block">
                     <h2>Доступные рецепты</h2>
-                    <p><strong>🗡️ Железный меч:</strong> Требует 5 железо, 2 дерева. Урон: +10.</p>
-                    <p><strong>🛡️ Кольчуга:</strong> Требует 10 железо, 5 кожи. Защита: +15.</p>
+                    <div class="crafts-list" id="craftsList">
+                        <!-- Загружается динамически -->
+                    </div>
                 </div>
             </div>
 
