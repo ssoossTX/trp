@@ -593,6 +593,10 @@ export class DungeonsManager {
     this.renderDungeonsList();
     this.updateStats();
 
+    // Обновляем интерфейс шапки (ресурсы, опыт, уровень)
+    UIManager.updateResources();
+    UIManager.updatePlayerProfile();
+
     // Показываем уведомление о завершении
     const dungeonId = gameState.dungeonState?.currentDungeonId;
     if (dungeonId) {
