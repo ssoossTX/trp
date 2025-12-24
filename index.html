@@ -304,8 +304,9 @@
     <!-- ===== BATTLE SCREEN ===== -->
     <div class="screen hidden" id="battle-screen">
         <div class="battle__container">
-            <!-- Enemy Section (Top) -->
-            <div class="battle__section battle__section--enemy">
+            <!-- Battle Section -->
+            <div class="battle__section">
+                <!-- Enemy -->
                 <div class="battle__enemy">
                     <div class="battle__enemy-image">
                         <img id="enemyImage" src="" alt="враг" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22%3E%3Crect fill=%22%23888%22 width=%22200%22 height=%22200%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2248%22 fill=%22%23fff%22 text-anchor=%22middle%22 dy=%22.3em%22%3E👹%3C/text%3E%3C/svg%3E'">
@@ -318,10 +319,6 @@
                         <span class="battle__hp-text" id="enemyHpText">100/100</span>
                     </div>
                 </div>
-            </div>
-
-            <!-- Player Section (Bottom) -->
-            <div class="battle__section battle__section--player">
                 <!-- Player Stats -->
                 <div class="battle__stats">
                     <div class="battle__stat-row">
