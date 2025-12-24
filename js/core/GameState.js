@@ -46,7 +46,10 @@ class GameState {
       // Состояния для врага (Целитель)
       enemyWeakened: false, // Враг под проклятием слабости
       weaknessTurnsLeft: 0, // Оставшиеся ходы проклятия
-      weaknessDamageReduction: 0.5 // Враг наносит 50% урона
+      weaknessDamageReduction: 0.5, // Враг наносит 50% урона
+      // Зелья
+      potionHpUsed: 0, // Кол-во использованных HP зелий в этой битве
+      potionManaUsed: 0 // Кол-во использованных Mana зелий в этой битве
     };
 
     this.currentTab = GAME_CONSTANTS.TABS.WORLD;
@@ -158,6 +161,10 @@ class GameState {
     // Сбрасываем состояния врага (Целитель)
     this.battle.enemyWeakened = false;
     this.battle.weaknessTurnsLeft = 0;
+    
+    // Сбрасываем счетчики зелий
+    this.battle.potionHpUsed = 0;
+    this.battle.potionManaUsed = 0;
 
     Logger.log(`Бой начался с ${enemy.name} в локации ${locationId}`);
     Logger.log(`Активные способности: ${activeAbilities.map(a => a.name).join(', ')}`);
@@ -706,6 +713,34 @@ class GameState {
     Logger.log(`⬆️ ${statName} увеличена до ${this.player.stats[statName]}! Осталось очков: ${this.player.abilityPoints}`);
     return true;
   }
-}
 
-export const gameState = new GameState();
+  /**
+   * Использует зелье HP
+   * @param {number} amount - Количество восстанавливаемого HP
+   * @returns {number} Количество восстановленного HP
+   */
+  useHpPotion(amount = GAME_CONSTANTS.POTION_HP_RESTORE) {
+    if (!this.battle.isInBattle) return 0;
+
+    const oldHp = this.battle.playerHp;
+    this.battle.playerHp = Math.min(this.battle.playerHp + amount, this.battle.playerMaxHp);
+    const healed = this.battle.playerHp - oldHp;
+    
+    Logger.log(`🩹 Использовано зелье HP! Восстановлено ${healed} HP`);
+    return healed;
+  }
+
+  /**
+   * Использует зелье Маны
+   * @param {number} amount - Количество восстанавливаемой маны
+   * @returns {number} Количество восстановленной маны
+   */
+  useManaPotion(amount = GAME_CONSTANTS.POTION_MANA_RESTORE) {
+    if (!this.battle.isInBattle) return 0;
+
+    const oldMana = this.battle.playerMana;
+    this.battle.playerMana = Math.min(this.battle.playerMana + amount, this.battle.playerMaxMana);
+    const restored = this.battle.playerMana - oldMana;
+    
+    Logger.log(`💙 Использовано зелье Маны! Восстановлено ${restored} маны`);
+    return restored;

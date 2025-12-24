@@ -205,6 +205,39 @@
   transform: translateY(0);
 }
 
+.battle__btn--potion {
+  font-size: var(--font-size-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+}
+
+.battle__btn--potion-hp {
+  background-color: #e74c3c;
+}
+
+.battle__btn--potion-hp:hover {
+  background-color: #c0392b;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+}
+
+.battle__btn--potion-hp:active {
+  transform: translateY(0);
+}
+
+.battle__btn--potion-mana {
+  background-color: #3498db;
+}
+
+.battle__btn--potion-mana:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+}
+
+.battle__btn--potion-mana:active {
+  transform: translateY(0);
+}
+
 .battle__btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;

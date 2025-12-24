@@ -200,6 +200,8 @@ export class UIManager {
   static attachGameEventListeners() {
     const attackBtn = DOMManager.getElementById('attackBtn');
     const fleeBtn = DOMManager.getElementById('fleeBtn');
+    const hpPotionBtn = DOMManager.getElementById('hpPotionBtn');
+    const manaPotionBtn = DOMManager.getElementById('manaPotionBtn');
 
     if (attackBtn) {
       attackBtn.addEventListener('click', () => BattleEngine.playerAttack());
@@ -207,6 +209,14 @@ export class UIManager {
 
     if (fleeBtn) {
       fleeBtn.addEventListener('click', () => BattleEngine.fleeBattle());
+    }
+
+    if (hpPotionBtn) {
+      hpPotionBtn.addEventListener('click', () => this.useHpPotion());
+    }
+
+    if (manaPotionBtn) {
+      manaPotionBtn.addEventListener('click', () => this.useManaPotion());
     }
 
     // Обработчики для модала дропа
@@ -316,6 +326,30 @@ export class UIManager {
         <div class="inventory-item__rarity">${this.rarityName(item.rarity || 'common')}</div>
       </div>
     `).join('');
+  }
+
+  /**
+   * Использует зелье HP
+   */
+  static useHpPotion() {
+    const healed = gameState.useHpPotion();
+    if (healed > 0) {
+      BattleUI.addLog(`🩹 Использовано зелье HP! Восстановлено ${healed} HP`, 'buff');
+      BattleUI.update();
+      BattleEngine.enemyAttack();
+    }
+  }
+
+  /**
+   * Использует зелье Маны
+   */
+  static useManaPotion() {
+    const restored = gameState.useManaPotion();
+    if (restored > 0) {
+      BattleUI.addLog(`💙 Использовано зелье Маны! Восстановлено ${restored} маны`, 'buff');
+      BattleUI.update();
+      BattleEngine.enemyAttack();
+    }
   }
 
   /**
