@@ -36,14 +36,17 @@ export class ClassSelectionManager {
     const classesGrid = DOMManager.getElementById('classesGrid');
     const classes = dataLoader.getClasses();
 
-    classesGrid.innerHTML = classes.map(classData => `
+    classesGrid.innerHTML = classes.map(classData => {
+      const imagePath = this.getClassImagePath(classData.name);
+      return `
       <div class="class-card" onclick="window.classSelectionManager.openClassDetails('${classData.id}')">
-        <img src="${this.getClassImagePath(classData.name)}" alt="${classData.name}" class="class-card__image" onerror="this.src='/trp/assets/img/background.jpg'">
+        <img src="${imagePath}" alt="${classData.name}" class="class-card__image" onerror="this.src='/trp/assets/img/background.jpg'">
         <div class="class-card__overlay">
           <h3 class="class-card__title">${classData.icon} ${classData.name}</h3>
         </div>
       </div>
-    `).join('');
+    `;
+    }).join('');
   }
 
   /**
@@ -51,9 +54,16 @@ export class ClassSelectionManager {
    */
   static openClassDetails(classId) {
     selectedClass = dataLoader.getClassById(classId);
-    if (!selectedClass) return;
+    if (!selectedClass) {
+      console.error('Класс не найден:', classId);
+      return;
+    }
 
     const detailsContent = DOMManager.getElementById('classDetailsContent');
+    if (!detailsContent) {
+      console.error('Элемент classDetailsContent не найден');
+      return;
+    }
     
     detailsContent.innerHTML = `
       <div class="class-details__content">
@@ -101,8 +111,20 @@ export class ClassSelectionManager {
     `;
 
     // Показываем экран деталей, скрываем выбор
-    DOMManager.hideElement('class-selection-screen');
-    DOMManager.showElement('class-details-screen');
+    const classSelectionScreen = DOMManager.getElementById('class-selection-screen');
+    const classDetailsScreen = DOMManager.getElementById('class-details-screen');
+    
+    if (classSelectionScreen) {
+      classSelectionScreen.classList.remove('visible');
+      classSelectionScreen.classList.add('hidden');
+    }
+    
+    if (classDetailsScreen) {
+      classDetailsScreen.classList.remove('hidden');
+      classDetailsScreen.classList.add('visible');
+    }
+
+    console.log('Открыт экран деталей класса:', selectedClass.name);
   }
 
   /**
@@ -110,8 +132,21 @@ export class ClassSelectionManager {
    */
   static closeClassDetails() {
     selectedClass = null;
-    DOMManager.showElement('class-selection-screen');
-    DOMManager.hideElement('class-details-screen');
+    
+    const classSelectionScreen = DOMManager.getElementById('class-selection-screen');
+    const classDetailsScreen = DOMManager.getElementById('class-details-screen');
+    
+    if (classSelectionScreen) {
+      classSelectionScreen.classList.remove('hidden');
+      classSelectionScreen.classList.add('visible');
+    }
+    
+    if (classDetailsScreen) {
+      classDetailsScreen.classList.remove('visible');
+      classDetailsScreen.classList.add('hidden');
+    }
+    
+    console.log('Закрыт экран деталей класса');
   }
 
   /**
