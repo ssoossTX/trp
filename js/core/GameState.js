@@ -685,7 +685,9 @@ class GameState {
     
     // Обновляем HP если увеличена выносливость
     if (statName === 'endurance') {
-      const newMaxHp = this.player.stats.endurance * GAME_CONSTANTS.BASE_HP_MULTIPLIER;
+      const baseMaxHp = this.player.stats.endurance * GAME_CONSTANTS.BASE_HP_MULTIPLIER;
+      const hpMultiplier = this.getAbilityBonus('hp');
+      const newMaxHp = Math.round(baseMaxHp * hpMultiplier);
       const hpGain = newMaxHp - this.player.maxHp;
       this.player.maxHp = newMaxHp;
       this.player.hp = Math.min(this.player.hp + hpGain, this.player.maxHp);
@@ -693,7 +695,9 @@ class GameState {
     
     // Обновляем Mana если увеличен интеллект
     if (statName === 'intelligence') {
-      const newMaxMana = this.player.stats.intelligence * GAME_CONSTANTS.BASE_MANA_MULTIPLIER;
+      const baseMaxMana = this.player.stats.intelligence * GAME_CONSTANTS.BASE_MANA_MULTIPLIER;
+      const manaMultiplier = this.getAbilityBonus('mana');
+      const newMaxMana = Math.round(baseMaxMana * manaMultiplier);
       const manaGain = newMaxMana - this.player.maxMana;
       this.player.maxMana = newMaxMana;
       this.player.mana = Math.min(this.player.mana + manaGain, this.player.maxMana);
