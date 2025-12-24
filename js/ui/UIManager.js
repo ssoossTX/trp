@@ -9,6 +9,7 @@ import { dataLoader } from '../data/DataLoader.js';
 import { LocationsManager } from '../locations/LocationsManager.js';
 import { DungeonsManager } from '../locations/DungeonsManager.js';
 import { QuestsManager } from '../quests/QuestsManager.js';
+import { InventoryManager } from './InventoryManager.js';
 import { GAME_CONSTANTS } from '../utils/constants.js';
 import { Logger } from '../utils/helpers.js';
 import { StatsUI } from './StatsUI.js';
@@ -325,26 +326,7 @@ export class UIManager {
    * @param {Array} inventory - Массив предметов в инвентаре
    */
   static renderInventory(inventory) {
-    const container = DOMManager.getElementById('inventoryContainer');
-    const emptyMessage = DOMManager.getElementById('inventoryEmpty');
-    
-    if (!container) return;
-
-    if (!inventory || inventory.length === 0) {
-      container.innerHTML = '';
-      emptyMessage.classList.remove('hidden');
-      return;
-    }
-
-    emptyMessage.classList.add('hidden');
-
-    container.innerHTML = inventory.map((item, index) => `
-      <div class="inventory-item inventory-item--${item.rarity || 'common'}">
-        <div class="inventory-item__icon">${item.image ? `<img src="/trp/assets/img/items/${item.image}" alt="${item.name}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;">` : item.icon}</div>
-        <div class="inventory-item__name">${item.name}</div>
-        <div class="inventory-item__rarity">${this.rarityName(item.rarity || 'common')}</div>
-      </div>
-    `).join('');
+    InventoryManager.renderInventory(inventory);
   }
 
   /**
