@@ -208,19 +208,23 @@
 }
 
 .battle__btn--potion-hp {
-  background-color: #e74c3c;
+  background-color: transparent;
+  border: 2px solid #e74c3c;
 }
 
 .battle__btn--potion-hp:hover:not(:disabled) {
-  background-color: #c0392b;
+  background-color: rgba(231, 76, 60, 0.2);
+  border-color: #c0392b;
 }
 
 .battle__btn--potion-mana {
-  background-color: #3498db;
+  background-color: transparent;
+  border: 2px solid #3498db;
 }
 
 .battle__btn--potion-mana:hover:not(:disabled) {
-  background-color: #2980b9;
+  background-color: rgba(52, 152, 219, 0.2);
+  border-color: #2980b9;
 }
 
 /* Abilities */
