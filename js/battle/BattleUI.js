@@ -69,7 +69,9 @@ export class BattleUI {
     DOMManager.setWidth('playerManaFill', playerManaPercent + '%');
     DOMManager.setText('playerManaText', `${playerMana}/${playerMaxMana}`);
     
+    // Обновляем кулдауны зелий и способностей
     UIManager.updatePotionButtons();
+    this.updateAbilityButtons();
   }
 
   /**
