@@ -363,26 +363,26 @@ export class UIManager {
   static updatePotionButtons() {
     const hpBtn = DOMManager.getElementById('hpPotionBtn');
     const manaBtn = DOMManager.getElementById('manaPotionBtn');
+    const hpCooldownText = DOMManager.getElementById('hpCooldownText');
+    const manaCooldownText = DOMManager.getElementById('manaCooldownText');
 
-    if (hpBtn) {
-      // Используем data-attribute вместо textContent, чтобы не удалять картинку
+    if (hpBtn && hpCooldownText) {
       if (gameState.battle.potionHpCooldown > 0) {
         hpBtn.disabled = true;
-        hpBtn.setAttribute('data-cooldown', gameState.battle.potionHpCooldown);
+        hpCooldownText.textContent = gameState.battle.potionHpCooldown;
       } else {
         hpBtn.disabled = false;
-        hpBtn.removeAttribute('data-cooldown');
+        hpCooldownText.textContent = '';
       }
     }
 
-    if (manaBtn) {
-      // Используем data-attribute вместо textContent, чтобы не удалять картинку
+    if (manaBtn && manaCooldownText) {
       if (gameState.battle.potionManaCooldown > 0) {
         manaBtn.disabled = true;
-        manaBtn.setAttribute('data-cooldown', gameState.battle.potionManaCooldown);
+        manaCooldownText.textContent = gameState.battle.potionManaCooldown;
       } else {
         manaBtn.disabled = false;
-        manaBtn.removeAttribute('data-cooldown');
+        manaCooldownText.textContent = '';
       }
     }
   }

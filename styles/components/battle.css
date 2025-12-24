@@ -221,8 +221,7 @@
 }
 
 /* Кулдаун для зелий */
-.battle__btn--potion[data-cooldown]::after {
-  content: attr(data-cooldown);
+.potion-cooldown {
   position: absolute;
   bottom: 0;
   right: 0;
@@ -237,6 +236,15 @@
   font-weight: bold;
   z-index: 20;
   border: 2px solid #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  min-height: 28px;
+}
+
+.potion-cooldown:empty {
+  display: none;
 }
 
 .battle__btn--potion-hp {

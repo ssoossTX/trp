@@ -342,8 +342,14 @@
 
                 <!-- Potions Row -->
                 <div class="battle__potions-row">
-                    <button class="battle__btn battle__btn--potion battle__btn--potion-hp" id="hpPotionBtn" title="Восстановить HP"><img src="/trp/assets/img/здоровья.png" alt="HP" loading="eager"></button>
-                    <button class="battle__btn battle__btn--potion battle__btn--potion-mana" id="manaPotionBtn" title="Восстановить Ману"><img src="/trp/assets/img/маны.png" alt="Мана" loading="eager"></button>
+                    <button class="battle__btn battle__btn--potion battle__btn--potion-hp" id="hpPotionBtn" title="Восстановить HP">
+                      <img src="/trp/assets/img/здоровья.png" alt="HP" loading="eager">
+                      <span class="potion-cooldown" id="hpCooldownText"></span>
+                    </button>
+                    <button class="battle__btn battle__btn--potion battle__btn--potion-mana" id="manaPotionBtn" title="Восстановить Ману">
+                      <img src="/trp/assets/img/маны.png" alt="Мана" loading="eager">
+                      <span class="potion-cooldown" id="manaCooldownText"></span>
+                    </button>
                 </div>
 
                 <!-- Active Abilities -->
