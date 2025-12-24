@@ -38,7 +38,16 @@ export class BattleUI {
 
     // Враг - обновляем имя и изображение
     console.log(`[BattleUI] Обновляю интерфейс для врага: ${enemy.name}`);
-    DOMManager.setText('enemyName', enemy.name);
+    
+    // Если в подземелье - добавляем индикатор прогресса
+    let enemyNameDisplay = enemy.name;
+    if (gameState.dungeonState) {
+      const currentIndex = gameState.dungeonState.currentEnemyIndex + 1;
+      const totalEnemies = gameState.dungeonState.dungeonEnemies.length;
+      enemyNameDisplay = `${enemy.name} (${currentIndex}/${totalEnemies})`;
+    }
+    
+    DOMManager.setText('enemyName', enemyNameDisplay);
     
     // Устанавливаем изображение врага
     if (enemy.image) {
