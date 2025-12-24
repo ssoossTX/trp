@@ -465,5 +465,69 @@
     font-size: 0.85em;
     padding: var(--spacing-sm) var(--spacing-md);
   }
+
+  /* Controls Row - Stack on mobile */
+  .battle__controls-row {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .battle__btn--attack {
+    width: 100%;
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: 0.9em;
+  }
+
+  /* Abilities - Wrap on mobile */
+  .battle__abilities {
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    width: 100%;
+  }
+
+  .btn-ability {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: 0.75em;
+  }
+
+  /* Bottom Row - Stack on mobile */
+  .battle__bottom-row {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .battle__bottom-left {
+    width: 100%;
+  }
+
+  .battle__btn--logs,
+  .battle__btn--flee {
+    flex: 1;
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: 0.75em;
+  }
+
+  /* Potions - Horizontal in mobile bottom */
+  .battle__potions-column {
+    width: 100%;
+    margin-left: 0;
+    justify-content: center;
+  }
+
+  .battle__btn--potion {
+    width: 70px !important;
+    height: 70px !important;
+  }
+
+  .battle__btn--potion img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .potion-cooldown {
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+  }
 }
 
