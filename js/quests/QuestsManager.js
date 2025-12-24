@@ -5,6 +5,7 @@ import { DOMManager } from '../core/DOMManager.js';
 import { gameState } from '../core/GameState.js';
 import { dataLoader } from '../data/DataLoader.js';
 import { Logger } from '../utils/helpers.js';
+import { UIManager } from '../ui/UIManager.js';
 
 export class QuestsManager {
   static quests = [];
@@ -175,6 +176,9 @@ export class QuestsManager {
     
     // Обновляем интерфейс
     this.renderQuestsList();
+    
+    // Обновляем профиль в шапке
+    UIManager.updatePlayerProfile();
   }
 
   /**
