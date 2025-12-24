@@ -166,6 +166,7 @@ export class UIManager {
       DungeonsManager.init().then(() => {
         DungeonsManager.updateStats();
       });
+    }
 
     // Инициализируем квесты при первом открытии вкладки
     if (tabName === 'quests') {
