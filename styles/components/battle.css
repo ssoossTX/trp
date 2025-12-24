@@ -192,19 +192,20 @@
 
 .battle__btn--potion {
   flex: 0;
-  padding: var(--spacing-sm) var(--spacing-md);
+  padding: 0;
   font-size: 0.8em;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 50px;
-  min-height: 50px;
+  width: 80px;
+  height: 80px;
 }
 
 .battle__btn--potion img {
-  width: 40px;
-  height: 40px;
+  width: 70px;
+  height: 70px;
   object-fit: contain;
+  display: block;
 }
 
 .battle__btn--potion-hp {
