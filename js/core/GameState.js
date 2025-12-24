@@ -11,6 +11,7 @@ class GameState {
       classId: null,
       classData: null,
       ability: null,
+      selectedAbility: null,
       stats: {},
       level: 1,
       experience: 0,
@@ -63,13 +64,20 @@ class GameState {
     this.player.ability = abilityName;
     this.player.stats = { ...classData.stats };
 
-    const maxHp = classData.stats.endurance * GAME_CONSTANTS.BASE_HP_MULTIPLIER;
-    this.player.maxHp = maxHp;
-    this.player.hp = maxHp;
+    // Сохраняем выбранную способность ДО расчета ресурсов (для применения бонусов)
+    this.player.selectedAbility = abilityName;
+
+    // Применяем бонусы при расчете максимального HP
+    const baseMaxHp = classData.stats.endurance * GAME_CONSTANTS.BASE_HP_MULTIPLIER;
+    const hpMultiplier = this.getAbilityBonus('hp');
+    this.player.maxHp = Math.round(baseMaxHp * hpMultiplier);
+    this.player.hp = this.player.maxHp;
     
-    const maxMana = classData.stats.intelligence * GAME_CONSTANTS.BASE_MANA_MULTIPLIER;
-    this.player.maxMana = maxMana;
-    this.player.mana = maxMana;
+    // Применяем бонусы при расчете максимальной маны
+    const baseMaxMana = classData.stats.intelligence * GAME_CONSTANTS.BASE_MANA_MULTIPLIER;
+    const manaMultiplier = this.getAbilityBonus('mana');
+    this.player.maxMana = Math.round(baseMaxMana * manaMultiplier);
+    this.player.mana = this.player.maxMana;
     
     // Инициализируем систему уровней
     this.player.level = 1;
@@ -77,61 +85,31 @@ class GameState {
     this.player.requiredExperienceForLevel = this.calculateRequiredExperience(1);
     this.player.abilityPoints = 0;
 
-    // Применяем бонусы от выбранной способности
-    this.applyAbilityBonus(abilityName);
-
     Logger.log(`Игрок инициализирован: ${classData.name}, способность: ${abilityName}`);
   }
 
   /**
-   * Применяет бонусы от способности к характеристикам игрока
-   * @param {string} abilityName - Имя способности
+   * Возвращает бонус от выбранной начальной способности
+   * @param {string} type - Тип бонуса (damage, hp, mana, agility, damage_reduction, xp)
+   * @returns {number} Множитель бонуса (1.0 если нет бонуса)
    */
-  applyAbilityBonus(abilityName) {
-    if (!abilityName) return;
+  getAbilityBonus(type) {
+    if (!this.player.selectedAbility) return 1.0;
 
-    switch (abilityName) {
-      case 'Усиленный удар':
-        // +10% к урону всех атак (применяется через модификатор силы)
-        this.player.stats.strength = Math.round(this.player.stats.strength * 1.1);
-        Logger.log(`✓ Способность применена: Усиленный удар (+10% урон)`);
-        break;
+    const abilityMap = {
+      'Усиленный удар': { type: 'damage', multiplier: 1.1 },
+      'Крепкое тело': { type: 'hp', multiplier: 1.1 },
+      'Магический резерв': { type: 'mana', multiplier: 1.1 },
+      'Боевая хватка': { type: 'agility', multiplier: 1.05 },
+      'Древний артефакт': { type: 'damage_reduction', multiplier: 0.85 },
+      'Боевой опыт': { type: 'xp', multiplier: 1.05 }
+    };
 
-      case 'Крепкое тело':
-        // +10% к максимальному HP
-        this.player.maxHp = Math.round(this.player.maxHp * 1.1);
-        this.player.hp = this.player.maxHp;
-        Logger.log(`✓ Способность применена: Крепкое тело (+10% HP: ${this.player.maxHp})`);
-        break;
-
-      case 'Магический резерв':
-        // +10% к максимальной мане
-        this.player.maxMana = Math.round(this.player.maxMana * 1.1);
-        this.player.mana = this.player.maxMana;
-        Logger.log(`✓ Способность применена: Магический резерв (+10% мана: ${this.player.maxMana})`);
-        break;
-
-      case 'Боевая хватка':
-        // +5% к ловкости
-        this.player.stats.agility = Math.round(this.player.stats.agility * 1.05);
-        Logger.log(`✓ Способность применена: Боевая хватка (+5% ловкость)`);
-        break;
-
-      case 'Древний артефакт':
-        // +15% к выносливости (как защита от магии)
-        this.player.stats.endurance = Math.round(this.player.stats.endurance * 1.15);
-        Logger.log(`✓ Способность применена: Древний артефакт (+15% выносливость)`);
-        break;
-
-      case 'Боевой опыт':
-        // +5% к интеллекту (как улучшение опыта)
-        this.player.stats.intelligence = Math.round(this.player.stats.intelligence * 1.05);
-        Logger.log(`✓ Способность применена: Боевой опыт (+5% интеллект)`);
-        break;
-
-      default:
-        Logger.log(`Неизвестная способность: ${abilityName}`);
+    const ability = abilityMap[this.player.selectedAbility];
+    if (ability && ability.type === type) {
+      return ability.multiplier;
     }
+    return 1.0;
   }
 
   /**
@@ -146,10 +124,15 @@ class GameState {
       currentHp: enemy.hp
     };
     this.battle.currentLocation = locationId;
-    this.battle.playerHp = this.player.hp;
-    this.battle.playerMaxHp = this.player.maxHp;
-    this.battle.playerMana = this.player.mana;
-    this.battle.playerMaxMana = this.player.maxMana;
+    
+    // Применяем бонусы HP и Mana от выбранной способности
+    const hpMultiplier = this.getAbilityBonus('hp');
+    const manaMultiplier = this.getAbilityBonus('mana');
+    
+    this.battle.playerMaxHp = Math.round(this.player.maxHp * hpMultiplier);
+    this.battle.playerHp = this.battle.playerMaxHp;
+    this.battle.playerMaxMana = Math.round(this.player.maxMana * manaMultiplier);
+    this.battle.playerMana = this.battle.playerMaxMana;
     this.battle.isInBattle = true;
     
     // Загружаем активные способности
@@ -218,7 +201,14 @@ class GameState {
    * @returns {number} Урон
    */
   getPlayerBaseDamage() {
-    return (this.player.stats.strength + this.player.stats.agility) * 0.5;
+    let agility = this.player.stats.agility;
+    // Применяем бонус ловкости от выбранной способности
+    agility *= this.getAbilityBonus('agility');
+    
+    let damage = (this.player.stats.strength + agility) * 0.5;
+    // Применяем бонус урона от выбранной способности
+    damage *= this.getAbilityBonus('damage');
+    return damage;
   }
 
   /**
@@ -226,7 +216,14 @@ class GameState {
    * @returns {number} Магический урон
    */
   getPlayerMagicDamage() {
-    return (this.player.stats.intelligence + this.player.stats.agility) * 0.5;
+    let agility = this.player.stats.agility;
+    // Применяем бонус ловкости от выбранной способности
+    agility *= this.getAbilityBonus('agility');
+    
+    let damage = (this.player.stats.intelligence + agility) * 0.5;
+    // Применяем бонус урона от выбранной способности
+    damage *= this.getAbilityBonus('damage');
+    return damage;
   }
 
   /**
@@ -631,8 +628,16 @@ class GameState {
    * @param {number} amount - Количество опыта
    */
   addExperience(amount) {
-    this.player.experience += amount;
-    Logger.log(`⭐ Получено ${amount} опыта!`);
+    // Применяем бонус от выбранной способности
+    const bonusMultiplier = this.getAbilityBonus('xp');
+    const finalAmount = Math.round(amount * bonusMultiplier);
+    
+    this.player.experience += finalAmount;
+    if (bonusMultiplier > 1.0) {
+      Logger.log(`⭐ Получено ${finalAmount} опыта! (+${Math.round((bonusMultiplier - 1) * 100)}% бонус)`);
+    } else {
+      Logger.log(`⭐ Получено ${finalAmount} опыта!`);
+    }
     
     // Проверяем, достаточно ли опыта для повышения уровня
     while (this.player.experience >= this.player.requiredExperienceForLevel) {

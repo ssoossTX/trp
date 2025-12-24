@@ -83,6 +83,10 @@ export class BattleEngine {
     // Применяем защиту магического щита
     damage = gameState.applyShieldProtection(damage);
 
+    // Применяем бонус уменьшения урона от выбранной способности
+    const damageReductionMultiplier = gameState.getAbilityBonus('damage_reduction');
+    damage = Math.round(damage * damageReductionMultiplier);
+
     gameState.battle.playerHp -= damage;
     BattleUI.addLog(`${enemy.name} нанёс ${damage} урона!`, 'enemy');
 
