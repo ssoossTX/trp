@@ -365,22 +365,26 @@ export class UIManager {
     const manaBtn = DOMManager.getElementById('manaPotionBtn');
 
     if (hpBtn) {
+      // Используем data-attribute вместо textContent, чтобы не удалять картинку
       if (gameState.battle.potionHpCooldown > 0) {
         hpBtn.disabled = true;
-        hpBtn.textContent = `🩹 HP (${gameState.battle.potionHpCooldown})`;
+        hpBtn.setAttribute('data-cooldown', gameState.battle.potionHpCooldown);
+        hpBtn.style.position = 'relative';
       } else {
         hpBtn.disabled = false;
-        hpBtn.textContent = '🩹 HP';
+        hpBtn.removeAttribute('data-cooldown');
       }
     }
 
     if (manaBtn) {
+      // Используем data-attribute вместо textContent, чтобы не удалять картинку
       if (gameState.battle.potionManaCooldown > 0) {
         manaBtn.disabled = true;
-        manaBtn.textContent = `💙 Мана (${gameState.battle.potionManaCooldown})`;
+        manaBtn.setAttribute('data-cooldown', gameState.battle.potionManaCooldown);
+        manaBtn.style.position = 'relative';
       } else {
         manaBtn.disabled = false;
-        manaBtn.textContent = '💙 Мана';
+        manaBtn.removeAttribute('data-cooldown');
       }
     }
   }
