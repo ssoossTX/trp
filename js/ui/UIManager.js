@@ -369,7 +369,6 @@ export class UIManager {
       if (gameState.battle.potionHpCooldown > 0) {
         hpBtn.disabled = true;
         hpBtn.setAttribute('data-cooldown', gameState.battle.potionHpCooldown);
-        hpBtn.style.position = 'relative';
       } else {
         hpBtn.disabled = false;
         hpBtn.removeAttribute('data-cooldown');
@@ -381,7 +380,6 @@ export class UIManager {
       if (gameState.battle.potionManaCooldown > 0) {
         manaBtn.disabled = true;
         manaBtn.setAttribute('data-cooldown', gameState.battle.potionManaCooldown);
-        manaBtn.style.position = 'relative';
       } else {
         manaBtn.disabled = false;
         manaBtn.removeAttribute('data-cooldown');

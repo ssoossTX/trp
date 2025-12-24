@@ -207,6 +207,7 @@
   border-radius: 8px !important;
   overflow: visible !important;
   border: 2px solid;
+  position: relative;
 }
 
 .battle__btn--potion img {
