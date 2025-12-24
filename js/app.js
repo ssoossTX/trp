@@ -9,6 +9,7 @@ import { gameState } from './core/GameState.js';
 import { eventManager } from './core/EventManager.js';
 import { ClassSelectionManager } from './classes/ClassSelectionManager.js';
 import { LocationsManager } from './locations/LocationsManager.js';
+import { DungeonsManager } from './locations/DungeonsManager.js';
 import { UIManager } from './ui/UIManager.js';
 import { BattleEngine } from './battle/BattleEngine.js';
 import { Logger, delay } from './utils/helpers.js';

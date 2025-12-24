@@ -3,6 +3,7 @@
 @import url('components/profile.css');
 @import url('components/battle.css');
 @import url('components/buttons.css');
+@import url('screens/dungeons.css');
 
 * {
   margin: 0;

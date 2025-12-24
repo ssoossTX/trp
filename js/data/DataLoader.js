@@ -8,6 +8,7 @@ class DataLoader {
     this.classes = null;
     this.locations = null;
     this.abilities = null;
+    this.dungeons = null;
     this.loaded = false;
   }
 
@@ -19,15 +20,17 @@ class DataLoader {
     try {
       Logger.log('Начинаю загрузку данных...');
       
-      const [classesData, locationsData, abilitiesData] = await Promise.all([
+      const [classesData, locationsData, abilitiesData, dungeonsData] = await Promise.all([
         loadJSON('data/classes.json'),
         loadJSON('data/locations.json'),
-        loadJSON('data/abilities.json')
+        loadJSON('data/abilities.json'),
+        loadJSON('data/dungeons.json')
       ]);
 
       this.classes = classesData;
       this.locations = locationsData;
       this.abilities = abilitiesData;
+      this.dungeons = dungeonsData;
       this.loaded = true;
 
       Logger.log('Все данные успешно загружены');
@@ -105,6 +108,26 @@ class DataLoader {
    */
   getLootForLocation(locationId) {
     return this.getLocationById(locationId)?.loot || [];
+  }
+
+  /**
+   * Загружает все подземелья
+   * @returns {Promise<Array>} Массив подземелий
+   */
+  async loadDungeons() {
+    if (!this.dungeons) {
+      this.dungeons = await loadJSON('data/dungeons.json');
+    }
+    return this.dungeons || [];
+  }
+
+  /**
+   * Возвращает подземелье по ID
+   * @param {string} dungeonId - ID подземелья
+   * @returns {Object|null} Данные подземелья или null
+   */
+  getDungeonById(dungeonId) {
+    return this.dungeons?.find(d => d.id === dungeonId) || null;
   }
 }
 

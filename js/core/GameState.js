@@ -22,7 +22,8 @@ class GameState {
       mana: 50,
       maxMana: 50,
       gold: 0,
-      inventory: []
+      inventory: [],
+      dungeonsProgress: {} // Прогресс по подземельям
     };
 
     this.battle = {

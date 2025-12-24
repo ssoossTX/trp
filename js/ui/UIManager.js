@@ -7,6 +7,7 @@ import { BattleEngine } from '../battle/BattleEngine.js';
 import { BattleUI } from '../battle/BattleUI.js';
 import { dataLoader } from '../data/DataLoader.js';
 import { LocationsManager } from '../locations/LocationsManager.js';
+import { DungeonsManager } from '../locations/DungeonsManager.js';
 import { GAME_CONSTANTS } from '../utils/constants.js';
 import { Logger } from '../utils/helpers.js';
 import { StatsUI } from './StatsUI.js';
@@ -157,6 +158,13 @@ export class UIManager {
     // Re-render локаций при переходе на вкладку Мир
     if (tabName === GAME_CONSTANTS.TABS.WORLD) {
       LocationsManager.renderLocations();
+    }
+    
+    // Инициализируем подземелья при первом открытии вкладки
+    if (tabName === 'dungeons') {
+      DungeonsManager.init().then(() => {
+        DungeonsManager.updateStats();
+      });
     }
     
     // Обновляем профиль при переходе на вкладку Профиля

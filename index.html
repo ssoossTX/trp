@@ -147,14 +147,52 @@
 
             <!-- Dungeons Tab -->
             <div class="tab-content" data-tab="dungeons">
-                <div class="content-block">
-                    <h2>🏚️ Подземелья</h2>
-                    <p>Глубокие подземелья с опасными ловушками и сильными врагами. Здесь хранятся древние артефакты.</p>
-                </div>
-                <div class="content-block">
-                    <h2>Доступные подземелья</h2>
-                    <p><strong>⚔️ Заброшенный форт:</strong> Уровень 5+, сложность высокая.</p>
-                    <p><strong>🔮 Башня магов:</strong> Уровень 7+, сложность адская.</p>
+                <div class="dungeons-container">
+                    <!-- Заголовок и статистика -->
+                    <div class="dungeons-header">
+                        <h2>🏰 Подземелья</h2>
+                        <div class="dungeons-stats">
+                            <div class="dungeon-stat">
+                                <span class="dungeon-stat-label">Пройдено:</span>
+                                <span id="totalDungeonsCompleted">0</span>
+                            </div>
+                            <div class="dungeon-stat">
+                                <span class="dungeon-stat-label">Лучший результат:</span>
+                                <span id="bestDungeonScore">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Фильтры -->
+                    <div class="dungeons-filters">
+                        <div class="filter-group">
+                            <label for="difficultyFilter">Сложность:</label>
+                            <select id="difficultyFilter">
+                                <option value="all">Все</option>
+                                <option value="L1">L1 - Легко</option>
+                                <option value="L2">L2 - Средне</option>
+                                <option value="L3">L3 - Сложно</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="statusFilter">Статус:</label>
+                            <select id="statusFilter">
+                                <option value="all">Все</option>
+                                <option value="not-started">Не начато</option>
+                                <option value="completed">Пройдено</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Сетка подземелий -->
+                    <div class="dungeons-grid" id="dungeonsGrid">
+                        <!-- Загружается динамически -->
+                    </div>
+
+                    <!-- Модальное окно деталей подземелья -->
+                    <div class="dungeon-details" id="dungeonDetails">
+                        <!-- Загружается динамически -->
+                    </div>
                 </div>
             </div>
 

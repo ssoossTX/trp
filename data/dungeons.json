@@ -1,0 +1,74 @@
+[
+  {
+    "id": "forest_ruins",
+    "name": "Развалины в лесу",
+    "difficulty": "L1",
+    "difficultyColor": "#27ae60",
+    "requiredLevel": 1,
+    "description": "Древние руины, поросшие мхом и лианами. Здесь обитают слабые враги.",
+    "image": "forest_ruins.png",
+    "enemies": ["Гоблин", "Волк-скаун", "Древний страж (босс)"],
+    "rewards": [
+      { "type": "gold", "value": 500, "chance": 1.0 },
+      { "type": "item", "name": "Меч лесника", "rarity": "uncommon", "chance": 0.3 },
+      { "type": "experience", "value": 200, "chance": 1.0 }
+    ],
+    "duration": "10-15 мин",
+    "description_full": "Когда-то это был величественный храм природы. Теперь здесь царит запустение. Ловушки срабатывают днем, создавая опасность для неосторожных путников.",
+    "tips": "Обходи активные ловушки слева направо"
+  },
+  {
+    "id": "crystal_caverns",
+    "name": "Кристальные пещеры",
+    "difficulty": "L2",
+    "difficultyColor": "#f39c12",
+    "requiredLevel": 5,
+    "description": "Сверкающие пещеры с кристаллами. Враги здесь сильнее и ловче.",
+    "image": "crystal_caverns.png",
+    "enemies": ["Кристальный голем", "Паук-мутант", "Королева кристаллов (босс)"],
+    "rewards": [
+      { "type": "gold", "value": 1000, "chance": 1.0 },
+      { "type": "item", "name": "Кристальный посох", "rarity": "rare", "chance": 0.2 },
+      { "type": "experience", "value": 500, "chance": 1.0 }
+    ],
+    "duration": "20-30 мин",
+    "description_full": "Подземные пещеры с чистейшими кристаллами. Волшебная энергия здесь очень сильна. Враги используют магические атаки.",
+    "tips": "Магический щит особенно полезен здесь"
+  },
+  {
+    "id": "dark_temple",
+    "name": "Храм Тьмы",
+    "difficulty": "L3",
+    "difficultyColor": "#e74c3c",
+    "requiredLevel": 10,
+    "description": "Древний некромантический храм. Опасное место, требующее хорошей подготовки.",
+    "image": "dark_temple.png",
+    "enemies": ["Скелет-воин", "Призрак", "Вампир", "Лич (босс)"],
+    "rewards": [
+      { "type": "gold", "value": 2000, "chance": 1.0 },
+      { "type": "item", "name": "Меч Тьмы", "rarity": "legendary", "chance": 0.1 },
+      { "type": "experience", "value": 1000, "chance": 1.0 }
+    ],
+    "duration": "40-60 мин",
+    "description_full": "Заброшенный храм, служивший когда-то центром черной магии. Здесь обитают самые опасные враги. Требуется стратегический подход и хороший уровень.",
+    "tips": "Враги здесь сильнее днём. Приходи ночью для лучших результатов"
+  },
+  {
+    "id": "ancient_library",
+    "name": "Древняя библиотека",
+    "difficulty": "L2",
+    "difficultyColor": "#f39c12",
+    "requiredLevel": 7,
+    "description": "Огромная библиотека с магическими книгами и големи. Множество головоломок.",
+    "image": "ancient_library.png",
+    "enemies": ["Огненный голем", "Тень книги", "Архивариус (босс)"],
+    "rewards": [
+      { "type": "gold", "value": 800, "chance": 1.0 },
+      { "type": "item", "name": "Кольцо магии", "rarity": "rare", "chance": 0.25 },
+      { "type": "experience", "value": 400, "chance": 1.0 }
+    ],
+    "duration": "25-35 мин",
+    "description_full": "Заколдованная библиотека, где живут элементали и охранники древних знаний. Много интерактивных элементов и головоломок.",
+    "tips": "Используй магические способности для решения головоломок"
+  }
+]
