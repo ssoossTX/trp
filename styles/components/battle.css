@@ -194,13 +194,9 @@
   flex: 0 0 auto;
   padding: 0 !important;
   margin: 0 !important;
-  font-size: 0 !important;
-  line-height: 0 !important;
   display: block !important;
   width: 80px !important;
   height: 80px !important;
-  color: transparent !important;
-  text-indent: -9999px !important;
   background: transparent !important;
   border-radius: 8px !important;
   overflow: visible !important;
