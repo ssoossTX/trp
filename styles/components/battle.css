@@ -192,7 +192,7 @@
 /* Potions Column (Right side) */
 .battle__potions-column {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: var(--spacing-sm);
   margin-left: auto;
 }
@@ -272,7 +272,7 @@
 /* Abilities */
 .battle__abilities {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: var(--spacing-xs);
   flex: 1;
 }
