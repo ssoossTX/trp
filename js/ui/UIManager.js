@@ -270,7 +270,17 @@ export class UIManager {
     }
     
     this.closeLootModal();
-    BattleEngine.fleeBattle();
+    
+    // Проверяем находимся ли мы в подземелье
+    if (gameState.dungeonState) {
+      // В подземелье переходим к следующему врагу
+      import('../locations/DungeonsManager.js').then(module => {
+        module.DungeonsManager.onDungeonEnemyDefeated();
+      });
+    } else {
+      // Обычная локация - возвращаемся на карту
+      BattleEngine.fleeBattle();
+    }
   }
 
   /**
