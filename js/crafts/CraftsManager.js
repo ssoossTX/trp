@@ -116,7 +116,7 @@ export class CraftsManager {
           <h3>Крафт завершен!</h3>
         </div>
         <div class="craft-notification__item">
-          <span class="craft-notification__item-icon">${craft.output.icon}</span>
+          ${craft.output.image ? `<img src="/trp/assets/img/${craft.output.image}" alt="${craft.output.name}" style="width: 50px; height: 50px; object-fit: contain; border-radius: 4px;">` : `<span class="craft-notification__item-icon">${craft.output.icon}</span>`}
           <p class="craft-notification__item-name">${craft.output.name}</p>
         </div>
       </div>

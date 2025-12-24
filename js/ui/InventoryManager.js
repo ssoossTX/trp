@@ -54,7 +54,7 @@ export class InventoryManager {
            data-item-rarity="${item.rarity || 'common'}"
            style="cursor: pointer;">
         <div class="inventory-item__icon">
-          ${item.image ? `<img src="/trp/assets/img/items/${item.image}" alt="${item.name}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;">` : item.icon}
+          ${item.image ? `<img src="/trp/assets/img/items/${item.image}" alt="${item.name}" style="width: 50px; height: 50px; object-fit: contain; border-radius: 4px; background: rgba(0,0,0,0.1); padding: 4px;">` : item.icon}
         </div>
         <div class="inventory-item__name">${item.name}</div>
         <div class="inventory-item__rarity">${this.rarityName(item.rarity || 'common')}</div>
