@@ -253,17 +253,8 @@ export class BattleEngine {
   static fleeBattle() {
     // Проверяем, находимся ли мы в подземелье
     if (gameState.dungeonState) {
-      // В подземелье не можем просто выйти - это поражение
-      if (confirm('Вы собираетесь покинуть подземелье? Это будет считаться поражением.')) {
-        // Помечаем поражение
-        gameState.battle.isInBattle = false;
-        gameState.battle.playerHp = 0;
-        
-        // Обрабатываем поражение в подземелье с небольшой задержкой
-        setTimeout(() => {
-          DungeonsManager.onDungeonPlayerDefeated();
-        }, 100);
-      }
+      // Показываем модальное окно подтверждения
+      this.showDungeonExitConfirmation();
       return;
     }
 
@@ -280,6 +271,50 @@ export class BattleEngine {
     UIManager.updateResources();
     
     eventManager.emit(APP_EVENTS.BATTLE_ENDED, { result: 'fled' });
+  }
+
+  /**
+   * Показывает модальное окно подтверждения выхода из подземелья
+   */
+  static showDungeonExitConfirmation() {
+    const modal = DOMManager.getElementById('dungeonExitConfirmModal');
+    const confirmBtn = DOMManager.getElementById('confirmExitDungeonBtn');
+    const cancelBtn = DOMManager.getElementById('cancelExitDungeonBtn');
+
+    if (!modal) return;
+
+    // Показываем модаль
+    modal.style.display = 'flex';
+
+    // Обработчик подтверждения выхода
+    const handleConfirm = () => {
+      // Помечаем поражение
+      gameState.battle.isInBattle = false;
+      gameState.battle.playerHp = 0;
+      
+      // Закрываем модаль
+      modal.style.display = 'none';
+      
+      // Обрабатываем поражение в подземелье
+      setTimeout(() => {
+        DungeonsManager.onDungeonPlayerDefeated();
+      }, 100);
+
+      // Удаляем обработчики
+      confirmBtn.removeEventListener('click', handleConfirm);
+      cancelBtn.removeEventListener('click', handleCancel);
+    };
+
+    // Обработчик отмены
+    const handleCancel = () => {
+      modal.style.display = 'none';
+      confirmBtn.removeEventListener('click', handleConfirm);
+      cancelBtn.removeEventListener('click', handleCancel);
+    };
+
+    // Прикрепляем обработчики
+    confirmBtn.addEventListener('click', handleConfirm);
+    cancelBtn.addEventListener('click', handleCancel);
   }
 
   /**

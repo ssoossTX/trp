@@ -372,6 +372,27 @@
         </div>
     </div>
 
+<!-- Модальное окно подтверждения выхода из подземелья -->
+    <div id="dungeonExitConfirmModal" class="modal modal--confirm" style="display: none;">
+        <div class="modal__content modal__content--confirm">
+            <div class="modal__header modal__header--warning">
+                <h2>⚠️ Покинуть подземелье?</h2>
+            </div>
+            <div class="modal__body">
+                <p>Вы уверены, что хотите выйти из подземелья?</p>
+                <p class="warning-text">Это будет считаться поражением и ваш прогресс в подземелье будет потерян.</p>
+            </div>
+            <div class="modal__buttons">
+                <button class="btn btn-primary" id="confirmExitDungeonBtn">
+                    🚪 Выйти из подземелья
+                </button>
+                <button class="btn btn-secondary" id="cancelExitDungeonBtn">
+                    ← Вернуться в бой
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- JavaScript модули -->
     <script type="module" src="js/app.js"></script>
 </body>
