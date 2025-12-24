@@ -254,26 +254,12 @@ export class ClassSelectionManager {
     // Обработчики для модального окна выбора способности
     const confirmBtn = DOMManager.getElementById('confirmBtn');
     const cancelBtn = DOMManager.getElementById('cancelBtn');
-    const abilityCloseBtn = DOMManager.getElementById('abilityCloseBtn');
 
     if (confirmBtn) {
       confirmBtn.addEventListener('click', () => this.confirmSelection());
     }
     if (cancelBtn) {
       cancelBtn.addEventListener('click', () => this.closeAbilityModal());
-    }
-    if (abilityCloseBtn) {
-      abilityCloseBtn.addEventListener('click', () => this.closeAbilityModal());
-    }
-
-    // Закрытие модали по клику на фон
-    const abilityModal = DOMManager.getElementById('abilityModal');
-    if (abilityModal) {
-      abilityModal.addEventListener('click', (e) => {
-        if (e.target === abilityModal) {
-          this.closeAbilityModal();
-        }
-      });
     }
   }
 }

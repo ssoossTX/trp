@@ -577,6 +577,11 @@
   line-height: 1.4;
 }
 
+/* Скрытие крестика в модали выбора способности */
+#abilityCloseBtn {
+  display: none;
+}
+
 /* Модальные кнопки */
 .modal__buttons {
   display: flex;
