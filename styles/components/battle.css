@@ -1,6 +1,5 @@
 /* ===== БОЕВОЙ ЭКРАН ===== */
 #battle-screen {
-  /* Фоновое изображение */
   background-image: url('/trp/assets/img/background.jpg');
   background-size: cover;
   background-position: center;
@@ -11,7 +10,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: var(--spacing-lg);
+  padding: var(--spacing-md);
   overflow-y: auto;
   width: 100% !important;
   height: 100% !important;
@@ -23,34 +22,59 @@
 
 .battle__container {
   width: 100%;
-  max-width: 600px;
+  max-width: 800px;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-lg);
-  background: rgba(255, 255, 255, 0.95);
-  padding: var(--spacing-xl);
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.97);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
-  margin: auto;
+  overflow: hidden;
+}
+
+/* Две секции: враг и игрок */
+.battle__section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: var(--spacing-lg);
+  flex: 1;
+}
+
+.battle__section--enemy {
+  border-bottom: 2px solid var(--light-bg);
+  background: rgba(248, 249, 250, 0.5);
+}
+
+.battle__section--player {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: var(--spacing-md);
+  overflow-y: auto;
 }
 
 /* Враг */
 .battle__enemy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
   text-align: center;
-  padding-bottom: var(--spacing-lg);
-  border-bottom: 2px solid var(--light-bg);
+  width: 100%;
 }
 
 .battle__enemy-image {
-  width: 150px;
-  height: 150px;
-  margin: 0 auto var(--spacing-md);
+  width: 140px;
+  height: 140px;
   border-radius: var(--radius-lg);
   overflow: hidden;
   background-color: #f5f5f5;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .battle__enemy-image img {
@@ -60,29 +84,25 @@
 }
 
 .battle__enemy-name {
-  font-size: var(--font-size-xxl);
+  font-size: 1.4em;
   color: var(--accent-color);
-  margin: 0 0 var(--spacing-md) 0;
+  margin: 0;
+  font-weight: bold;
 }
 
+/* HP Container для врага */
 .battle__hp-container {
   display: flex;
   align-items: center;
   gap: var(--spacing-md);
-  margin-bottom: var(--spacing-md);
-}
-
-.battle__hp-label {
-  font-weight: bold;
-  min-width: 60px;
-  color: var(--primary-color);
-  font-size: var(--font-size-sm);
+  width: 100%;
+  max-width: 300px;
 }
 
 .battle__hp-bar {
   flex: 1;
-  height: 30px;
-  background-color: var(--light-bg);
+  height: 24px;
+  background-color: #ecf0f1;
   border-radius: var(--radius-sm);
   overflow: hidden;
   border: 2px solid var(--border-color);
@@ -90,44 +110,54 @@
 
 .battle__hp-fill {
   height: 100%;
-  background: var(--hp-enemy);
+  background: linear-gradient(90deg, #e74c3c, #c0392b);
   transition: width var(--transition-normal);
   width: 100%;
 }
 
 .battle__hp-fill--player {
-  background: var(--hp-player);
+  background: linear-gradient(90deg, #27ae60, #229954);
 }
 
 .battle__hp-text {
-  min-width: 70px;
+  min-width: 65px;
   text-align: right;
   font-weight: bold;
   color: var(--primary-color);
-  font-size: var(--font-size-sm);
+  font-size: 0.85em;
 }
 
-.battle__mana-container {
+/* Player Stats */
+.battle__stats {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  width: 100%;
+  padding: var(--spacing-md);
+  background: #f8f9fa;
+  border-radius: var(--radius-md);
+}
+
+.battle__stat-row {
   display: flex;
   align-items: center;
   gap: var(--spacing-md);
-  margin-bottom: 0;
 }
 
-.battle__mana-label {
+.battle__stat-label {
   font-weight: bold;
-  min-width: 60px;
-  color: #4a90e2;
-  font-size: var(--font-size-sm);
+  min-width: 45px;
+  color: var(--primary-color);
+  font-size: 0.9em;
 }
 
 .battle__mana-bar {
   flex: 1;
-  height: 20px;
-  background-color: var(--light-bg);
+  height: 16px;
+  background-color: #ecf0f1;
   border-radius: var(--radius-sm);
   overflow: hidden;
-  border: 2px solid var(--border-color);
+  border: 2px solid #4a90e2;
 }
 
 .battle__mana-fill {
@@ -137,131 +167,68 @@
   width: 100%;
 }
 
-.battle__mana-fill--player {
-  background: linear-gradient(90deg, #4a90e2, #357abd);
-}
-
 .battle__mana-text {
-  min-width: 70px;
+  min-width: 50px;
   text-align: right;
   font-weight: bold;
   color: #4a90e2;
-  font-size: var(--font-size-sm);
+  font-size: 0.85em;
 }
 
-/* Игрок */
-.battle__player {
-  padding: var(--spacing-lg);
-  background-color: var(--light-bg);
-  border-radius: var(--radius-md);
-}
-
-/* Действия */
-.battle__actions {
-  display: flex;
-  gap: var(--spacing-md);
-  padding: var(--spacing-lg);
-  background-color: #f8f9fa;
-  border-radius: var(--radius-md);
-  flex-wrap: wrap;
-  align-items: center;
-}
-
-.battle__btn {
-  padding: var(--spacing-md) var(--spacing-lg);
-  font-size: var(--font-size-base);
-  font-weight: bold;
-  border: none;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  transition: all var(--transition-normal);
-  color: white;
-}
-
+/* Attack Button */
 .battle__btn--attack {
+  width: 100%;
+  padding: var(--spacing-lg) var(--spacing-md);
+  font-size: 1.1em;
   background-color: var(--accent-color);
-  flex: 1;
-  min-width: 120px;
 }
 
-.battle__btn--attack:hover {
+.battle__btn--attack:hover:not(:disabled) {
   background-color: #c0392b;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
 }
 
-.battle__btn--attack:active {
-  transform: translateY(0);
-}
-
-.battle__btn--flee {
-  background-color: var(--text-light);
-  flex-basis: 100%;
-  order: 20;
-}
-
-.battle__btn--flee:hover {
-  background-color: #7f8c8d;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(149, 165, 166, 0.3);
-}
-
-.battle__btn--flee:active {
-  transform: translateY(0);
+/* Potions Row */
+.battle__potions-row {
+  display: flex;
+  gap: var(--spacing-md);
+  width: 100%;
 }
 
 .battle__btn--potion {
-  font-size: 0.75rem;
-  padding: 0.4rem 0.6rem;
-  min-width: auto;
-  flex-shrink: 0;
+  flex: 1;
+  padding: var(--spacing-md);
+  font-size: 0.9em;
 }
 
 .battle__btn--potion-hp {
   background-color: #e74c3c;
 }
 
-.battle__btn--potion-hp:hover {
+.battle__btn--potion-hp:hover:not(:disabled) {
   background-color: #c0392b;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
-}
-
-.battle__btn--potion-hp:active {
-  transform: translateY(0);
 }
 
 .battle__btn--potion-mana {
   background-color: #3498db;
 }
 
-.battle__btn--potion-mana:hover {
+.battle__btn--potion-mana:hover:not(:disabled) {
   background-color: #2980b9;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
 }
 
-.battle__btn--potion-mana:active {
-  transform: translateY(0);
-}
-
-.battle__btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-/* Способности */
+/* Abilities */
 .battle__abilities {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-sm);
-  flex-basis: 100%;
-  order: 10;
+  width: 100%;
 }
 
 .btn-ability {
-  padding: var(--spacing-md) var(--spacing-lg);
-  font-size: var(--font-size-sm);
+  padding: var(--spacing-md) var(--spacing-md);
+  font-size: 0.9em;
   font-weight: bold;
   border: 2px solid var(--primary-color);
   background-color: #3498db;
@@ -269,7 +236,6 @@
   border-radius: var(--radius-sm);
   cursor: pointer;
   transition: all var(--transition-normal);
-  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -279,11 +245,6 @@
 .btn-ability:hover:not(:disabled) {
   background-color: #2980b9;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
-}
-
-.btn-ability:active:not(:disabled) {
-  transform: translateY(0);
 }
 
 .btn-ability:disabled {
@@ -292,67 +253,121 @@
   background-color: #95a5a6;
 }
 
-.btn-ability.ability--cooldown {
-  background-color: #7f8c8d;
-  border-color: #95a5a6;
-}
-
 .ability-name {
   flex: 1;
   text-align: left;
 }
 
 .ability-mana {
-  font-size: var(--font-size-xs);
+  font-size: 0.8em;
   background-color: rgba(74, 144, 226, 0.3);
   padding: 2px 6px;
   border-radius: var(--radius-sm);
   white-space: nowrap;
-  color: #e8f4f8;
 }
 
 .ability-cooldown {
-  min-width: 24px;
-  height: 24px;
+  min-width: 20px;
+  height: 20px;
   background-color: rgba(0, 0, 0, 0.2);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: var(--font-size-xs);
+  font-size: 0.75em;
   font-weight: bold;
   color: white;
 }
 
-/* Лог боя */
-.battle__log {
-  max-height: 150px;
+/* Bottom Actions */
+.battle__bottom-actions {
+  display: flex;
+  gap: var(--spacing-md);
+  width: 100%;
+  margin-top: auto;
+  padding-top: var(--spacing-md);
+  border-top: 1px solid #ecf0f1;
+}
+
+.battle__btn--logs,
+.battle__btn--flee {
+  flex: 1;
   padding: var(--spacing-md);
+  font-size: 0.9em;
+}
+
+.battle__btn--logs {
+  background-color: #9b59b6;
+}
+
+.battle__btn--logs:hover:not(:disabled) {
+  background-color: #8e44ad;
+}
+
+.battle__btn--flee {
+  background-color: #95a5a6;
+}
+
+.battle__btn--flee:hover:not(:disabled) {
+  background-color: #7f8c8d;
+}
+
+/* Common Button Styles */
+.battle__btn {
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  color: white;
+  font-weight: bold;
+}
+
+.battle__btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.battle__btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Battle Logs Modal */
+.battle-logs__content {
+  max-width: 600px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.battle-logs__container {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--spacing-lg);
   background-color: var(--dark-bg);
   color: var(--light-bg);
   border-radius: var(--radius-sm);
-  font-size: var(--font-size-sm);
-  overflow-y: auto;
+  font-size: 0.9em;
   font-family: 'Courier New', monospace;
+  max-height: 400px;
 }
 
 .battle__log-entry {
   margin-bottom: var(--spacing-sm);
   padding-bottom: var(--spacing-sm);
-  border-bottom: 1px solid rgba(236, 240, 241, 0.2);
-  line-height: 1.6;
+  border-bottom: 1px solid rgba(236, 240, 241, 0.1);
+  line-height: 1.5;
 }
 
 .battle__log-entry--player {
-  color: var(--success-color);
+  color: #27ae60;
 }
 
 .battle__log-entry--enemy {
-  color: var(--accent-color);
+  color: #e74c3c;
 }
 
 .battle__log-entry--neutral {
-  color: var(--light-bg);
+  color: #ecf0f1;
 }
 
 .battle__log-entry--buff {
@@ -367,20 +382,31 @@
 /* Responsive */
 @media (max-width: 600px) {
   .battle__container {
-    padding: var(--spacing-lg);
     max-width: 95%;
+    height: auto;
+    min-height: 100vh;
   }
 
-  .battle__actions {
-    grid-template-columns: 1fr;
+  .battle__section {
+    padding: var(--spacing-md);
   }
 
   .battle__enemy-image {
-    width: 120px;
-    height: 120px;
+    width: 100px;
+    height: 100px;
   }
 
   .battle__enemy-name {
-    font-size: var(--font-size-xl);
+    font-size: 1.2em;
+  }
+
+  .battle__hp-container {
+    max-width: 100%;
+  }
+
+  .battle__btn {
+    font-size: 0.85em;
+    padding: var(--spacing-sm) var(--spacing-md);
   }
 }
+

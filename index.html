@@ -304,51 +304,73 @@
     <!-- ===== BATTLE SCREEN ===== -->
     <div class="screen hidden" id="battle-screen">
         <div class="battle__container">
-            <!-- Enemy Info -->
-            <div class="battle__enemy">
-                <div class="battle__enemy-image">
-                    <img id="enemyImage" src="" alt="враг" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22%3E%3Crect fill=%22%23888%22 width=%22200%22 height=%22200%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2248%22 fill=%22%23fff%22 text-anchor=%22middle%22 dy=%22.3em%22%3E👹%3C/text%3E%3C/svg%3E'">
-                </div>
-                <h2 class="battle__enemy-name" id="enemyName">Враг</h2>
-                <div class="battle__hp-container">
-                    <span class="battle__hp-label">HP</span>
-                    <div class="battle__hp-bar">
-                        <div class="battle__hp-fill" id="enemyHpFill" style="width: 100%;"></div>
+            <!-- Enemy Section (Top) -->
+            <div class="battle__section battle__section--enemy">
+                <div class="battle__enemy">
+                    <div class="battle__enemy-image">
+                        <img id="enemyImage" src="" alt="враг" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22%3E%3Crect fill=%22%23888%22 width=%22200%22 height=%22200%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2248%22 fill=%22%23fff%22 text-anchor=%22middle%22 dy=%22.3em%22%3E👹%3C/text%3E%3C/svg%3E'">
                     </div>
-                    <span class="battle__hp-text" id="enemyHpText">100/100</span>
+                    <h2 class="battle__enemy-name" id="enemyName">Враг</h2>
+                    <div class="battle__hp-container">
+                        <div class="battle__hp-bar">
+                            <div class="battle__hp-fill" id="enemyHpFill" style="width: 100%;"></div>
+                        </div>
+                        <span class="battle__hp-text" id="enemyHpText">100/100</span>
+                    </div>
                 </div>
             </div>
 
-            <!-- Player Info -->
-            <div class="battle__player">
-                <div class="battle__hp-container">
-                    <span class="battle__hp-label">Ваш HP</span>
-                    <div class="battle__hp-bar">
-                        <div class="battle__hp-fill battle__hp-fill--player" id="playerHpFill" style="width: 100%;"></div>
+            <!-- Player Section (Bottom) -->
+            <div class="battle__section battle__section--player">
+                <!-- Player Stats -->
+                <div class="battle__stats">
+                    <div class="battle__stat-row">
+                        <span class="battle__stat-label">HP:</span>
+                        <div class="battle__hp-bar">
+                            <div class="battle__hp-fill battle__hp-fill--player" id="playerHpFill" style="width: 100%;"></div>
+                        </div>
+                        <span class="battle__hp-text" id="playerHpText">100/100</span>
                     </div>
-                    <span class="battle__hp-text" id="playerHpText">100/100</span>
-                </div>
-                <div class="battle__mana-container">
-                    <span class="battle__mana-label">Ваша Мана</span>
-                    <div class="battle__mana-bar">
-                        <div class="battle__mana-fill battle__mana-fill--player" id="playerManaFill" style="width: 100%;"></div>
+                    <div class="battle__stat-row">
+                        <span class="battle__stat-label">Мана:</span>
+                        <div class="battle__mana-bar">
+                            <div class="battle__mana-fill" id="playerManaFill" style="width: 100%;"></div>
+                        </div>
+                        <span class="battle__mana-text" id="playerManaText">50/50</span>
                     </div>
-                    <span class="battle__mana-text" id="playerManaText">50/50</span>
                 </div>
-            </div>
 
-            <!-- Battle Actions -->
-            <div class="battle__actions">
+                <!-- Attack Button -->
                 <button class="battle__btn battle__btn--attack" id="attackBtn">⚔️ Атаковать</button>
-                <button class="battle__btn battle__btn--potion battle__btn--potion-hp" id="hpPotionBtn" title="Восстановить 100 HP">🩹 HP</button>
-                <button class="battle__btn battle__btn--potion battle__btn--potion-mana" id="manaPotionBtn" title="Восстановить 100 Маны">💙 Мана</button>
-                <div class="battle__abilities" id="abilitiesContainer"></div>
-                <button class="battle__btn battle__btn--flee" id="fleeBtn">🚪 Покинуть</button>
-            </div>
 
-            <!-- Battle Log -->
-            <div class="battle__log">
-                <div id="battleLog"></div>
+                <!-- Potions Row -->
+                <div class="battle__potions-row">
+                    <button class="battle__btn battle__btn--potion battle__btn--potion-hp" id="hpPotionBtn" title="Восстановить HP">🩹 HP</button>
+                    <button class="battle__btn battle__btn--potion battle__btn--potion-mana" id="manaPotionBtn" title="Восстановить Ману">💙 Мана</button>
+                </div>
+
+                <!-- Active Abilities -->
+                <div class="battle__abilities" id="abilitiesContainer"></div>
+
+                <!-- Bottom Actions -->
+                <div class="battle__bottom-actions">
+                    <button class="battle__btn battle__btn--logs" id="battleLogsBtn">📋 Логи боя</button>
+                    <button class="battle__btn battle__btn--flee" id="fleeBtn">🚪 Выход</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Battle Logs Modal -->
+    <div id="battleLogsModal" class="modal">
+        <div class="modal__content battle-logs__content">
+            <div class="modal__header">
+                <h2>📋 Логи боя</h2>
+            </div>
+            <button type="button" class="modal__close" id="battleLogsCloseBtn" aria-label="Закрыть окно">&times;</button>
+            <div class="battle-logs__container" id="battleLogsContainer"></div>
+            <div class="modal__buttons">
+                <button class="btn btn-primary" id="closeBattleLogsBtn">Закрыть</button>
             </div>
         </div>
     </div>

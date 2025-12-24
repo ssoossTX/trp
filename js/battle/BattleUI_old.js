@@ -8,23 +8,22 @@ import { GAME_CONSTANTS } from '../utils/constants.js';
 import { UIManager } from '../ui/UIManager.js';
 
 export class BattleUI {
-  static battleLogs = [];
-
   /**
    * Показывает боевой экран
    */
   static show() {
-    this.battleLogs = [];
+    // Очищаем старые логи боя перед новым боем
+    this.clearLog();
     DOMManager.hideScreen(GAME_CONSTANTS.MAIN_GAME_SCREEN_ID);
     DOMManager.showScreen(GAME_CONSTANTS.BATTLE_SCREEN_ID);
-    this.setupEventListeners();
   }
 
   /**
    * Скрывает боевой экран
    */
   static hide() {
-    this.battleLogs = [];
+    // Очищаем логи боя при выходе из локации
+    this.clearLog();
     this.clearAbilityButtons();
     DOMManager.hideScreen(GAME_CONSTANTS.BATTLE_SCREEN_ID);
     DOMManager.showScreen(GAME_CONSTANTS.MAIN_GAME_SCREEN_ID);
@@ -37,8 +36,10 @@ export class BattleUI {
     const enemy = gameState.battle.currentEnemy;
     const { playerHp, playerMaxHp, playerMana, playerMaxMana } = gameState.battle;
 
+    // Враг - обновляем имя и изображение
     console.log(`[BattleUI] Обновляю интерфейс для врага: ${enemy.name}`);
     
+    // Если в подземелье - добавляем индикатор прогресса
     let enemyNameDisplay = enemy.name;
     if (gameState.dungeonState) {
       const currentIndex = gameState.dungeonState.currentEnemyIndex + 1;
@@ -48,6 +49,7 @@ export class BattleUI {
     
     DOMManager.setText('enemyName', enemyNameDisplay);
     
+    // Устанавливаем изображение врага
     if (enemy.image) {
       const enemyImage = DOMManager.getElementById('enemyImage');
       if (enemyImage) {
@@ -61,14 +63,17 @@ export class BattleUI {
     DOMManager.setWidth('enemyHpFill', enemyPercent + '%');
     DOMManager.setText('enemyHpText', `${Math.max(0, enemy.currentHp)}/${enemy.hp}`);
 
+    // Игрок - HP
     const playerPercent = calculatePercent(playerHp, playerMaxHp);
     DOMManager.setWidth('playerHpFill', playerPercent + '%');
     DOMManager.setText('playerHpText', `${playerHp}/${playerMaxHp}`);
     
+    // Игрок - Мана
     const playerManaPercent = calculatePercent(playerMana, playerMaxMana);
     DOMManager.setWidth('playerManaFill', playerManaPercent + '%');
     DOMManager.setText('playerManaText', `${playerMana}/${playerMaxMana}`);
     
+    // Обновляем кнопки зелий
     UIManager.updatePotionButtons();
   }
 
@@ -76,30 +81,37 @@ export class BattleUI {
    * Добавляет запись в лог боя
    */
   static addLog(message, type = 'neutral') {
-    this.battleLogs.push({ message, type });
+    const battleLog = DOMManager.getElementById('battleLog');
+    if (!battleLog) return;
+
+    const entry = document.createElement('div');
+    entry.className = `battle__log-entry battle__log-entry--${type}`;
+    entry.textContent = message;
+    battleLog.appendChild(entry);
+
+    // Автоскролл вниз
+    battleLog.scrollTop = battleLog.scrollHeight;
   }
 
   /**
-   * Отображает логи в модали
+   * Очищает лог боя
    */
-  static showBattleLogs() {
-    const logsContainer = DOMManager.getElementById('battleLogsContainer');
-    if (!logsContainer) return;
-
-    logsContainer.innerHTML = this.battleLogs.map(log => `
-      <div class="battle__log-entry battle__log-entry--${log.type}">
-        ${log.message}
-      </div>
-    `).join('');
-
-    DOMManager.openModal('battleLogsModal');
+  static clearLog() {
+    DOMManager.clear('battleLog');
   }
 
   /**
-   * Закрывает модаль логов
+   * Отключает кнопку атаки
    */
-  static closeBattleLogs() {
-    DOMManager.closeModal('battleLogsModal');
+  static disableAttackButton() {
+    DOMManager.disableButton('attackBtn');
+  }
+
+  /**
+   * Включает кнопку атаки
+   */
+  static enableAttackButton() {
+    DOMManager.enableButton('attackBtn');
   }
 
   /**
@@ -112,7 +124,7 @@ export class BattleUI {
     abilitiesContainer.innerHTML = abilities.map(ability => {
       const manaCostText = ability.manaCost ? `<span class="ability-mana">${ability.manaCost}💙</span>` : '';
       return `
-      <button class="btn-ability" id="ability-${ability.name}" onclick="window.BattleEngine.useActiveAbility('${ability.name}')">
+      <button class="btn btn-ability" id="ability-${ability.name}" onclick="window.BattleEngine.useActiveAbility('${ability.name}')">
         <span class="ability-name">${ability.name}</span>
         ${manaCostText}
         <span class="ability-cooldown" id="cooldown-${ability.name}"></span>
@@ -159,12 +171,20 @@ export class BattleUI {
 
   /**
    * Показывает модальное окно с дропом
+   * @param {string} enemyName - Имя врага
+   * @param {Object} loot - Объект с дропом {gold, items}
    */
   static showLootModal(enemyName, loot) {
+    // Сохраняем текущий дроп для последующей обработки
     this.currentLoot = loot;
+    
+    // Установка имени врага
     DOMManager.setText('dropEnemyName', enemyName);
+    
+    // Установка золота
     DOMManager.setText('dropGold', loot.gold);
     
+    // Отрисовка предметов
     const dropItemsContainer = DOMManager.getElementById('dropItems');
     if (dropItemsContainer) {
       dropItemsContainer.innerHTML = loot.items.map(item => `
@@ -178,11 +198,14 @@ export class BattleUI {
       `).join('');
     }
     
+    // Открытие модала
     DOMManager.openModal('dropModal');
   }
 
   /**
    * Возвращает название редкости
+   * @param {string} rarity - Редкость
+   * @returns {string} Название редкости
    */
   static rarityName(rarity) {
     const names = {
@@ -199,33 +222,5 @@ export class BattleUI {
    */
   static hideLootModal() {
     DOMManager.closeModal('dropModal');
-  }
-
-  /**
-   * Устанавливает обработчики событий
-   */
-  static setupEventListeners() {
-    const battleLogsBtn = DOMManager.getElementById('battleLogsBtn');
-    const battleLogsCloseBtn = DOMManager.getElementById('battleLogsCloseBtn');
-    const closeBattleLogsBtn = DOMManager.getElementById('closeBattleLogsBtn');
-    const battleLogsModal = DOMManager.getElementById('battleLogsModal');
-
-    if (battleLogsBtn) {
-      battleLogsBtn.addEventListener('click', () => this.showBattleLogs());
-    }
-    if (battleLogsCloseBtn) {
-      battleLogsCloseBtn.addEventListener('click', () => this.closeBattleLogs());
-    }
-    if (closeBattleLogsBtn) {
-      closeBattleLogsBtn.addEventListener('click', () => this.closeBattleLogs());
-    }
-    
-    if (battleLogsModal) {
-      battleLogsModal.addEventListener('click', (e) => {
-        if (e.target === battleLogsModal) {
-          this.closeBattleLogs();
-        }
-      });
-    }
   }
 }
