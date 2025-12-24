@@ -407,20 +407,6 @@ export class DungeonsManager {
     
     // Инициализируем боевую сессию
     BattleEngine.initiateBattle(enemy, dungeonId, activeAbilities);
-    
-    // Переопределяем обработчик победы для обработки логики подземелья
-    const originalPlayerWins = BattleEngine.playerWins;
-    BattleEngine.playerWins = function() {
-      originalPlayerWins.call(this);
-      DungeonsManager.onDungeonEnemyDefeated();
-    };
-
-    // Переопределяем обработчик поражения для обработки логики подземелья
-    const originalPlayerLoses = BattleEngine.playerLoses;
-    BattleEngine.playerLoses = function() {
-      originalPlayerLoses.call(this);
-      DungeonsManager.onDungeonPlayerDefeated();
-    };
   }
 
   /**

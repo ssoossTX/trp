@@ -142,9 +142,13 @@ export class BattleEngine {
       BattleUI.showLootModal(enemy.name, loot);
     }, 500);
     
-    // Обновляем полоски ресурсов в шапке игры и профиль
+    // Обновляем только ресурсы на боевом экране
     UIManager.updateResources();
-    UIManager.updatePlayerProfile();
+    
+    // Обновляем профиль только если НЕ в подземелье
+    if (!gameState.dungeonState) {
+      UIManager.updatePlayerProfile();
+    }
 
     eventManager.emit(APP_EVENTS.BATTLE_ENDED, { result: 'win' });
   }
@@ -219,9 +223,23 @@ export class BattleEngine {
 
     BattleUI.addLog(`Вы были побеждены ${enemy.name}...`, 'enemy');
     BattleUI.addLog('Вы теряете сознание...', 'enemy');
-    BattleUI.addLog('Нажмите "Покинуть локацию" для возвращения', 'neutral');
-    BattleUI.disableAttackButton();
-    BattleUI.update();
+    
+    // Если в подземелье - сразу обрабатываем поражение
+    if (gameState.dungeonState) {
+      BattleUI.disableAttackButton();
+      BattleUI.update();
+      
+      setTimeout(() => {
+        import('../locations/DungeonsManager.js').then(module => {
+          module.DungeonsManager.onDungeonPlayerDefeated();
+        });
+      }, 1000);
+    } else {
+      // Обычная локация
+      BattleUI.addLog('Нажмите "Покинуть локацию" для возвращения', 'neutral');
+      BattleUI.disableAttackButton();
+      BattleUI.update();
+    }
     
     // Обновляем полоски ресурсов в шапке игры
     UIManager.updateResources();
