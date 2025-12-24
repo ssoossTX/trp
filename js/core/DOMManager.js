@@ -116,11 +116,25 @@ class DOMManager {
   }
 
   /**
+   * Показать элемент (альтернативный метод)
+   */
+  static showElement(elementId) {
+    return this.show(elementId);
+  }
+
+  /**
    * Скрыть элемент
    */
   static hide(elementId) {
     const el = this.getElementById(elementId);
     if (el) el.classList.add('hidden');
+  }
+
+  /**
+   * Скрыть элемент (альтернативный метод)
+   */
+  static hideElement(elementId) {
+    return this.hide(elementId);
   }
 
   /**

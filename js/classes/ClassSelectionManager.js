@@ -21,57 +21,103 @@ export class ClassSelectionManager {
   }
 
   /**
-   * Отрисовывает карточки классов
+   * Получает путь к картинке класса
+   */
+  static getClassImagePath(className) {
+    // Преобразуем имя класса в название файла
+    const fileName = className.toLowerCase().replace(' ', '_');
+    return `/trp/assets/img/enemies/${fileName}.jpg`;
+  }
+
+  /**
+   * Отрисовывает карточки классов (картинки)
    */
   static renderClasses() {
     const classesGrid = DOMManager.getElementById('classesGrid');
     const classes = dataLoader.getClasses();
 
     classesGrid.innerHTML = classes.map(classData => `
-      <div class="class-card">
-        <div class="class-card__header">
-          <div class="class-card__icon">${classData.icon}</div>
-          <h3 class="class-card__title">${classData.name}</h3>
-        </div>
-        
-        <div class="class-card__description">
-          <p class="class-card__main-desc">${classData.description}</p>
-        </div>
-        
-        <div class="class-card__stats">
-          <h4>Характеристики</h4>
-          ${this.renderStats(classData.stats)}
-        </div>
-        
-        <div class="class-card__abilities">
-          <h4>Боевые способности</h4>
-          ${classData.activeAbilities.map(ability => `
-            <div class="ability-item">
-              <div class="ability-item__name">${ability.name}</div>
-              <div class="ability-item__info">
-                <span class="ability-item__mana">💙 ${ability.manaCost}</span>
-                <span class="ability-item__cooldown">⏱️ ${ability.cooldown}</span>
-              </div>
-              <div class="ability-item__desc">${ability.description}</div>
-            </div>
-          `).join('')}
-        </div>
-        
-        <div class="class-card__details">
-          ${classData.details}
-        </div>
-        
-        <div class="class-card__actions">
-          <button class="btn btn-primary" onclick="window.classSelectionManager.openAbilityModal('${classData.id}')">Выбрать класс</button>
+      <div class="class-card" onclick="window.classSelectionManager.openClassDetails('${classData.id}')">
+        <img src="${this.getClassImagePath(classData.name)}" alt="${classData.name}" class="class-card__image" onerror="this.src='/trp/assets/img/background.jpg'">
+        <div class="class-card__overlay">
+          <h3 class="class-card__title">${classData.icon} ${classData.name}</h3>
         </div>
       </div>
     `).join('');
   }
 
   /**
-   * Отрисовывает характеристики класса
+   * Открывает экран с деталями класса
    */
-  static renderStats(stats) {
+  static openClassDetails(classId) {
+    selectedClass = dataLoader.getClassById(classId);
+    if (!selectedClass) return;
+
+    const detailsContent = DOMManager.getElementById('classDetailsContent');
+    
+    detailsContent.innerHTML = `
+      <div class="class-details__content">
+        <div class="class-details__header">
+          <img src="${this.getClassImagePath(selectedClass.name)}" alt="${selectedClass.name}" class="class-details__image" onerror="this.src='/trp/assets/img/background.jpg'">
+          <div class="class-details__title-group">
+            <h1 class="class-details__title">${selectedClass.icon} ${selectedClass.name}</h1>
+            <p class="class-details__main-desc">${selectedClass.description}</p>
+          </div>
+        </div>
+
+        <div class="class-details__stats">
+          <h3>Характеристики</h3>
+          <div class="stats-grid">
+            ${this.renderStatsDetails(selectedClass.stats)}
+          </div>
+        </div>
+
+        <div class="class-details__abilities">
+          <h3>Боевые способности</h3>
+          <div class="abilities-list">
+            ${selectedClass.activeAbilities.map(ability => `
+              <div class="ability-card">
+                <div class="ability-card__name">${ability.name}</div>
+                <div class="ability-card__meta">
+                  <span class="ability-card__meta-item">💙 ${ability.manaCost} мана</span>
+                  <span class="ability-card__meta-item">⏱️ ${ability.cooldown}с кулдаун</span>
+                </div>
+                <div class="ability-card__desc">${ability.description}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <div class="class-details__description">
+          <h3>Описание класса</h3>
+          <p>${selectedClass.details}</p>
+        </div>
+
+        <div class="class-details__actions">
+          <button class="btn btn-back" onclick="window.classSelectionManager.closeClassDetails()">Вернуться назад</button>
+          <button class="btn btn-choose-class" onclick="window.classSelectionManager.openAbilityModal()">Выбрать класс</button>
+        </div>
+      </div>
+    `;
+
+    // Показываем экран деталей, скрываем выбор
+    DOMManager.hideElement('class-selection-screen');
+    DOMManager.showElement('class-details-screen');
+  }
+
+  /**
+   * Закрывает экран деталей класса
+   */
+  static closeClassDetails() {
+    selectedClass = null;
+    DOMManager.showElement('class-selection-screen');
+    DOMManager.hideElement('class-details-screen');
+  }
+
+  /**
+   * Отрисовывает характеристики класса в деталях
+   */
+  static renderStatsDetails(stats) {
     const statNames = {
       strength: 'Сила',
       agility: 'Ловкость',
@@ -80,13 +126,11 @@ export class ClassSelectionManager {
     };
 
     return Object.entries(stats).map(([key, value]) => `
-      <div class="stat">
-        <div class="stat__label">
-          <span>${statNames[key]}</span>
-          <span>${value}</span>
-        </div>
-        <div class="stat__bar">
-          <div class="stat__fill stat__fill--${key}" style="width: ${value * 10}%;"></div>
+      <div class="stat-item">
+        <div class="stat-item__label">${statNames[key]}</div>
+        <div class="stat-item__value">${value}</div>
+        <div class="stat-item__bar">
+          <div class="stat-item__fill" style="width: ${value * 10}%;"></div>
         </div>
       </div>
     `).join('');
@@ -95,8 +139,9 @@ export class ClassSelectionManager {
   /**
    * Открывает модаль выбора способности
    */
-  static openAbilityModal(classId) {
-    selectedClass = dataLoader.getClassById(classId);
+  static openAbilityModal() {
+    if (!selectedClass) return;
+
     selectedAbility = null;
 
     const abilityOptions = DOMManager.getElementById('abilityOptions');
@@ -112,7 +157,38 @@ export class ClassSelectionManager {
     `).join('');
 
     DOMManager.disableButton('confirmBtn');
-    DOMManager.openModal(GAME_CONSTANTS.MODALS.ABILITY);
+    
+    // Создаём модаль если её нет
+    let abilityModal = DOMManager.getElementById('abilityModal');
+    if (!abilityModal) {
+      const container = document.createElement('div');
+      container.id = 'abilityModal';
+      container.className = 'modal';
+      container.innerHTML = `
+        <div class="modal__content">
+          <button type="button" class="modal__close" id="abilityCloseBtn" aria-label="Закрыть окно">&times;</button>
+          <h2>Выберите начальную способность</h2>
+          <div class="ability__options" id="abilityOptions"></div>
+          <div class="modal__buttons">
+            <button class="confirm-btn" id="confirmBtn" disabled>Подтвердить выбор</button>
+            <button class="cancel-btn" id="cancelBtn">Отмена</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(container);
+      abilityModal = container;
+      
+      // Прикрепляем обработчики
+      const confirmBtn = abilityModal.querySelector('#confirmBtn');
+      const cancelBtn = abilityModal.querySelector('#cancelBtn');
+      const closeBtn = abilityModal.querySelector('#abilityCloseBtn');
+      
+      if (confirmBtn) confirmBtn.addEventListener('click', () => this.confirmSelection());
+      if (cancelBtn) cancelBtn.addEventListener('click', () => this.closeAbilityModal());
+      if (closeBtn) closeBtn.addEventListener('click', () => this.closeAbilityModal());
+    }
+    
+    DOMManager.openModal('abilityModal');
   }
 
   /**
@@ -120,40 +196,13 @@ export class ClassSelectionManager {
    */
   static selectAbility(index, name) {
     selectedAbility = name;
-    DOMManager.enableButton('confirmBtn');
+    const confirmBtn = DOMManager.getElementById('confirmBtn');
+    if (confirmBtn) DOMManager.enableButton('confirmBtn');
 
     document.querySelectorAll('.ability-option').forEach((option, i) => {
       if (i === index) option.classList.add('selected');
       else option.classList.remove('selected');
     });
-  }
-
-  /**
-   * Открывает модаль деталей класса
-   */
-  static openDetailsModal(classId) {
-    const classData = dataLoader.getClassById(classId);
-    const detailsContent = DOMManager.getElementById('detailsContent');
-    const detailsTitle = DOMManager.getElementById('detailsTitle');
-
-    detailsTitle.textContent = classData.name;
-    detailsContent.innerHTML = `
-      <h3>Описание</h3>
-      <p>${classData.details}</p>
-      
-      <h3>Характеристики</h3>
-      <p>
-        <strong>Сила:</strong> ${classData.stats.strength}/10<br>
-        <strong>Ловкость:</strong> ${classData.stats.agility}/10<br>
-        <strong>Интеллект:</strong> ${classData.stats.intelligence}/10<br>
-        <strong>Выносливость:</strong> ${classData.stats.endurance}/10
-      </p>
-      
-      <h3>Уникальные навыки</h3>
-      <p>${classData.abilities.map(ability => `<strong>${ability}</strong>`).join(', ')}</p>
-    `;
-
-    DOMManager.openModal(GAME_CONSTANTS.MODALS.DETAILS);
   }
 
   /**
@@ -174,7 +223,7 @@ export class ClassSelectionManager {
    * Закрывает модаль выбора способности
    */
   static closeAbilityModal() {
-    DOMManager.closeModal(GAME_CONSTANTS.MODALS.ABILITY);
+    DOMManager.closeModal('abilityModal');
     selectedClass = null;
     selectedAbility = null;
   }
@@ -183,34 +232,7 @@ export class ClassSelectionManager {
    * Прикрепляет обработчики событий
    */
   static attachEventListeners() {
-    const confirmBtn = DOMManager.getElementById('confirmBtn');
-    const cancelBtn = DOMManager.getElementById('cancelBtn');
-    const closeDetailsBtn = DOMManager.getElementById('closeDetailsBtn');
-    const abilityCloseBtn = DOMManager.getElementById('abilityCloseBtn');
-    const detailsCloseBtn = DOMManager.getElementById('detailsCloseBtn');
-
-    if (confirmBtn) confirmBtn.addEventListener('click', () => this.confirmSelection());
-    if (cancelBtn) cancelBtn.addEventListener('click', () => this.closeAbilityModal());
-    if (closeDetailsBtn) closeDetailsBtn.addEventListener('click', () => DOMManager.closeModal(GAME_CONSTANTS.MODALS.DETAILS));
-    if (abilityCloseBtn) abilityCloseBtn.addEventListener('click', () => this.closeAbilityModal());
-    if (detailsCloseBtn) detailsCloseBtn.addEventListener('click', () => DOMManager.closeModal(GAME_CONSTANTS.MODALS.DETAILS));
-
-    // Закрытие по клику на фон
-    const abilityModal = DOMManager.getElementById(GAME_CONSTANTS.MODALS.ABILITY);
-    const detailsModal = DOMManager.getElementById(GAME_CONSTANTS.MODALS.DETAILS);
-
-    if (abilityModal) abilityModal.addEventListener('click', (e) => {
-      if (e.target === abilityModal) this.closeAbilityModal();
-    });
-
-    if (detailsModal) detailsModal.addEventListener('click', (e) => {
-      if (e.target === detailsModal) DOMManager.closeModal(GAME_CONSTANTS.MODALS.DETAILS);
-    });
-
-    // Закрытие по Escape
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') DOMManager.closeAllModals();
-    });
+    // Основные обработчики будут прикреплены при открытии модалей
   }
 }
 
