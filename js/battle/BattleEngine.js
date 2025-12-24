@@ -9,6 +9,7 @@ import { GAME_CONSTANTS, APP_EVENTS } from '../utils/constants.js';
 import { BattleUI } from './BattleUI.js';
 import { UIManager } from '../ui/UIManager.js';
 import { DungeonsManager } from '../locations/DungeonsManager.js';
+import { DOMManager } from '../core/DOMManager.js';
 
 export class BattleEngine {
   /**
