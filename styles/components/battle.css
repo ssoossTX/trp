@@ -191,17 +191,22 @@
 }
 
 .battle__btn--potion {
-  flex: 0;
-  padding: 0;
-  font-size: 0.8em;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 80px;
-  height: 80px;
-  color: transparent;
+  flex: 0 0 auto;
+  padding: 0 !important;
+  margin: 0 !important;
+  font-size: 0 !important;
+  line-height: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 80px !important;
+  height: 80px !important;
+  color: transparent !important;
+  text-indent: -9999px !important;
   background: transparent !important;
-  border-radius: 8px;
+  border-radius: 8px !important;
+  overflow: visible !important;
+  border: 2px solid;
 }
 
 .battle__btn--potion img {
@@ -209,26 +214,26 @@
   height: 70px;
   object-fit: contain;
   display: block;
-  pointer-events: none;
+  pointer-events: auto;
+  margin: auto;
+  z-index: 10;
 }
 
 .battle__btn--potion-hp {
-  background-color: transparent;
-  border: 2px solid #e74c3c;
+  border-color: #e74c3c;
 }
 
 .battle__btn--potion-hp:hover:not(:disabled) {
-  background-color: rgba(231, 76, 60, 0.2);
+  background-color: rgba(231, 76, 60, 0.1) !important;
   border-color: #c0392b;
 }
 
 .battle__btn--potion-mana {
-  background-color: transparent;
-  border: 2px solid #3498db;
+  border-color: #3498db;
 }
 
 .battle__btn--potion-mana:hover:not(:disabled) {
-  background-color: rgba(52, 152, 219, 0.2);
+  background-color: rgba(52, 152, 219, 0.1) !important;
   border-color: #2980b9;
 }
 
