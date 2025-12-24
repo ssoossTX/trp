@@ -499,33 +499,125 @@ export class DungeonsManager {
         progress.bestScore = score;
       }
 
+      // Собираем награды для показа
+      let dungeonRewards = {
+        gold: 0,
+        experience: 0,
+        items: []
+      };
+
       // Добавляем награды
       dungeon.rewards.forEach(reward => {
         const chance = Math.random();
         if (chance <= reward.chance) {
           if (reward.type === 'gold') {
             gameState.addGold(reward.value);
+            dungeonRewards.gold += reward.value;
           } else if (reward.type === 'experience') {
             gameState.addExperience(reward.value);
+            dungeonRewards.experience += reward.value;
           } else if (reward.type === 'item') {
             // Добавляем предмет в инвентарь
-            gameState.addItems([{
+            const item = {
               name: reward.name,
               rarity: reward.rarity || 'common',
               icon: '⚔️',
               image: null
-            }]);
+            };
+            gameState.addItems([item]);
+            dungeonRewards.items.push(item);
             Logger.log(`⚔️ Получен предмет: ${reward.name} (${reward.rarity})`);
           }
         }
       });
+
+      // Показываем модальное окно с награднми подземелья
+      this.showDungeonCompletionRewards(dungeonRewards, dungeon);
+    } else {
+      // Очищаем состояние подземелья
+      gameState.dungeonState = null;
+      // Закрываем боевой интерфейс и возвращаемся на экран подземелий
+      this.returnToDungeons();
     }
+  }
 
-    // Очищаем состояние подземелья
-    gameState.dungeonState = null;
-
-    // Закрываем боевой интерфейс и возвращаемся на экран подземелий
-    this.returnToDungeons();
+  showDungeonCompletionRewards(rewards, dungeon) {
+    let modal = document.getElementById('dungeonRewardsModal');
+    if (!modal) {
+      // Создаем модальное окно если его нет
+      const newModal = document.createElement('div');
+      newModal.id = 'dungeonRewardsModal';
+      newModal.className = 'modal modal--reward';
+      newModal.innerHTML = `
+        <div class="modal__overlay"></div>
+        <div class="modal__content modal__content--reward">
+          <div class="modal__header modal__header--victory">
+            <h2>Подземелье завершено!</h2>
+            <p class="modal__subtitle">${dungeon.name}</p>
+          </div>
+          <div class="modal__body">
+            <div class="rewards-container">
+              ${rewards.gold > 0 ? `<div class="reward-item reward-gold">💰 Золото: +${rewards.gold}</div>` : ''}
+              ${rewards.experience > 0 ? `<div class="reward-item reward-xp">⭐ Опыт: +${rewards.experience}</div>` : ''}
+              ${rewards.items.length > 0 ? `
+                <div class="reward-items">
+                  <h4>Предметы:</h4>
+                  ${rewards.items.map(item => `
+                    <div class="reward-item reward-item-drop" data-rarity="${item.rarity}">
+                      ${item.icon} ${item.name}
+                    </div>
+                  `).join('')}
+                </div>
+              ` : ''}
+            </div>
+          </div>
+          <div class="modal__footer">
+            <button class="btn btn-primary" id="closeRewardsBtn">Продолжить</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(newModal);
+      modal = newModal;
+    }
+    
+    // Показываем модальное окно
+    modal.style.display = 'flex';
+    
+    // Обновляем содержимое
+    const content = modal.querySelector('.modal__content');
+    content.innerHTML = `
+      <div class="modal__header modal__header--victory">
+        <h2>Подземелье завершено!</h2>
+        <p class="modal__subtitle">${dungeon.name}</p>
+      </div>
+      <div class="modal__body">
+        <div class="rewards-container">
+          ${rewards.gold > 0 ? `<div class="reward-item reward-gold">💰 Золото: +${rewards.gold}</div>` : ''}
+          ${rewards.experience > 0 ? `<div class="reward-item reward-xp">⭐ Опыт: +${rewards.experience}</div>` : ''}
+          ${rewards.items.length > 0 ? `
+            <div class="reward-items">
+              <h4>Предметы:</h4>
+              ${rewards.items.map(item => `
+                <div class="reward-item reward-item-drop" data-rarity="${item.rarity}">
+                  ${item.icon} ${item.name}
+                </div>
+              `).join('')}
+            </div>
+          ` : ''}
+        </div>
+      </div>
+      <div class="modal__footer">
+        <button class="btn btn-primary" id="closeRewardsBtn">Продолжить</button>
+      </div>
+    `;
+    
+    // Обработчик закрытия
+    const closeBtn = document.getElementById('closeRewardsBtn');
+    closeBtn.onclick = () => {
+      modal.style.display = 'none';
+      gameState.dungeonState = null;
+      this.returnToDungeons();
+    };
   }
 
   /**
