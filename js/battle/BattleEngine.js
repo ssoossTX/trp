@@ -8,6 +8,7 @@ import { calculateDamage } from '../utils/helpers.js';
 import { GAME_CONSTANTS, APP_EVENTS } from '../utils/constants.js';
 import { BattleUI } from './BattleUI.js';
 import { UIManager } from '../ui/UIManager.js';
+import { DungeonsManager } from '../locations/DungeonsManager.js';
 
 export class BattleEngine {
   /**
@@ -231,6 +232,21 @@ export class BattleEngine {
    * Выход из боя
    */
   static fleeBattle() {
+    // Проверяем, находимся ли мы в подземелье
+    if (gameState.dungeonState) {
+      // В подземелье не можем просто выйти - это поражение
+      if (confirm('Вы собираетесь покинуть подземелье? Это будет считаться поражением.')) {
+        // Помечаем поражение
+        gameState.battle.isInBattle = false;
+        gameState.battle.playerHp = 0;
+        
+        // Обрабатываем поражение в подземелье
+        DungeonsManager.onDungeonPlayerDefeated();
+      }
+      return;
+    }
+
+    // Обычный выход из боя (не подземелье)
     gameState.endBattle();
     
     // Восстанавливаем ресурсы при выходе с локации

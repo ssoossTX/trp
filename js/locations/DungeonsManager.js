@@ -5,6 +5,7 @@ import { DOMManager } from '../core/DOMManager.js';
 import { gameState } from '../core/GameState.js';
 import { dataLoader } from '../data/DataLoader.js';
 import { Logger } from '../utils/helpers.js';
+import { BattleEngine } from '../battle/BattleEngine.js';
 
 export class DungeonsManager {
   static dungeons = [];
@@ -314,6 +315,8 @@ export class DungeonsManager {
     gameState.dungeonState = {
       currentDungeonId: dungeonId,
       startTime: Date.now(),
+      currentEnemyIndex: 0,
+      dungeonEnemies: this.generateDungeonEnemies(dungeon),
       returnPoint: {
         location: gameState.currentTab,
         playerState: JSON.parse(JSON.stringify(gameState.player))
@@ -325,25 +328,169 @@ export class DungeonsManager {
     // Закрываем детали и список
     this.closeDungeonDetails();
     
-    // TODO: Переход в режим подземелья (боевая система или исследование)
-    alert(`Начало подземелья: ${dungeon.name}\n\nЭта система будет интегрирована с боевой системой.`);
+    // Переходим в режим боевой системы подземелья
+    this.startDungeonBattle();
   }
 
   /**
-   * Завершает подземелье
+   * Генерирует врагов для подземелья на основе данных
    */
-  static completeDungeon(dungeonId, success, score = 0) {
-    const dungeon = this.dungeons.find(d => d.id === dungeonId);
-    if (!dungeon) return;
+  static generateDungeonEnemies(dungeon) {
+    return dungeon.enemies.map(enemyName => {
+      // Удаляем тег (босс) если есть
+      const cleanName = enemyName.replace(' (босс)', '');
+      const isBoss = enemyName.includes('(босс)');
+      
+      // Базовые параметры врага зависят от сложности подземелья
+      let levelBonus = 0;
+      if (dungeon.difficulty === 'L1') levelBonus = 0;
+      else if (dungeon.difficulty === 'L2') levelBonus = 4;
+      else if (dungeon.difficulty === 'L3') levelBonus = 9;
+      
+      const enemyLevel = dungeon.requiredLevel + levelBonus;
+      const baseMultiplier = 1 + (enemyLevel - 1) * 0.5;
+      
+      // Для босса применяем множитель 1.5x
+      const hpMultiplier = isBoss ? 1.5 : 1;
+      const damageMultiplier = isBoss ? 1.3 : 1;
+      
+      return {
+        id: `${dungeon.id}_${cleanName.toLowerCase().replace(/\s+/g, '_')}`,
+        name: cleanName,
+        level: enemyLevel,
+        isBoss: isBoss,
+        maxHp: Math.round(30 * baseMultiplier * hpMultiplier),
+        currentHp: Math.round(30 * baseMultiplier * hpMultiplier),
+        attack: Math.round(5 * baseMultiplier * damageMultiplier),
+        defense: Math.round(2 * baseMultiplier),
+        reward: {
+          gold: Math.round(50 * baseMultiplier * (isBoss ? 2 : 1)),
+          experience: Math.round(25 * baseMultiplier * (isBoss ? 3 : 1))
+        }
+      };
+    });
+  }
 
-    const progress = gameState.player.dungeonsProgress[dungeonId];
-    if (!progress) return;
-
-    // Записываем попытку
-    if (!progress.attempts) {
-      progress.attempts = [];
+  /**
+   * Запускает боевую систему для подземелья
+   */
+  static startDungeonBattle() {
+    if (!gameState.dungeonState || gameState.dungeonState.dungeonEnemies.length === 0) {
+      this.completeDungeonBattle();
+      return;
     }
 
+    // Получаем текущего врага
+    const currentEnemyIndex = gameState.dungeonState.currentEnemyIndex;
+    const enemy = gameState.dungeonState.dungeonEnemies[currentEnemyIndex];
+    
+    if (!enemy) {
+      this.completeDungeonBattle();
+      return;
+    }
+
+    // Инициализируем боевую систему с врагом подземелья
+    const dungeonId = gameState.dungeonState.currentDungeonId;
+    const dungeon = this.dungeons.find(d => d.id === dungeonId);
+    
+    Logger.log(`⚔️ Враг в подземелье: ${enemy.name} (${currentEnemyIndex + 1}/${gameState.dungeonState.dungeonEnemies.length})`);
+    
+    // Инициализируем боевую сессию
+    BattleEngine.initiateBattle(enemy, dungeonId, gameState.player.activeAbilities);
+    
+    // Переопределяем обработчик победы для обработки логики подземелья
+    const originalPlayerWins = BattleEngine.playerWins;
+    BattleEngine.playerWins = function() {
+      originalPlayerWins.call(this);
+      DungeonsManager.onDungeonEnemyDefeated();
+    };
+
+    // Переопределяем обработчик поражения для обработки логики подземелья
+    const originalPlayerLoses = BattleEngine.playerLoses;
+    BattleEngine.playerLoses = function() {
+      originalPlayerLoses.call(this);
+      DungeonsManager.onDungeonPlayerDefeated();
+    };
+  }
+
+  /**
+   * Вызывается при победе над врагом в подземелье
+   */
+  static onDungeonEnemyDefeated() {
+    if (!gameState.dungeonState) return;
+
+    gameState.dungeonState.currentEnemyIndex++;
+    
+    const dungeonId = gameState.dungeonState.currentDungeonId;
+    const dungeon = this.dungeons.find(d => d.id === dungeonId);
+    
+    // Если есть еще враги - переходим к следующему
+    if (gameState.dungeonState.currentEnemyIndex < gameState.dungeonState.dungeonEnemies.length) {
+      Logger.log(`✓ Враг повергнут! Подготовка к следующему бою...`);
+      
+      // Небольшое восстановление здоровья и маны между боями (80%)
+      gameState.battle.playerHp = Math.round(gameState.player.maxHp * 0.8);
+      gameState.battle.playerMana = Math.round(gameState.player.maxMana * 0.8);
+      
+      // Даем игроку возможность подготовиться
+      setTimeout(() => {
+        this.startDungeonBattle();
+      }, 2000);
+    } else {
+      // Все враги повергнуты - подземелье пройдено!
+      Logger.log(`🎉 Подземелье ${dungeon.name} пройдено!`);
+      setTimeout(() => {
+        this.completeDungeonBattle(true);
+      }, 2000);
+    }
+  }
+
+  /**
+   * Вызывается при поражении игрока в подземелье
+   */
+  static onDungeonPlayerDefeated() {
+    if (!gameState.dungeonState) return;
+
+    const dungeonId = gameState.dungeonState.currentDungeonId;
+    const dungeon = this.dungeons.find(d => d.id === dungeonId);
+    
+    Logger.log(`💀 Вы были повергнуты! Подземелье не пройдено.`);
+    
+    setTimeout(() => {
+      this.completeDungeonBattle(false);
+    }, 2000);
+  }
+
+  /**
+   * Завершает прохождение подземелья и возвращает в основной интерфейс
+   */
+  static completeDungeonBattle(success = false) {
+    if (!gameState.dungeonState) return;
+
+    const dungeonId = gameState.dungeonState.currentDungeonId;
+    const dungeon = this.dungeons.find(d => d.id === dungeonId);
+    
+    if (!dungeon) return;
+
+    // Записываем результат в прогресс
+    const progress = gameState.player.dungeonsProgress[dungeonId];
+    if (!progress) {
+      gameState.player.dungeonsProgress[dungeonId] = {
+        started: false,
+        completed: false,
+        attempts: []
+      };
+    }
+
+    // Вычисляем очки за подземелье
+    let score = 0;
+    if (success) {
+      const timeBonus = Math.max(0, 1000 - (Date.now() - gameState.dungeonState.startTime) / 100);
+      const healthBonus = (gameState.battle.playerHp / gameState.player.maxHp) * 500;
+      score = Math.round(500 + timeBonus + healthBonus);
+    }
+
+    // Записываем попытку
     progress.attempts.push({
       date: new Date().toISOString(),
       completed: success,
@@ -364,20 +511,20 @@ export class DungeonsManager {
         if (chance <= reward.chance) {
           if (reward.type === 'gold') {
             gameState.addGold(reward.value);
+            Logger.log(`💰 +${reward.value} золота`);
           } else if (reward.type === 'experience') {
             gameState.addExperience(reward.value);
+            Logger.log(`⭐ +${reward.value} опыта`);
           }
-          // TODO: Обработка предметов в инвентарь
         }
       });
-
-      Logger.log(`✓ Подземелье ${dungeon.name} пройдено!`);
     }
 
-    // Возвращаемся в основную игру если сохранено состояние
-    if (gameState.dungeonState && gameState.dungeonState.returnPoint) {
-      // TODO: Восстановить состояние игры
-    }
+    // Очищаем состояние подземелья
+    gameState.dungeonState = null;
+
+    // Закрываем боевой интерфейс и возвращаемся на экран подземелий
+    this.returnToDungeons();
   }
 
   /**
@@ -438,6 +585,45 @@ export class DungeonsManager {
 
     DOMManager.setText('totalDungeonsCompleted', totalCompleted);
     DOMManager.setText('bestDungeonScore', bestScore > 0 ? bestScore : '-');
+  }
+
+  /**
+   * Возвращает игрока на экран подземелий из боевой системы
+   */
+  static returnToDungeons() {
+    // Скрываем боевой интерфейс
+    const battleScreen = DOMManager.getElementById('battle');
+    if (battleScreen) {
+      battleScreen.style.display = 'none';
+    }
+
+    // Показываем экран подземелий
+    const dungeonsTab = DOMManager.getElementById('dungeons');
+    if (dungeonsTab) {
+      dungeonsTab.style.display = 'block';
+    }
+
+    // Обновляем список подземелий и статистику
+    this.renderDungeonsList();
+    this.updateStats();
+
+    // Показываем уведомление о завершении
+    const dungeonId = gameState.dungeonState?.currentDungeonId;
+    if (dungeonId) {
+      const dungeon = this.dungeons.find(d => d.id === dungeonId);
+      const progress = gameState.player.dungeonsProgress[dungeonId];
+      
+      if (dungeon && progress) {
+        if (progress.attempts && progress.attempts.length > 0) {
+          const lastAttempt = progress.attempts[progress.attempts.length - 1];
+          if (lastAttempt.completed) {
+            Logger.log(`✨ Подземелье ${dungeon.name} успешно пройдено! Очки: ${lastAttempt.score}`);
+          } else {
+            Logger.log(`⚠️ Подземелье ${dungeon.name} не пройдено. Попробуй еще раз!`);
+          }
+        }
+      }
+    }
   }
 }
 
