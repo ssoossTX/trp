@@ -8,7 +8,7 @@
       "name": "Зелье восстановления HP",
       "quantity": 1,
       "rarity": "uncommon",
-      "icon": "🧪",
+      "image": "здоровья.png",
       "type": "consumable",
       "hp": 100
     },

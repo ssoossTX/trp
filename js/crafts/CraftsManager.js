@@ -198,7 +198,7 @@ export class CraftsManager {
 
           <div class="craft-card__output">
             <div class="craft-card__output-item">
-              <span class="craft-card__output-icon">${craft.output.icon}</span>
+              ${craft.output.image ? `<img src="/trp/assets/img/${craft.output.image}" alt="${craft.output.name}" class="craft-card__output-image">` : `<span class="craft-card__output-icon">${craft.output.icon}</span>`}
               <div class="craft-card__output-info">
                 <div class="craft-card__output-name">${craft.output.name}</div>
                 <div class="craft-card__output-quantity">x${craft.output.quantity}</div>

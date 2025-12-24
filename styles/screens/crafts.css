@@ -109,6 +109,13 @@
   flex-shrink: 0;
 }
 
+.craft-card__output-image {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
 .craft-card__output-info {
   color: white;
 }
