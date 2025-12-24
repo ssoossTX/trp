@@ -107,7 +107,7 @@ export class InventoryManager {
         
         <div class="item-info__header item-info__header--${item.rarity || 'common'}">
           <div class="item-info__icon">
-            ${item.image ? `<img src="/trp/assets/img/items/${item.image}" alt="${item.name}">` : `<span style="font-size: 3rem;">${item.icon}</span>`}
+            ${item.image ? `<img src="/trp/assets/img/${item.image}" alt="${item.name}">` : `<span style="font-size: 3rem;">${item.icon}</span>`}
           </div>
           <div class="item-info__title">
             <h2>${item.name}</h2>
