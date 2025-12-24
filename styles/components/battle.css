@@ -40,12 +40,10 @@
   justify-content: center;
   align-items: center;
   padding: var(--spacing-md);
-  flex: 1;
 }
 
 .battle__section--enemy {
-  border-bottom: 2px solid var(--light-bg);
-  background: rgba(248, 249, 250, 0.5);
+  background: transparent;
 }
 
 .battle__section--player {
