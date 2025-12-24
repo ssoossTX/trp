@@ -4,7 +4,7 @@
     "title": "Пройти подземелье развалины в лесу",
     "description": "Исследуй старые развалины в лесу и победи всех врагов",
     "type": "dungeon",
-    "requiredDungeonId": "dungeon_forest_ruins",
+    "requiredDungeonId": "forest_ruins",
     "icon": "🗺️",
     "rewards": {
       "experience": 100,
