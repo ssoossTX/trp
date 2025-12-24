@@ -175,11 +175,19 @@ export class ClassSelectionManager {
    * Открывает модаль выбора способности
    */
   static openAbilityModal() {
-    if (!selectedClass) return;
+    if (!selectedClass) {
+      console.error('Класс не выбран');
+      return;
+    }
 
     selectedAbility = null;
 
     const abilityOptions = DOMManager.getElementById('abilityOptions');
+    if (!abilityOptions) {
+      console.error('Элемент abilityOptions не найден');
+      return;
+    }
+
     const abilities = dataLoader.getAbilities();
     const randomAbilities = shuffleArray(abilities).slice(0, 3);
 
@@ -193,37 +201,13 @@ export class ClassSelectionManager {
 
     DOMManager.disableButton('confirmBtn');
     
-    // Создаём модаль если её нет
-    let abilityModal = DOMManager.getElementById('abilityModal');
-    if (!abilityModal) {
-      const container = document.createElement('div');
-      container.id = 'abilityModal';
-      container.className = 'modal';
-      container.innerHTML = `
-        <div class="modal__content">
-          <button type="button" class="modal__close" id="abilityCloseBtn" aria-label="Закрыть окно">&times;</button>
-          <h2>Выберите начальную способность</h2>
-          <div class="ability__options" id="abilityOptions"></div>
-          <div class="modal__buttons">
-            <button class="confirm-btn" id="confirmBtn" disabled>Подтвердить выбор</button>
-            <button class="cancel-btn" id="cancelBtn">Отмена</button>
-          </div>
-        </div>
-      `;
-      document.body.appendChild(container);
-      abilityModal = container;
-      
-      // Прикрепляем обработчики
-      const confirmBtn = abilityModal.querySelector('#confirmBtn');
-      const cancelBtn = abilityModal.querySelector('#cancelBtn');
-      const closeBtn = abilityModal.querySelector('#abilityCloseBtn');
-      
-      if (confirmBtn) confirmBtn.addEventListener('click', () => this.confirmSelection());
-      if (cancelBtn) cancelBtn.addEventListener('click', () => this.closeAbilityModal());
-      if (closeBtn) closeBtn.addEventListener('click', () => this.closeAbilityModal());
+    // Открываем модаль
+    const abilityModal = DOMManager.getElementById('abilityModal');
+    if (abilityModal) {
+      abilityModal.classList.add('active');
     }
-    
-    DOMManager.openModal('abilityModal');
+
+    console.log('Открыта модаль выбора способности');
   }
 
   /**
@@ -267,7 +251,40 @@ export class ClassSelectionManager {
    * Прикрепляет обработчики событий
    */
   static attachEventListeners() {
-    // Основные обработчики будут прикреплены при открытии модалей
+    // Обработчики для модального окна выбора способности
+    const confirmBtn = DOMManager.getElementById('confirmBtn');
+    const cancelBtn = DOMManager.getElementById('cancelBtn');
+    const abilityCloseBtn = DOMManager.getElementById('abilityCloseBtn');
+
+    if (confirmBtn) {
+      confirmBtn.addEventListener('click', () => this.confirmSelection());
+    }
+    if (cancelBtn) {
+      cancelBtn.addEventListener('click', () => this.closeAbilityModal());
+    }
+    if (abilityCloseBtn) {
+      abilityCloseBtn.addEventListener('click', () => this.closeAbilityModal());
+    }
+
+    // Закрытие модали по клику на фон
+    const abilityModal = DOMManager.getElementById('abilityModal');
+    if (abilityModal) {
+      abilityModal.addEventListener('click', (e) => {
+        if (e.target === abilityModal) {
+          this.closeAbilityModal();
+        }
+      });
+    }
+
+    // Закрытие по Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const modal = DOMManager.getElementById('abilityModal');
+        if (modal && modal.classList.contains('active')) {
+          this.closeAbilityModal();
+        }
+      }
+    });
   }
 }
 
