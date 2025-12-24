@@ -174,6 +174,13 @@
   margin: var(--spacing-md) 0;
 }
 
+/* Left Column */
+.battle__left-column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
 /* Attack Button */
 .battle__btn--attack {
   flex: 0 0 auto;
@@ -194,7 +201,7 @@
   display: flex;
   flex-direction: row;
   gap: var(--spacing-sm);
-  margin-left: auto;
+  margin-left: 0;
 }
 
 .battle__btn--potion {
@@ -449,8 +456,8 @@
   }
 
   .battle__enemy-image {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
   }
 
   .battle__enemy-name {
