@@ -5,6 +5,7 @@ import { DOMManager } from '../core/DOMManager.js';
 import { gameState } from '../core/GameState.js';
 import { calculatePercent } from '../utils/helpers.js';
 import { GAME_CONSTANTS } from '../utils/constants.js';
+import { UIManager } from '../ui/UIManager.js';
 
 export class BattleUI {
   /**
@@ -62,6 +63,9 @@ export class BattleUI {
     const playerManaPercent = calculatePercent(playerMana, playerMaxMana);
     DOMManager.setWidth('playerManaFill', playerManaPercent + '%');
     DOMManager.setText('playerManaText', `${playerMana}/${playerMaxMana}`);
+    
+    // Обновляем кнопки зелий
+    UIManager.updatePotionButtons();
   }
 
   /**

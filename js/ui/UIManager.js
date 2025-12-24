@@ -336,7 +336,10 @@ export class UIManager {
     if (healed > 0) {
       BattleUI.addLog(`🩹 Использовано зелье HP! Восстановлено ${healed} HP`, 'buff');
       BattleUI.update();
+      this.updatePotionButtons();
       BattleEngine.enemyAttack();
+    } else if (gameState.battle.potionHpCooldown > 0) {
+      BattleUI.addLog(`🩹 Зелье HP на кулдауне! Осталось ${gameState.battle.potionHpCooldown} ходов`, 'error');
     }
   }
 
@@ -348,7 +351,38 @@ export class UIManager {
     if (restored > 0) {
       BattleUI.addLog(`💙 Использовано зелье Маны! Восстановлено ${restored} маны`, 'buff');
       BattleUI.update();
+      this.updatePotionButtons();
       BattleEngine.enemyAttack();
+    } else if (gameState.battle.potionManaCooldown > 0) {
+      BattleUI.addLog(`💙 Зелье Маны на кулдауне! Осталось ${gameState.battle.potionManaCooldown} ходов`, 'error');
+    }
+  }
+
+  /**
+   * Обновляет состояние кнопок зелий
+   */
+  static updatePotionButtons() {
+    const hpBtn = DOMManager.getElementById('hpPotionBtn');
+    const manaBtn = DOMManager.getElementById('manaPotionBtn');
+
+    if (hpBtn) {
+      if (gameState.battle.potionHpCooldown > 0) {
+        hpBtn.disabled = true;
+        hpBtn.textContent = `🩹 HP (${gameState.battle.potionHpCooldown})`;
+      } else {
+        hpBtn.disabled = false;
+        hpBtn.textContent = '🩹 HP';
+      }
+    }
+
+    if (manaBtn) {
+      if (gameState.battle.potionManaCooldown > 0) {
+        manaBtn.disabled = true;
+        manaBtn.textContent = `💙 Мана (${gameState.battle.potionManaCooldown})`;
+      } else {
+        manaBtn.disabled = false;
+        manaBtn.textContent = '💙 Мана';
+      }
     }
   }
 

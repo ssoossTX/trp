@@ -49,7 +49,9 @@ class GameState {
       weaknessDamageReduction: 0.5, // Враг наносит 50% урона
       // Зелья
       potionHpUsed: 0, // Кол-во использованных HP зелий в этой битве
-      potionManaUsed: 0 // Кол-во использованных Mana зелий в этой битве
+      potionManaUsed: 0, // Кол-во использованных Mana зелий в этой битве
+      potionHpCooldown: 0, // Кулдаун HP зелья
+      potionManaCooldown: 0 // Кулдаун Mana зелья
     };
 
     this.currentTab = GAME_CONSTANTS.TABS.WORLD;
@@ -165,6 +167,8 @@ class GameState {
     // Сбрасываем счетчики зелий
     this.battle.potionHpUsed = 0;
     this.battle.potionManaUsed = 0;
+    this.battle.potionHpCooldown = 0;
+    this.battle.potionManaCooldown = 0;
 
     Logger.log(`Бой начался с ${enemy.name} в локации ${locationId}`);
     Logger.log(`Активные способности: ${activeAbilities.map(a => a.name).join(', ')}`);
@@ -721,10 +725,19 @@ class GameState {
    */
   useHpPotion(amount = GAME_CONSTANTS.POTION_HP_RESTORE) {
     if (!this.battle.isInBattle) return 0;
+    
+    // Проверяем кулдаун
+    if (this.battle.potionHpCooldown > 0) {
+      Logger.log(`🩹 Зелье HP на кулдауне! Осталось ${this.battle.potionHpCooldown} ходов`);
+      return 0;
+    }
 
     const oldHp = this.battle.playerHp;
     this.battle.playerHp = Math.min(this.battle.playerHp + amount, this.battle.playerMaxHp);
     const healed = this.battle.playerHp - oldHp;
+    
+    // Устанавливаем кулдаун (4 хода)
+    this.battle.potionHpCooldown = 4;
     
     Logger.log(`🩹 Использовано зелье HP! Восстановлено ${healed} HP`);
     return healed;
@@ -737,13 +750,35 @@ class GameState {
    */
   useManaPotion(amount = GAME_CONSTANTS.POTION_MANA_RESTORE) {
     if (!this.battle.isInBattle) return 0;
+    
+    // Проверяем кулдаун
+    if (this.battle.potionManaCooldown > 0) {
+      Logger.log(`💙 Зелье Маны на кулдауне! Осталось ${this.battle.potionManaCooldown} ходов`);
+      return 0;
+    }
 
     const oldMana = this.battle.playerMana;
     this.battle.playerMana = Math.min(this.battle.playerMana + amount, this.battle.playerMaxMana);
     const restored = this.battle.playerMana - oldMana;
     
+    // Устанавливаем кулдаун (4 хода)
+    this.battle.potionManaCooldown = 4;
+    
     Logger.log(`💙 Использовано зелье Маны! Восстановлено ${restored} маны`);
-    return restored;  }
+    return restored;
+  }
+
+  /**
+   * Уменьшает кулдауны зелий
+   */
+  decrementPotionCooldowns() {
+    if (this.battle.potionHpCooldown > 0) {
+      this.battle.potionHpCooldown--;
+    }
+    if (this.battle.potionManaCooldown > 0) {
+      this.battle.potionManaCooldown--;
+    }
+  }
 }
 
 export const gameState = new GameState();

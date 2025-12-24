@@ -98,6 +98,9 @@ export class BattleEngine {
     
     // Уменьшаем кулдауны способностей в конце хода врага
     gameState.decrementAbilityCooldowns();
+    
+    // Уменьшаем кулдауны зелий
+    gameState.decrementPotionCooldowns();
 
     if (gameState.battle.playerHp <= 0) {
       this.playerLoses();
