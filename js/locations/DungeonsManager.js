@@ -507,6 +507,15 @@ export class DungeonsManager {
             gameState.addGold(reward.value);
           } else if (reward.type === 'experience') {
             gameState.addExperience(reward.value);
+          } else if (reward.type === 'item') {
+            // Добавляем предмет в инвентарь
+            gameState.addItems([{
+              name: reward.name,
+              rarity: reward.rarity || 'common',
+              icon: '⚔️',
+              image: null
+            }]);
+            Logger.log(`⚔️ Получен предмет: ${reward.name} (${reward.rarity})`);
           }
         }
       });
