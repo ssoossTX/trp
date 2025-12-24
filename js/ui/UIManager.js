@@ -26,12 +26,17 @@ export class UIManager {
   /**
    * Инициализирует UI основной игры
    */
-  static initGameUI() {
+  static async initGameUI() {
     console.log('[UIManager] Initializing game UI');
     this.updatePlayerProfile();
     this.initTabs();
     this.attachGameEventListeners();
     StatsUI.init();
+    
+    // Инициализируем все системы
+    await DungeonsManager.init();
+    await QuestsManager.init();
+    await CraftsManager.init();
   }
 
   /**
@@ -163,25 +168,17 @@ export class UIManager {
       LocationsManager.renderLocations();
     }
     
-    // Инициализируем подземелья при первом открытии вкладки
+    // Обновляем представление при открытии вкладок (системы уже инициализированы при загрузке)
     if (tabName === 'dungeons') {
-      DungeonsManager.init().then(() => {
-        DungeonsManager.updateStats();
-      });
+      DungeonsManager.updateStats();
     }
 
-    // Инициализируем квесты при первом открытии вкладки
     if (tabName === 'quests') {
-      QuestsManager.init().then(() => {
-        QuestsManager.renderQuestsList();
-      });
+      QuestsManager.renderQuestsList();
     }
 
-    // Инициализируем крафты при первом открытии вкладки
     if (tabName === 'craft') {
-      CraftsManager.init().then(() => {
-        CraftsManager.renderCraftsList();
-      });
+      CraftsManager.renderCraftsList();
     }
     
     // Обновляем профиль при переходе на вкладку Профиля
