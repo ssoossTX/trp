@@ -431,13 +431,13 @@ export class DungeonsManager {
       // Даем игроку возможность подготовиться
       setTimeout(() => {
         this.startDungeonBattle();
-      }, 2000);
+      }, 500);
     } else {
       // Все враги повергнуты - подземелье пройдено!
       Logger.log(`🎉 Подземелье ${dungeon.name} пройдено!`);
       setTimeout(() => {
         this.completeDungeonBattle(true);
-      }, 2000);
+      }, 500);
     }
   }
 
