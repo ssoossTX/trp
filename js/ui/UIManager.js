@@ -8,6 +8,7 @@ import { BattleUI } from '../battle/BattleUI.js';
 import { dataLoader } from '../data/DataLoader.js';
 import { LocationsManager } from '../locations/LocationsManager.js';
 import { DungeonsManager } from '../locations/DungeonsManager.js';
+import { QuestsManager } from '../quests/QuestsManager.js';
 import { GAME_CONSTANTS } from '../utils/constants.js';
 import { Logger } from '../utils/helpers.js';
 import { StatsUI } from './StatsUI.js';
@@ -165,6 +166,13 @@ export class UIManager {
       DungeonsManager.init().then(() => {
         DungeonsManager.updateStats();
       });
+
+    // Инициализируем квесты при первом открытии вкладки
+    if (tabName === 'quests') {
+      QuestsManager.init().then(() => {
+        QuestsManager.renderQuestsList();
+      });
+    }
     }
     
     // Обновляем профиль при переходе на вкладку Профиля

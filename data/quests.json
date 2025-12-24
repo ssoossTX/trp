@@ -1,0 +1,16 @@
+[
+  {
+    "id": "quest_forest_ruins",
+    "title": "Пройти подземелье развалины в лесу",
+    "description": "Исследуй старые развалины в лесу и победи всех врагов",
+    "type": "dungeon",
+    "requiredDungeonId": "dungeon_forest_ruins",
+    "icon": "🗺️",
+    "rewards": {
+      "experience": 100,
+      "gold": 100
+    },
+    "difficulty": "easy",
+    "order": 1
+  }
+]

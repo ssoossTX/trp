@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="styles/components/battle.css">
     <link rel="stylesheet" href="styles/screens/class-selection.css">
     <link rel="stylesheet" href="styles/screens/game.css">
+    <link rel="stylesheet" href="styles/screens/quests.css">
+    <link rel="stylesheet" href="styles/screens/dungeons.css">
 </head>
 <body>
     <!-- Loading Screen -->
@@ -203,9 +205,10 @@
                     <p>Различные задания от жителей мира. Выполняйте их для получения опыта, золота и репутации.</p>
                 </div>
                 <div class="content-block">
-                    <h2>Активные квесты</h2>
-                    <p><strong>⚔️ Истребитель волков:</strong> Уничтожить 10 волков в лесу. Награда: 50 золота.</p>
-                    <p><strong>🔍 Потерянное кольцо:</strong> Найти кольцо в склепе. Награда: 100 золота, редкий предмет.</p>
+                    <h2>Ваши квесты</h2>
+                    <div class="quests-list" id="questsList">
+                        <!-- Загружается динамически -->
+                    </div>
                 </div>
             </div>
 

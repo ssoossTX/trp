@@ -9,6 +9,7 @@ class DataLoader {
     this.locations = null;
     this.abilities = null;
     this.dungeons = null;
+    this.quests = null;
     this.loaded = false;
   }
 
@@ -20,17 +21,19 @@ class DataLoader {
     try {
       Logger.log('Начинаю загрузку данных...');
       
-      const [classesData, locationsData, abilitiesData, dungeonsData] = await Promise.all([
+      const [classesData, locationsData, abilitiesData, dungeonsData, questsData] = await Promise.all([
         loadJSON('data/classes.json'),
         loadJSON('data/locations.json'),
         loadJSON('data/abilities.json'),
-        loadJSON('data/dungeons.json')
+        loadJSON('data/dungeons.json'),
+        loadJSON('data/quests.json')
       ]);
 
       this.classes = classesData;
       this.locations = locationsData;
       this.abilities = abilitiesData;
       this.dungeons = dungeonsData;
+      this.quests = questsData;
       this.loaded = true;
 
       Logger.log('Все данные успешно загружены');
@@ -128,6 +131,26 @@ class DataLoader {
    */
   getDungeonById(dungeonId) {
     return this.dungeons?.find(d => d.id === dungeonId) || null;
+  }
+
+  /**
+   * Загружает все квесты
+   * @returns {Promise<Array>} Массив квестов
+   */
+  async loadQuests() {
+    if (!this.quests) {
+      this.quests = await loadJSON('data/quests.json');
+    }
+    return this.quests || [];
+  }
+
+  /**
+   * Возвращает квест по ID
+   * @param {string} questId - ID квеста
+   * @returns {Object|null} Данные квеста или null
+   */
+  getQuestById(questId) {
+    return this.quests?.find(q => q.id === questId) || null;
   }
 }
 

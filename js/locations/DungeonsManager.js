@@ -8,6 +8,7 @@ import { Logger } from '../utils/helpers.js';
 import { BattleEngine } from '../battle/BattleEngine.js';
 import { BattleUI } from '../battle/BattleUI.js';
 import { UIManager } from '../ui/UIManager.js';
+import { QuestsManager } from '../quests/QuestsManager.js';
 
 export class DungeonsManager {
   static dungeons = [];
@@ -697,6 +698,9 @@ export class DungeonsManager {
     // Обновляем интерфейс шапки (ресурсы, опыт, уровень)
     UIManager.updateResources();
     UIManager.updatePlayerProfile();
+
+    // Проверяем условия выполнения квестов
+    QuestsManager.checkQuestConditions();
 
     // Показываем уведомление о завершении
     const dungeonId = gameState.dungeonState?.currentDungeonId;
