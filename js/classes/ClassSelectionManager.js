@@ -275,16 +275,6 @@ export class ClassSelectionManager {
         }
       });
     }
-
-    // Закрытие по Escape
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        const modal = DOMManager.getElementById('abilityModal');
-        if (modal && modal.classList.contains('active')) {
-          this.closeAbilityModal();
-        }
-      }
-    });
   }
 }
 

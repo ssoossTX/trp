@@ -191,13 +191,6 @@ export class UIManager {
    * Прикрепляет обработчики событий модалей
    */
   static attachEventListeners() {
-    // Закрытие модалей по Escape
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        DOMManager.closeAllModals();
-      }
-    });
-
     // Закрытие лут-модали по крестику (делегирование)
     document.addEventListener('click', (e) => {
       if (e.target && e.target.id === 'lootCloseBtn') {
