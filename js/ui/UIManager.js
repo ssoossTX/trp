@@ -174,7 +174,6 @@ export class UIManager {
         QuestsManager.renderQuestsList();
       });
     }
-    }
     
     // Обновляем профиль при переходе на вкладку Профиля
     if (tabName === 'profile') {
