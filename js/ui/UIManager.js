@@ -230,7 +230,6 @@ export class UIManager {
     // Обработчики для модала дропа
     const takeLootBtn = DOMManager.getElementById('takeLootBtn');
     const dropCloseBtn = DOMManager.getElementById('dropCloseBtn');
-    const dropCloseBtn2 = DOMManager.getElementById('dropCloseBtn2');
 
     if (takeLootBtn) {
       takeLootBtn.addEventListener('click', () => this.takeLoot());
@@ -238,10 +237,6 @@ export class UIManager {
 
     if (dropCloseBtn) {
       dropCloseBtn.addEventListener('click', () => this.closeLootModal());
-    }
-
-    if (dropCloseBtn2) {
-      dropCloseBtn2.addEventListener('click', () => this.closeLootModal());
     }
   }
 
