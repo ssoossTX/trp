@@ -80,6 +80,20 @@ export class BattleUI {
   }
 
   /**
+   * Отключает кнопку атаки
+   */
+  static disableAttackButton() {
+    DOMManager.disableButton('attackBtn');
+  }
+
+  /**
+   * Включает кнопку атаки
+   */
+  static enableAttackButton() {
+    DOMManager.enableButton('attackBtn');
+  }
+
+  /**
    * Отображает логи в модали
    */
   static showBattleLogs() {
