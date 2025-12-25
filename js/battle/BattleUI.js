@@ -154,6 +154,10 @@ export class BattleUI {
       <button class="battle__btn--ability" id="ability-${ability.name}" onclick="window.BattleEngine.useActiveAbility('${ability.name}')" title="${ability.name}">
         <img src="${imagePath}" alt="${ability.name}" loading="eager">
         <span class="ability-cooldown" id="cooldown-${ability.name}"></span>
+        <span class="ability-mana-cost" id="mana-${ability.name}">
+          <img src="/trp/assets/img/мана.png" alt="мана" class="ability-mana-icon">
+          <span class="ability-mana-text">${ability.manaCost}</span>
+        </span>
       </button>
     `;
     }).join('');
