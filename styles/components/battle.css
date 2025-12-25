@@ -211,10 +211,10 @@
   display: block !important;
   width: 80px !important;
   height: 80px !important;
-  background: transparent !important;
+  background: rgba(0, 0, 0, 0.2) !important;
   border-radius: 8px !important;
   overflow: visible !important;
-  border: 2px solid;
+  border: 3px solid;
   position: relative;
 }
 
