@@ -2,6 +2,7 @@
 
 .quest-card {
   background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  border: 2px solid #34495e;
   border-radius: 12px;
   padding: var(--spacing-lg);
   margin-bottom: var(--spacing-md);
@@ -10,11 +11,13 @@
 }
 
 .quest-card:hover {
+  border-color: #3498db;
   box-shadow: 0 4px 12px rgba(52, 152, 219, 0.2);
   transform: translateY(-2px);
 }
 
 .quest-card--completed {
+  border-color: #27ae60;
   background: linear-gradient(135deg, #1e5631 0%, #2d6a4f 100%);
 }
 
@@ -178,6 +181,8 @@
   top: 20px;
   right: 20px;
   background: linear-gradient(135deg, #27ae60 0%, #16a085 100%);
+  border: 2px solid #229954;
+  border-left: 4px solid #f39c12;
   border-radius: 12px;
   padding: var(--spacing-lg);
   max-width: 400px;
