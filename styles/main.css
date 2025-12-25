@@ -180,7 +180,8 @@ strong {
 /* ===== MEDIA QUERIES ===== */
 @media (max-width: 600px) {
   .screen {
-    padding: 10px;
+    padding: 0;
+    background-color: transparent;
   }
 
   h1 {
