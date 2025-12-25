@@ -441,6 +441,24 @@
   background-color: #7f8c8d;
 }
 
+/* Кнопка выхода в углу */
+.battle__btn--flee-corner {
+  position: absolute;
+  top: var(--spacing-md);
+  right: var(--spacing-md);
+  width: 50px !important;
+  height: 50px !important;
+  padding: 0 !important;
+  border-radius: 8px;
+  z-index: 100;
+}
+
+.battle__btn--flee-corner img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
 /* Common Button Styles */
 .battle__btn {
   border: none;
