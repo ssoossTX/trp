@@ -447,8 +447,8 @@
   position: absolute;
   top: var(--spacing-md);
   right: var(--spacing-md);
-  width: 100px !important;
-  height: 100px !important;
+  width: 80px !important;
+  height: 80px !important;
   padding: 0 !important;
   border-radius: 8px;
   z-index: 100;
