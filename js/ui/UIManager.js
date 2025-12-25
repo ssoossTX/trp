@@ -298,10 +298,37 @@ export class UIManager {
     const container = DOMManager.getElementById('activeAbilitiesContainer');
     if (!container) return;
 
-    container.innerHTML = abilities.map(ability => `
+    // Маппинг имён способностей на имена файлов
+    const abilityImages = {
+      // Воин
+      'Боевой клич': 'клич.jpg',
+      'Мощный удар': 'удар.jpg',
+      // Маг
+      'Огненный шар': 'огненный_шар.jpg',
+      'Магический щит': 'маг_щит.jpg',
+      // Лучник
+      'Скоростной залп': 'скорост_залп.jpg',
+      'Точный выстрел': 'точн_выстрел.jpg',
+      // Паладин
+      'Щитовой удар': 'щит_удар.jpg',
+      'Последний рубеж': 'послед_рубеж.jpg',
+      // Жрец
+      'Исцеление': 'исц.jpg',
+      'Проклятие слабости': 'прокл_слаб.jpg',
+      // Убийца
+      'Уход в тень': 'уход_тень.jpg',
+      'Быстрая атака': 'быстрая_атака.jpg'
+    };
+
+    container.innerHTML = abilities.map(ability => {
+      const imageName = abilityImages[ability.name] || 'placeholder.jpg';
+      const imagePath = `/trp/assets/img/${imageName}`;
+      return `
       <div class="ability-card ability-card--active">
         <div class="ability-card__header">
-          <div class="ability-card__icon">⚡</div>
+          <div class="ability-card__icon">
+            <img src="${imagePath}" alt="${ability.name}" class="ability-card__image">
+          </div>
           <h3 class="ability-card__title">${ability.name}</h3>
         </div>
         <p class="ability-card__description">${ability.description}</p>
@@ -316,7 +343,7 @@ export class UIManager {
           </div>
         </div>
       </div>
-    `).join('');
+    `}.join('');
   }
 
   /**
