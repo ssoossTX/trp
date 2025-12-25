@@ -448,6 +448,10 @@
   grid-template-rows: repeat(2, 1fr);
   gap: var(--spacing-xl);
   flex: 1;
+  justify-items: center;
+  align-items: center;
+  justify-content: space-evenly;
+  align-content: space-evenly;
 }
 
 .menu__btn {
