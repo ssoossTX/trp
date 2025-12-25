@@ -142,11 +142,11 @@
 }
 
 .content-block {
-  background: white;
+  background: transparent;
   border-radius: var(--radius-lg);
   padding: var(--spacing-lg);
   margin-bottom: var(--spacing-lg);
-  box-shadow: var(--shadow-md);
+  box-shadow: none;
 }
 
 .content-block h2 {
@@ -375,6 +375,11 @@
   .locations__grid {
     grid-template-columns: 1fr;
   }
+
+  .location-card {
+    padding: 0;
+    margin-bottom: var(--spacing-md);
+  }
 }
 /* Кастомный стиль скроллбара для Webkit браузеров */
 .content-area::-webkit-scrollbar {
@@ -561,8 +566,8 @@
     padding: 0;
   }
 
-  .game-screen__exit-btn {
-    width: 50px;
-    height: 50px;
+  .content-block {
+    padding: 0;
+    margin-bottom: 0;
   }
 }

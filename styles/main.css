@@ -36,11 +36,9 @@ body {
   box-sizing: border-box;
   overflow-y: auto;
   overflow-x: hidden;
-}
   display: none;
   opacity: 0;
   transition: opacity var(--transition-normal);
-  overflow-y: auto;
 }
 
 .screen.hidden {
