@@ -479,11 +479,12 @@ export class UIManager {
         QuestsManager.renderQuestsList();
         break;
       case 'craft':
-        CraftsManager.render();
+        CraftsManager.renderCraftsList();
         break;
       case 'profile':
         StatsUI.updateStatsDisplay();
-        InventoryManager.render();
+        const player = gameState.getPlayerState();
+        InventoryManager.renderInventory(player.inventory);
         break;
     }
   }
