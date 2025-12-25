@@ -165,7 +165,7 @@
   font-size: 0.85em;
 }
 
-/* Controls Row: Attack + Right Column */
+/* Controls Row: Attack + Potions */
 .battle__controls-row {
   display: flex;
   gap: var(--spacing-md);
@@ -174,12 +174,11 @@
   margin: var(--spacing-md) 0;
 }
 
-/* Right Column: Abilities + Potions */
-.battle__right-column {
+/* Left Column: Attack + Abilities */
+.battle__left-column {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-sm);
-  flex: 1;
 }
 
 /* Attack Button */
@@ -202,6 +201,7 @@
   display: flex;
   flex-direction: row;
   gap: var(--spacing-sm);
+  margin-left: auto;
 }
 
 .battle__btn--potion {
