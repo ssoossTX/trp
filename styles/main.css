@@ -22,10 +22,7 @@ body {
 body {
   font-family: var(--font-family);
   color: var(--text-primary);
-  background-color: transparent;
-  border: none;
-  margin: 0;
-  padding: 0;
+  background-color: #f5f5f5;
 }
 
 /* ===== ЭКРАНЫ И ПЕРЕХОДЫ ===== */
@@ -37,12 +34,13 @@ body {
   height: 100%;
   z-index: 1;
   box-sizing: border-box;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
   display: none;
   opacity: 0;
   transition: opacity var(--transition-normal);
-  border: none;
-  outline: none;
+  overflow-y: auto;
 }
 
 .screen.hidden {
