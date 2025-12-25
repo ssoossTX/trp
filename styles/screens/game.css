@@ -439,8 +439,8 @@
 
 .menu__buttons-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: var(--spacing-lg);
+  grid-template-columns: repeat(auto-fit, minmax(84px, 1fr));
+  gap: var(--spacing-xl);
 }
 
 .menu__btn {
@@ -448,8 +448,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--spacing-md);
-  padding: var(--spacing-lg);
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
   background: linear-gradient(135deg, var(--primary-color), #2980b9);
   color: white;
   border: none;
@@ -470,11 +470,11 @@
 }
 
 .menu__btn-icon {
-  font-size: 2em;
+  font-size: 1.4em;
 }
 
 .menu__btn-label {
-  font-size: 0.9em;
+  font-size: 0.75em;
   text-align: center;
 }
 
