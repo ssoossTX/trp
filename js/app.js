@@ -78,12 +78,13 @@ class Game {
     // Скрываем экран выбора класса
     DOMManager.hideScreen(GAME_CONSTANTS.CLASS_SELECTION_SCREEN_ID);
 
-    // Показываем основную игру
-    DOMManager.showScreen(GAME_CONSTANTS.MAIN_GAME_SCREEN_ID);
-
     // Инициализируем основную игру
     UIManager.initGameUI();
     LocationsManager.init();
+
+    // Показываем главное меню
+    UIManager.showMainMenu();
+    UIManager.initMenuNavigation();
 
     // Скрываем экран загрузки
     if (loadingScreen) loadingScreen.classList.remove('active');

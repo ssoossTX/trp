@@ -61,90 +61,99 @@
         </div>
     </div>
 
-    <!-- ===== MAIN GAME SCREEN ===== -->
-    <div class="screen hidden" id="main-game-ui">
-        <!-- Header with Resources -->
-        <div class="game__header">
-            <div class="game__title">⚔️ Путешествие начинается</div>
-            <div class="game__resources">
-                <div class="resource-item">
-                    <span>⭐</span>
-                    <span id="header-level">Уровень: 1</span>
-                </div>
-                <div class="resource-item">
-                    <span>📊</span>
-                    <div id="header-xp-container" style="display: flex; flex-direction: column; gap: 4px;">
-                        <span id="header-xp">0/100</span>
-                        <div id="header-xp-bar" style="width: 100px; height: 8px; background: #333; border-radius: 4px; overflow: hidden;">
-                            <div id="header-xp-progress" style="height: 100%; background: linear-gradient(90deg, #4CAF50, #8BC34A); width: 0%; transition: width 0.3s ease;"></div>
+    <!-- ===== MAIN MENU SCREEN ===== -->
+    <div class="screen hidden" id="main-menu-screen">
+        <div class="menu__container">
+            <div class="menu__header">
+                <div class="game__title">⚔️ Путешествие начинается</div>
+                <div class="game__resources">
+                    <div class="resource-item">
+                        <span>⭐</span>
+                        <span id="menu-level">Уровень: 1</span>
+                    </div>
+                    <div class="resource-item">
+                        <span>📊</span>
+                        <div id="menu-xp-container" style="display: flex; flex-direction: column; gap: 4px;">
+                            <span id="menu-xp">0/100</span>
+                            <div id="menu-xp-bar" style="width: 100px; height: 8px; background: #333; border-radius: 4px; overflow: hidden;">
+                                <div id="menu-xp-progress" style="height: 100%; background: linear-gradient(90deg, #4CAF50, #8BC34A); width: 0%; transition: width 0.3s ease;"></div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="resource-item">
-                    <span>❤️</span>
-                    <span id="maxHpText">Max HP: 100</span>
-                </div>
-                <div class="resource-item">
-                    <span>✨</span>
-                    <span id="maxManaText">Max MP: 50</span>
-                </div>
-                <div class="resource-item">
-                    <span>💰</span>
-                    <span id="goldText">100</span>
-                </div>
-                <div class="player-avatar" id="playerAvatar">👤</div>
-            </div>
-        </div>
-
-        <!-- Tab Navigation -->
-        <div class="tabs__container">
-            <div class="tab active" data-tab="world">
-                <div class="tab__icon">🗺️</div>
-                <div class="tab__label">Мир</div>
-            </div>
-            <div class="tab" data-tab="dungeons">
-                <div class="tab__icon">🏚️</div>
-                <div class="tab__label">Подземелья</div>
-            </div>
-            <div class="tab" data-tab="quests">
-                <div class="tab__icon">📜</div>
-                <div class="tab__label">Квесты</div>
-            </div>
-            <div class="tab" data-tab="craft">
-                <div class="tab__icon">🔨</div>
-                <div class="tab__label">Крафт</div>
-            </div>
-            <div class="tab" data-tab="profile">
-                <div class="tab__icon">🛡️</div>
-                <div class="tab__label">Профиль</div>
-            </div>
-            <div class="tab" data-tab="settings">
-                <div class="tab__icon">⚙️</div>
-                <div class="tab__label">Настройки</div>
-            </div>
-        </div>
-
-        <!-- Content Area -->
-        <div class="content-area">
-            <!-- World Tab -->
-            <div class="tab-content active" data-tab="world">
-                <div class="content-block">
-                    <div class="world__header">
-                        <h2>Исследуемые земли</h2>
-                        <p class="subtitle world__subtitle">Выберите место для приключения</p>
+                    <div class="resource-item">
+                        <span>❤️</span>
+                        <span id="menu-maxHp">Max HP: 100</span>
                     </div>
-
-                    <div class="locations__grid" id="locationsGrid"></div>
-
-                    <p class="world-warning">
-                        ⚠️ Более опасные локации требуют более высокого уровня.
-                        Новичкам рекомендуется начать с Города.
-                    </p>
+                    <div class="resource-item">
+                        <span>✨</span>
+                        <span id="menu-maxMana">Max MP: 50</span>
+                    </div>
+                    <div class="resource-item">
+                        <span>💰</span>
+                        <span id="menu-gold">100</span>
+                    </div>
+                    <div class="player-avatar" id="menu-playerAvatar">👤</div>
                 </div>
             </div>
 
-            <!-- Dungeons Tab -->
-            <div class="tab-content" data-tab="dungeons">
+            <div class="menu__buttons-grid">
+                <button class="menu__btn" data-screen="world">
+                    <div class="menu__btn-icon">🗺️</div>
+                    <div class="menu__btn-label">Мир</div>
+                </button>
+                <button class="menu__btn" data-screen="dungeons">
+                    <div class="menu__btn-icon">🏰</div>
+                    <div class="menu__btn-label">Подземелья</div>
+                </button>
+                <button class="menu__btn" data-screen="quests">
+                    <div class="menu__btn-icon">📜</div>
+                    <div class="menu__btn-label">Квесты</div>
+                </button>
+                <button class="menu__btn" data-screen="craft">
+                    <div class="menu__btn-icon">🔨</div>
+                    <div class="menu__btn-label">Крафт</div>
+                </button>
+                <button class="menu__btn" data-screen="profile">
+                    <div class="menu__btn-icon">🛡️</div>
+                    <div class="menu__btn-label">Профиль</div>
+                </button>
+                <button class="menu__btn" data-screen="settings">
+                    <div class="menu__btn-icon">⚙️</div>
+                    <div class="menu__btn-label">Настройки</div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== WORLD SCREEN ===== -->
+    <div class="screen hidden" id="world-screen">
+        <div class="game-screen__container">
+            <button class="game-screen__exit-btn" id="worldExitBtn">
+                <img src="/trp/assets/img/выход.png" alt="Назад">
+            </button>
+            <div class="game-screen__content">
+                <div class="world__header">
+                    <h2>Исследуемые земли</h2>
+                    <p class="subtitle world__subtitle">Выберите место для приключения</p>
+                </div>
+
+                <div class="locations__grid" id="locationsGrid"></div>
+
+                <p class="world-warning">
+                    ⚠️ Более опасные локации требуют более высокого уровня.
+                    Новичкам рекомендуется начать с Города.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== DUNGEONS SCREEN ===== -->
+    <div class="screen hidden" id="dungeons-screen">
+        <div class="game-screen__container">
+            <button class="game-screen__exit-btn" id="dungeonsExitBtn">
+                <img src="/trp/assets/img/выход.png" alt="Назад">
+            </button>
+            <div class="game-screen__content">
                 <div class="dungeons-container">
                     <!-- Заголовок и статистика -->
                     <div class="dungeons-header">
@@ -193,9 +202,16 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <!-- Quests Tab -->
-            <div class="tab-content" data-tab="quests">
+    <!-- ===== QUESTS SCREEN ===== -->
+    <div class="screen hidden" id="quests-screen">
+        <div class="game-screen__container">
+            <button class="game-screen__exit-btn" id="questsExitBtn">
+                <img src="/trp/assets/img/выход.png" alt="Назад">
+            </button>
+            <div class="game-screen__content">
                 <div class="content-block">
                     <h2>📜 Квесты</h2>
                     <p>Различные задания от жителей мира. Выполняйте их для получения опыта, золота и репутации.</p>
@@ -207,9 +223,16 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <!-- Craft Tab -->
-            <div class="tab-content" data-tab="craft">
+    <!-- ===== CRAFTS SCREEN ===== -->
+    <div class="screen hidden" id="craft-screen">
+        <div class="game-screen__container">
+            <button class="game-screen__exit-btn" id="craftExitBtn">
+                <img src="/trp/assets/img/выход.png" alt="Назад">
+            </button>
+            <div class="game-screen__content">
                 <div class="content-block">
                     <h2>🔨 Крафт и улучшение</h2>
                     <p>Создавайте новые предметы и улучшайте своё снаряжение используя собранные материалы.</p>
@@ -221,9 +244,16 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <!-- Profile Tab -->
-            <div class="tab-content" data-tab="profile">
+    <!-- ===== PROFILE SCREEN ===== -->
+    <div class="screen hidden" id="profile-screen">
+        <div class="game-screen__container">
+            <button class="game-screen__exit-btn" id="profileExitBtn">
+                <img src="/trp/assets/img/выход.png" alt="Назад">
+            </button>
+            <div class="game-screen__content">
                 <div class="content-block">
                     <h2>🛡️ Профиль персонажа</h2>
                     <p><strong>Имя:</strong> <span id="charName">Герой</span></p>
@@ -277,9 +307,16 @@
                     <p id="inventoryEmpty" class="inventory-empty">Инвентарь пуст</p>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <!-- Settings Tab -->
-            <div class="tab-content" data-tab="settings">
+    <!-- ===== SETTINGS SCREEN ===== -->
+    <div class="screen hidden" id="settings-screen">
+        <div class="game-screen__container">
+            <button class="game-screen__exit-btn" id="settingsExitBtn">
+                <img src="/trp/assets/img/выход.png" alt="Назад">
+            </button>
+            <div class="game-screen__content">
                 <div class="content-block">
                     <h2>⚙️ Настройки</h2>
                     <p>Управление параметрами игры и аудио.</p>
@@ -289,14 +326,6 @@
                     <p><input type="checkbox" checked> Музыка включена</p>
                     <p><input type="checkbox"> Сложный режим</p>
                 </div>
-            </div>
-        </div>
-
-        <!-- Loot Modal -->
-        <div id="lootModal" class="modal">
-            <div class="modal__content">
-                <h2 class="loot-modal__title">Добыча локации: <span id="lootModalTitle">Неизвестная локация</span></h2>
-                <ul class="loot-modal__list" id="lootList"></ul>
             </div>
         </div>
     </div>

@@ -429,4 +429,106 @@ export class UIManager {
     };
     return names[rarity] || 'Неизвестно';
   }
+
+  /**
+   * Переходит на главное меню
+   */
+  static showMainMenu() {
+    this.hideAllScreens();
+    DOMManager.showElement('main-menu-screen');
+    this.updateMenuResources();
+  }
+
+  /**
+   * Переходит на указанный экран
+   * @param {string} screenName - Название экрана (world, dungeons, quests, craft, profile, settings)
+   */
+  static showGameScreen(screenName) {
+    this.hideAllScreens();
+    const screenId = `${screenName}-screen`;
+    DOMManager.showElement(screenId);
+    
+    // Инициализируем содержимое экрана при первом открытии
+    switch(screenName) {
+      case 'world':
+        LocationsManager.renderLocations();
+        break;
+      case 'dungeons':
+        DungeonsManager.updateStats();
+        break;
+      case 'quests':
+        QuestsManager.renderQuestsList();
+        break;
+      case 'craft':
+        CraftsManager.render();
+        break;
+      case 'profile':
+        StatsUI.updateStatsDisplay();
+        InventoryManager.render();
+        break;
+    }
+  }
+
+  /**
+   * Скрывает все экраны
+   */
+  static hideAllScreens() {
+    const screens = DOMManager.querySelectorAll('.screen');
+    screens.forEach(screen => {
+      screen.classList.add('hidden');
+    });
+  }
+
+  /**
+   * Обновляет ресурсы на меню
+   */
+  static updateMenuResources() {
+    const player = gameState.getPlayerState();
+    
+    DOMManager.setText('menu-level', `Уровень: ${player.level}`);
+    DOMManager.setText('menu-xp', `${player.experience} / ${player.requiredExperienceForLevel}`);
+    DOMManager.setText('menu-maxHp', `Max HP: ${player.maxHp}`);
+    DOMManager.setText('menu-maxMana', `Max MP: ${player.maxMana}`);
+    DOMManager.setText('menu-gold', player.gold);
+    
+    const xpPercent = Math.min((player.experience / player.requiredExperienceForLevel) * 100, 100);
+    const xpProgress = DOMManager.getElementById('menu-xp-progress');
+    if (xpProgress) {
+      xpProgress.style.width = `${xpPercent}%`;
+    }
+  }
+
+  /**
+   * Инициализирует обработчики навигации для меню
+   */
+  static initMenuNavigation() {
+    const menuButtons = DOMManager.querySelectorAll('.menu__btn');
+    menuButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const screenName = btn.getAttribute('data-screen');
+        this.showGameScreen(screenName);
+      });
+    });
+
+    // Инициализируем кнопки выхода на каждом экране
+    const exitButtons = {
+      'worldExitBtn': 'main-menu-screen',
+      'dungeonsExitBtn': 'main-menu-screen',
+      'questsExitBtn': 'main-menu-screen',
+      'craftExitBtn': 'main-menu-screen',
+      'profileExitBtn': 'main-menu-screen',
+      'settingsExitBtn': 'main-menu-screen'
+    };
+
+    for (const [btnId, targetScreen] of Object.entries(exitButtons)) {
+      const btn = DOMManager.getElementById(btnId);
+      if (btn) {
+        btn.addEventListener('click', () => {
+          this.hideAllScreens();
+          DOMManager.showElement(targetScreen);
+          this.updateMenuResources();
+        });
+      }
+    }
+  }
 }
