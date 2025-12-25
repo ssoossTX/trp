@@ -39,6 +39,7 @@ body {
   display: none;
   opacity: 0;
   transition: opacity var(--transition-normal);
+  background-color: transparent;
 }
 
 .screen.hidden {
