@@ -30,7 +30,7 @@
 .game__title {
   font-size: var(--font-size-xl);
   font-weight: bold;
-  color: var(--primary-color);
+  color: #000000;
 }
 
 .game__resources {
