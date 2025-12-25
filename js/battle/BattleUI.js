@@ -125,19 +125,18 @@ export class BattleUI {
     const abilitiesContainer = DOMManager.getElementById('abilitiesContainer');
     if (!abilitiesContainer) return;
 
+    // Маппинг имён способностей на имена файлов
+    const abilityImages = {
+      'Боевой клич': 'клич.jpg',
+      'Мощный удар': 'удар.jpg'
+    };
+
     abilitiesContainer.innerHTML = abilities.map(ability => {
-      const manaCostText = ability.manaCost ? `<span class="ability-mana">${ability.manaCost}💙</span>` : '';
-      const imageHtml = ability.image 
-        ? `<img src="/trp/assets/img/${ability.image}" alt="${ability.name}" class="ability-image">` 
-        : '';
-      
+      const imageName = abilityImages[ability.name] || 'placeholder.jpg';
+      const imagePath = `/trp/assets/img/${imageName}`;
       return `
-      <button class="btn-ability ${ability.image ? 'btn-ability--image' : ''}" id="ability-${ability.name}" 
-              onclick="window.BattleEngine.useActiveAbility('${ability.name}')" 
-              title="${ability.name}">
-        ${imageHtml}
-        ${!ability.image ? `<span class="ability-name">${ability.name}</span>` : ''}
-        ${!ability.image ? manaCostText : ''}
+      <button class="battle__btn--ability" id="ability-${ability.name}" onclick="window.BattleEngine.useActiveAbility('${ability.name}')" title="${ability.name}">
+        <img src="${imagePath}" alt="${ability.name}" loading="eager">
         <span class="ability-cooldown" id="cooldown-${ability.name}"></span>
       </button>
     `;
