@@ -387,7 +387,7 @@
   z-index: -1;
 }
 
-.modal__content {
+.location-modal .modal__content {
   position: relative;
   background: white;
   border-radius: var(--radius-lg);
