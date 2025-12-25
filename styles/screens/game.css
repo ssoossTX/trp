@@ -348,7 +348,7 @@
 
 .world-warning {
   text-align: center;
-  color: var(--text-light);
+  color: #000000;
   font-size: var(--font-size-sm);
   margin-top: var(--spacing-lg);
   padding-top: var(--spacing-lg);
@@ -731,8 +731,8 @@
 
 .game-screen__exit-btn {
   position: absolute;
-  top: var(--spacing-md);
-  right: calc(var(--spacing-xl) - 10px);
+  top: calc(var(--spacing-md) + 30px);
+  right: calc(var(--spacing-xl) - 20px);
   width: 60px;
   height: 60px;
   background: transparent;
