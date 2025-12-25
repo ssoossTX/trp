@@ -125,7 +125,7 @@
   gap: var(--spacing-sm);
   width: 100%;
   padding: var(--spacing-sm) var(--spacing-md);
-  background: #f8f9fa;
+  background: #e8e8e8;
   border-radius: var(--radius-md);
 }
 
