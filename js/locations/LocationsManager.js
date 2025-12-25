@@ -50,10 +50,17 @@ export class LocationsManager {
     const locationsGrid = DOMManager.getElementById('locationsGrid');
     const locations = dataLoader.getLocations();
 
+    const locationImages = {
+      'city': '/trp/assets/img/город.jpg',
+      'forest': '/trp/assets/img/лес.jpg',
+      'mountains': '/trp/assets/img/горы.jpg'
+    };
+
     locationsGrid.innerHTML = Object.entries(locations).map(([key, location]) => {
+      const imagePath = locationImages[key] || location.icon;
       return `
         <button class="location-btn" onclick="window.LocationsManager.showLocationModal('${key}')">
-          <div class="location-btn__icon">${location.icon}</div>
+          <div class="location-btn__icon"><img src="${imagePath}" alt="${location.name}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;"></div>
           <div class="location-btn__name">${location.name}</div>
         </button>
       `;
