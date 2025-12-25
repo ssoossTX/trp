@@ -554,7 +554,7 @@
   }
 
   .game-screen__container {
-    padding: var(--spacing-md);
+    padding: 0;
   }
 
   .game-screen__exit-btn {
