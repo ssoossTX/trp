@@ -75,8 +75,9 @@ class Game {
     // Ждём немного
     await delay(GAME_CONSTANTS.SCREEN_TRANSITION_DELAY);
 
-    // Скрываем экран выбора класса
+    // Скрываем оба экрана выбора класса (основной и деталей)
     DOMManager.hideScreen(GAME_CONSTANTS.CLASS_SELECTION_SCREEN_ID);
+    DOMManager.hideScreen('class-details-screen');
 
     // Инициализируем основную игру
     UIManager.initGameUI();
