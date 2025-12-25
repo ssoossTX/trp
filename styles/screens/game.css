@@ -395,9 +395,10 @@
   background: white;
   border-radius: var(--radius-lg);
   padding: var(--spacing-xl);
-  max-width: 600px;
+  max-width: 90%;
   width: 90%;
-  max-height: 80vh;
+  max-height: 90vh;
+  height: 90vh;
   overflow-y: auto;
   box-shadow: var(--shadow-lg);
   z-index: 1001;
