@@ -447,8 +447,8 @@
   position: absolute;
   top: var(--spacing-md);
   right: var(--spacing-md);
-  width: 80px !important;
-  height: 80px !important;
+  width: 60px !important;
+  height: 60px !important;
   padding: 0 !important;
   border-radius: 8px;
   z-index: 100;
@@ -540,8 +540,8 @@
   }
 
   .battle__enemy-image {
-    width: 144px;
-    height: 144px;
+    width: 175px;
+    height: 175px;
   }
 
   .battle__enemy-name {
