@@ -494,6 +494,7 @@ export class UIManager {
   static hideAllScreens() {
     const screens = DOMManager.querySelectorAll('.screen');
     screens.forEach(screen => {
+      screen.classList.remove('visible');
       screen.classList.add('hidden');
     });
   }
