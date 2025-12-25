@@ -527,65 +527,100 @@
     padding: var(--spacing-sm) var(--spacing-md);
   }
 
-  /* Controls Row - Stack on mobile */
+  /* Controls Row - Full width on mobile */
   .battle__controls-row {
     flex-direction: column;
     gap: var(--spacing-sm);
   }
 
-  .battle__right-column {
+  .battle__left-column {
     width: 100%;
+    flex-direction: column;
+    gap: var(--spacing-sm);
   }
 
   .battle__btn--attack {
-    width: 100%;
+    width: 100% !important;
     padding: var(--spacing-sm) var(--spacing-md);
     font-size: 0.9em;
   }
 
-  /* Abilities - Wrap on mobile */
+  /* Abilities - Fit in one row on mobile */
   .battle__abilities {
-    flex-direction: column;
-    gap: var(--spacing-xs);
+    flex-direction: row;
+    gap: 4px;
     width: 100%;
+    flex-wrap: wrap;
+    justify-content: flex-start;
   }
 
   .battle__btn--ability {
-    width: 70px !important;
-    height: 70px !important;
+    width: 60px !important;
+    height: 60px !important;
+    flex: 0 0 calc(25% - 3px);
   }
 
   .battle__btn--ability img {
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
   }
 
   .ability-cooldown {
-    width: 24px;
-    height: 24px;
-    font-size: 12px;
+    width: 22px;
+    height: 22px;
+    font-size: 11px;
   }
 
-  /* Potions - Horizontal in mobile */
+  .ability-mana-cost {
+    font-size: 10px;
+    padding: 1px 3px;
+  }
+
+  .ability-mana-text {
+    font-size: 11px;
+  }
+
+  /* Potions - Separate row on mobile */
   .battle__potions-column {
+    width: 100%;
+    margin-left: 0;
+    justify-content: flex-start;
+    gap: var(--spacing-sm);
+  }
+
+  .battle__btn--potion {
+    width: 60px !important;
+    height: 60px !important;
+    flex: 0 0 auto;
+  }
+
+  .battle__btn--potion img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .potion-cooldown {
+    width: 22px;
+    height: 22px;
+    font-size: 11px;
+  }
+
+  /* Bottom Row - Stack on mobile */
+  .battle__bottom-row {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .battle__bottom-left {
     width: 100%;
     justify-content: center;
   }
 
-  .battle__btn--potion {
-    width: 70px !important;
-    height: 70px !important;
-  }
-
-  .battle__btn--potion img {
-    width: 60px;
-    height: 60px;
-  }
-
-  .potion-cooldown {
-    width: 24px;
-    height: 24px;
-    font-size: 12px;
+  .battle__btn--logs,
+  .battle__btn--flee {
+    flex: 1;
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: 0.75em;
   }
 }
 
