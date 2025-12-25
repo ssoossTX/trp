@@ -343,7 +343,7 @@ export class UIManager {
           </div>
         </div>
       </div>
-    `}.join('');
+    `).join('');
   }
 
   /**
