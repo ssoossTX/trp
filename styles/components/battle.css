@@ -118,6 +118,10 @@
   font-size: 0.75em;
 }
 
+#playerHpText {
+  color: #000;
+}
+
 /* Player Stats */
 .battle__stats {
   display: flex;
