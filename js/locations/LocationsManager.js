@@ -15,41 +15,114 @@ export class LocationsManager {
    */
   static init() {
     this.renderLocations();
+    this.initModalHandlers();
   }
 
   /**
-   * Отрисовывает карточки локаций
+   * Инициализирует обработчики модального окна
+   */
+  static initModalHandlers() {
+    const modal = DOMManager.getElementById('locationModal');
+    const closeBtn = DOMManager.getElementById('modalCloseBtn');
+    const overlay = DOMManager.getElementById('modalOverlay');
+
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => this.closeLocationModal());
+    }
+
+    if (overlay) {
+      overlay.addEventListener('click', () => this.closeLocationModal());
+    }
+
+    if (modal) {
+      modal.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          this.closeLocationModal();
+        }
+      });
+    }
+  }
+
+  /**
+   * Отрисовывает кнопки локаций
    */
   static renderLocations() {
     const locationsGrid = DOMManager.getElementById('locationsGrid');
     const locations = dataLoader.getLocations();
 
     locationsGrid.innerHTML = Object.entries(locations).map(([key, location]) => {
-      const dangerStars = '⭐'.repeat(location.dangerLevel);
       return `
-        <div class="card location-card">
-          <div class="location-card__icon">${location.icon}</div>
-          <h3>${location.name}</h3>
-          <p class="location-card__description">${location.description}</p>
-          
-          <div class="location-card__info">
-            <p><span class="danger-level">Опасность:</span> <span class="stars">${dangerStars}</span></p>
-            <p><span class="rare-loot">Редкий дроп:</span> ${location.rareLootChance}</p>
-            <p><span class="required-level">Уровень:</span> ${location.requiredLevel}+</p>
-          </div>
-
-          <div class="location-card__loot-list">
-            <strong>Возможная добыча:</strong>
-            ${location.loot.slice(0, 3).map(item => `<p>• ${item.name}</p>`).join('')}
-          </div>
-
-          <div class="location-card__buttons">
-            <button class="btn btn-primary explore-btn" onclick="window.LocationsManager.startExploration('${key}')">Исследовать</button>
-            <button class="btn btn-info loot-btn" onclick="window.LocationsManager.showLootDetails('${key}')">Добыча</button>
-          </div>
-        </div>
+        <button class="location-btn" onclick="window.LocationsManager.showLocationModal('${key}')">
+          <div class="location-btn__icon">${location.icon}</div>
+          <div class="location-btn__name">${location.name}</div>
+        </button>
       `;
     }).join('');
+  }
+
+  /**
+   * Показывает модальное окно с деталями локации
+   */
+  static showLocationModal(locationId) {
+    const location = dataLoader.getLocationById(locationId);
+    if (!location) {
+      alert('Локация не найдена');
+      return;
+    }
+
+    const dangerStars = '⭐'.repeat(location.dangerLevel);
+    const modalBody = DOMManager.getElementById('modalBody');
+    
+    modalBody.innerHTML = `
+      <div class="modal__header">
+        <div class="modal__icon">${location.icon}</div>
+        <h2 class="modal__title">${location.name}</h2>
+      </div>
+
+      <div class="modal__section">
+        <p class="modal__section-content">${location.description}</p>
+      </div>
+
+      <div class="modal__stats">
+        <div class="modal__stat">
+          <div class="modal__stat-label">Опасность</div>
+          <div class="modal__stat-value">${dangerStars}</div>
+        </div>
+        <div class="modal__stat">
+          <div class="modal__stat-label">Требуемый уровень</div>
+          <div class="modal__stat-value">${location.requiredLevel}+</div>
+        </div>
+        <div class="modal__stat">
+          <div class="modal__stat-label">Редкий дроп</div>
+          <div class="modal__stat-value">${location.rareLootChance}</div>
+        </div>
+      </div>
+
+      <div class="modal__section">
+        <div class="modal__section-title">Возможная добыча:</div>
+        <div class="modal__section-content">
+          ${location.loot.map(item => `<p>• ${item.name}</p>`).join('')}
+        </div>
+      </div>
+
+      <div class="modal__buttons">
+        <button class="modal__btn modal__btn-primary" onclick="window.LocationsManager.startExploration('${locationId}')">🗡️ Исследовать</button>
+        <button class="modal__btn modal__btn-secondary" onclick="window.LocationsManager.closeLocationModal()">Закрыть</button>
+      </div>
+    `;
+
+    const modal = DOMManager.getElementById('locationModal');
+    modal.classList.remove('hidden');
+    modal.classList.add('visible');
+  }
+
+  /**
+   * Закрывает модальное окно
+   */
+  static closeLocationModal() {
+    const modal = DOMManager.getElementById('locationModal');
+    modal.classList.remove('visible');
+    modal.classList.add('hidden');
   }
 
   /**

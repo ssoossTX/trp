@@ -103,12 +103,21 @@
                     <p class="subtitle world__subtitle">Выберите место для приключения</p>
                 </div>
 
-                <div class="locations__grid" id="locationsGrid"></div>
+                <div class="locations__buttons-grid" id="locationsGrid"></div>
 
                 <p class="world-warning">
                     ⚠️ Более опасные локации требуют более высокого уровня.
                     Новичкам рекомендуется начать с Города.
                 </p>
+            </div>
+        </div>
+
+        <!-- Модальное окно локации -->
+        <div class="location-modal hidden" id="locationModal">
+            <div class="modal__overlay" id="modalOverlay"></div>
+            <div class="modal__content">
+                <button class="modal__close" id="modalCloseBtn">✕</button>
+                <div class="modal__body" id="modalBody"></div>
             </div>
         </div>
     </div>
