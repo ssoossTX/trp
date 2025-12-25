@@ -454,8 +454,8 @@
   justify-content: center;
   gap: var(--spacing-sm);
   padding: 0;
-  width: 60px;
-  height: 60px;
+  width: 90px;
+  height: 90px;
   background: transparent;
   color: white;
   border: none;
