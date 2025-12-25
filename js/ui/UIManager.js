@@ -446,7 +446,11 @@ export class UIManager {
    */
   static showMainMenu() {
     this.hideAllScreens();
-    DOMManager.showElement('main-menu-screen');
+    const menuScreen = DOMManager.getElementById('main-menu-screen');
+    if (menuScreen) {
+      menuScreen.classList.remove('hidden');
+      menuScreen.classList.add('visible');
+    }
     this.updateMenuResources();
   }
 
@@ -457,7 +461,11 @@ export class UIManager {
   static showGameScreen(screenName) {
     this.hideAllScreens();
     const screenId = `${screenName}-screen`;
-    DOMManager.showElement(screenId);
+    const screen = DOMManager.getElementById(screenId);
+    if (screen) {
+      screen.classList.remove('hidden');
+      screen.classList.add('visible');
+    }
     
     // Инициализируем содержимое экрана при первом открытии
     switch(screenName) {
@@ -536,7 +544,11 @@ export class UIManager {
       if (btn) {
         btn.addEventListener('click', () => {
           this.hideAllScreens();
-          DOMManager.showElement(targetScreen);
+          const screen = DOMManager.getElementById(targetScreen);
+          if (screen) {
+            screen.classList.remove('hidden');
+            screen.classList.add('visible');
+          }
           this.updateMenuResources();
         });
       }
