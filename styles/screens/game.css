@@ -412,11 +412,11 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100%;
-  min-height: 100vh;
+  height: 100vh;
   justify-content: center;
   align-items: center;
   padding: 0;
+  box-sizing: border-box;
 }
 
 .menu__container {
@@ -425,10 +425,10 @@
   padding: var(--spacing-xl);
   box-shadow: none;
   width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  flex: 1;
 }
 
 .menu__header {
