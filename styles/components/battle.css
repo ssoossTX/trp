@@ -27,7 +27,7 @@
   flex-direction: column;
   height: auto;
   min-height: 100vh;
-  background: rgba(0, 0, 0, 0.35);
+  background: rgba(0, 0, 0, 0.45);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
   overflow: hidden;
