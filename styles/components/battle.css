@@ -43,6 +43,7 @@
   gap: var(--spacing-md);
   overflow-y: auto;
   flex: 1;
+  position: relative;
 }
 
 /* Враг */
