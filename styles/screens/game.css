@@ -420,7 +420,7 @@
 }
 
 .menu__container {
-  background: rgba(0, 0, 0, 0.55);
+  background: transparent;
   border-radius: 0;
   padding: var(--spacing-xl);
   box-shadow: none;
