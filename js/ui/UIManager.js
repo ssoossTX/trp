@@ -51,7 +51,7 @@ export class UIManager {
     const xpText = `${player.experience} / ${player.requiredExperienceForLevel}`;
     const xpPercent = Math.min((player.experience / player.requiredExperienceForLevel) * 100, 100);
     
-    // Обновление шапки меню
+    // Обновление шапки меню (старая система, на случай если ещё используется)
     DOMManager.setText('header-level', levelText);
     DOMManager.setText('header-xp', xpText);
     const headerXpProgress = DOMManager.getElementById('header-xp-progress');
@@ -65,6 +65,14 @@ export class UIManager {
     const profileXpProgress = DOMManager.getElementById('profile-xp-progress');
     if (profileXpProgress) {
       profileXpProgress.style.width = `${xpPercent}%`;
+    }
+
+    // Обновление меню
+    DOMManager.setText('menu-level', levelText);
+    DOMManager.setText('menu-xp', xpText);
+    const menuXpProgress = DOMManager.getElementById('menu-xp-progress');
+    if (menuXpProgress) {
+      menuXpProgress.style.width = `${xpPercent}%`;
     }
     
     Logger.log(`[UIManager] Уровень и опыт синхронизированы: ${levelText}, ${xpText}`);
@@ -119,12 +127,15 @@ export class UIManager {
 
     // Max HP
     DOMManager.setText('maxHpText', `Max HP: ${player.maxHp}`);
+    DOMManager.setText('menu-maxHp', `Max HP: ${player.maxHp}`);
 
     // Max Mana
     DOMManager.setText('maxManaText', `Max MP: ${player.maxMana}`);
+    DOMManager.setText('menu-maxMana', `Max MP: ${player.maxMana}`);
 
     // Gold
     DOMManager.setText('goldText', player.gold);
+    DOMManager.setText('menu-gold', player.gold);
     
     // Синхронизированное обновление уровня и опыта
     this.renderLevelAndXP();
