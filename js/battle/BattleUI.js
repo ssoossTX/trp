@@ -155,7 +155,6 @@ export class BattleUI {
         <img src="${imagePath}" alt="${ability.name}" loading="eager">
         <span class="ability-cooldown" id="cooldown-${ability.name}"></span>
         <span class="ability-mana-cost" id="mana-${ability.name}">
-          <img src="/trp/assets/img/мана.png" alt="мана" class="ability-mana-icon">
           <span class="ability-mana-text">${ability.manaCost}</span>
         </span>
       </button>
