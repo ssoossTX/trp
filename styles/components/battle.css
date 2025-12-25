@@ -298,6 +298,7 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--spacing-sm);
+  position: relative;
 }
 
 .btn-ability:hover:not(:disabled) {
@@ -309,6 +310,32 @@
   opacity: 0.6;
   cursor: not-allowed;
   background-color: #95a5a6;
+}
+
+/* Квадратные кнопки с картинками */
+.btn-ability--image {
+  width: 80px;
+  height: 80px;
+  padding: 0 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  border: 2px solid #3498db;
+  background-color: transparent;
+}
+
+.btn-ability--image:hover:not(:disabled) {
+  background-color: rgba(52, 152, 219, 0.1);
+  border-color: #2980b9;
+}
+
+.ability-image {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  display: block;
 }
 
 .ability-name {
@@ -500,6 +527,16 @@
   .btn-ability {
     padding: var(--spacing-xs) var(--spacing-sm);
     font-size: 0.75em;
+  }
+
+  .btn-ability--image {
+    width: 70px;
+    height: 70px;
+  }
+
+  .ability-image {
+    width: 60px;
+    height: 60px;
   }
 
   /* Potions - Horizontal in mobile */

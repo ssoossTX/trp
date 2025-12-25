@@ -127,10 +127,17 @@ export class BattleUI {
 
     abilitiesContainer.innerHTML = abilities.map(ability => {
       const manaCostText = ability.manaCost ? `<span class="ability-mana">${ability.manaCost}💙</span>` : '';
+      const imageHtml = ability.image 
+        ? `<img src="/trp/assets/img/${ability.image}" alt="${ability.name}" class="ability-image">` 
+        : '';
+      
       return `
-      <button class="btn-ability" id="ability-${ability.name}" onclick="window.BattleEngine.useActiveAbility('${ability.name}')">
-        <span class="ability-name">${ability.name}</span>
-        ${manaCostText}
+      <button class="btn-ability ${ability.image ? 'btn-ability--image' : ''}" id="ability-${ability.name}" 
+              onclick="window.BattleEngine.useActiveAbility('${ability.name}')" 
+              title="${ability.name}">
+        ${imageHtml}
+        ${!ability.image ? `<span class="ability-name">${ability.name}</span>` : ''}
+        ${!ability.image ? manaCostText : ''}
         <span class="ability-cooldown" id="cooldown-${ability.name}"></span>
       </button>
     `;

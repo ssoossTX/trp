@@ -1,6 +1,6 @@
 {
   "name": "narrative-rpg",
-  "version": "1.0.0",
+  "version": "0.0.2",
   "description": "Текстовая ролевая игра в браузере с боевой системой",
   "main": "index.html",
   "scripts": {
