@@ -113,12 +113,12 @@
 }
 
 .ability-card--active {
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-  box-shadow: 0 4px 15px rgba(245, 87, 108, 0.3);
+  background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+  box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
 }
 
 .ability-card--active:hover {
-  box-shadow: 0 8px 25px rgba(245, 87, 108, 0.4);
+  box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
 }
 
 .ability-card--passive {
