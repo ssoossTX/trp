@@ -2,7 +2,6 @@
 
 .craft-card {
   background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-  border: 2px solid #34495e;
   border-radius: 12px;
   padding: var(--spacing-lg);
   margin-bottom: var(--spacing-md);
@@ -11,7 +10,6 @@
 }
 
 .craft-card:hover {
-  border-color: #3498db;
   box-shadow: 0 4px 12px rgba(52, 152, 219, 0.2);
   transform: translateY(-2px);
 }
@@ -101,7 +99,6 @@
   padding: 12px;
   background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
   border-radius: 8px;
-  border: 2px solid #1e8449;
 }
 
 .craft-card__output-icon {
@@ -116,8 +113,6 @@
   flex-shrink: 0;
   background: rgba(255, 255, 255, 0.2);
   border-radius: 4px;
-  padding: 4px;
-  border: 2px solid rgba(255, 255, 255, 0.5);
 }
 
 .craft-card__output-info {
@@ -176,8 +171,6 @@
   top: 20px;
   right: 20px;
   background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
-  border: 2px solid #2475a8;
-  border-left: 4px solid #f39c12;
   border-radius: 12px;
   padding: var(--spacing-lg);
   max-width: 350px;
