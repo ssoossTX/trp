@@ -193,7 +193,7 @@
 /* Сетка кнопок локаций */
 .locations__buttons-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  grid-template-columns: 1fr;
   gap: var(--spacing-lg);
   justify-items: center;
   margin-bottom: var(--spacing-lg);
