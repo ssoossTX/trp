@@ -422,8 +422,10 @@
   border-radius: var(--radius-lg);
   padding: var(--spacing-xl);
   box-shadow: var(--shadow-lg);
-  max-width: 800px;
-  width: 100%;
+  width: 90%;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .menu__header {
@@ -439,8 +441,10 @@
 
 .menu__buttons-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(84px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
   gap: var(--spacing-xl);
+  flex: 1;
 }
 
 .menu__btn {
@@ -526,6 +530,7 @@
 @media (max-width: 600px) {
   .menu__container {
     padding: var(--spacing-lg);
+    height: 95vh;
   }
 
   .menu__header {
@@ -536,6 +541,7 @@
 
   .menu__buttons-grid {
     grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
     gap: var(--spacing-md);
   }
 
