@@ -420,11 +420,12 @@
 }
 
 .battle__btn--logs {
-  background-color: #9b59b6;
+  background-color: #888888;
+  color: #000;
 }
 
 .battle__btn--logs:hover:not(:disabled) {
-  background-color: #8e44ad;
+  background-color: #707070;
 }
 
 .battle__btn--flee {
@@ -576,7 +577,7 @@
   .battle__btn--attack {
     width: 100% !important;
     padding: var(--spacing-sm) var(--spacing-md);
-    font-size: 0.9em;
+    font-size: 1.05em;
   }
 
   /* Abilities - Fit in one row on mobile */
