@@ -732,7 +732,7 @@
 .game-screen__exit-btn {
   position: absolute;
   top: var(--spacing-md);
-  right: var(--spacing-xl);
+  right: calc(var(--spacing-xl) - 10px);
   width: 60px;
   height: 60px;
   background: transparent;
