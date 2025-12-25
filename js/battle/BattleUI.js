@@ -131,7 +131,7 @@ export class BattleUI {
       'Мощный удар': 'удар.jpg'
     };
 
-    abilitiesContainer.innerHTML = abilities.map(ability => {
+    let html = abilities.map(ability => {
       const imageName = abilityImages[ability.name] || 'placeholder.jpg';
       const imagePath = `/trp/assets/img/${imageName}`;
       return `
@@ -141,6 +141,18 @@ export class BattleUI {
       </button>
     `;
     }).join('');
+
+    // Добавляем 2 пустых слота для будущих способностей
+    html += `
+      <button class="battle__btn--ability battle__btn--ability-empty" disabled title="Свободный слот">
+        <div class="ability-empty-icon">+</div>
+      </button>
+      <button class="battle__btn--ability battle__btn--ability-empty" disabled title="Свободный слот">
+        <div class="ability-empty-icon">+</div>
+      </button>
+    `;
+
+    abilitiesContainer.innerHTML = html;
   }
 
   /**
