@@ -168,7 +168,7 @@
 }
 
 .world__subtitle {
-  color: var(--text-light);
+  color: #000000;
   font-size: var(--font-size-sm);
   font-style: italic;
 }
