@@ -132,6 +132,7 @@
   padding: var(--spacing-sm) var(--spacing-md);
   background: #e8e8e8;
   border-radius: var(--radius-md);
+  margin-bottom: -10px;
 }
 
 .battle__stat-row {
