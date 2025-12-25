@@ -201,13 +201,13 @@
 
 /* Кнопка локации */
 .location-btn {
-  width: 140px;
-  height: 140px;
+  width: 252px;
+  height: 252px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: var(--spacing-sm);
+  justify-content: flex-start;
+  gap: var(--spacing-md);
   padding: var(--spacing-md);
   background: rgba(255, 255, 255, 0.9);
   border: 2px solid var(--primary-color);
@@ -233,12 +233,15 @@
 }
 
 .location-btn__icon {
-  font-size: 2.5em;
-  line-height: 1;
+  width: 180px;
+  height: 180px;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
 }
 
 .location-btn__name {
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-base);
   font-weight: bold;
 }
 
