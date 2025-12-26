@@ -2,6 +2,11 @@
 .dungeons-header-title {
   text-align: center;
   margin-bottom: var(--spacing-lg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-lg);
+  position: relative;
 }
 
 .dungeons-header-title h2 {
@@ -9,6 +14,12 @@
   font-size: var(--font-size-xl);
   color: #000000;
   font-weight: bold;
+}
+
+.dungeons-header-title .game-screen__exit-btn {
+  position: static;
+  right: auto;
+  top: auto;
 }
 
 .dungeons-container {
