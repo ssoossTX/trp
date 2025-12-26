@@ -657,7 +657,7 @@
   height: 100%;
   align-items: center;
   justify-content: center;
-  z-index: 2000;
+  z-index: 11001;
 }
 
 .modal--item .modal__overlay {
@@ -668,6 +668,7 @@
   height: 100%;
   background: rgba(0, 0, 0, 0.7);
   cursor: pointer;
+  z-index: 10999 !important;
 }
 
 .modal__content--item {
@@ -678,6 +679,7 @@
   border-radius: 12px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
   overflow: hidden;
+  z-index: 11002 !important;
   z-index: 2001;
   animation: scaleIn 0.3s ease-out;
 }
