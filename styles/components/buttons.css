@@ -658,6 +658,7 @@
   align-items: center;
   justify-content: center;
   z-index: 11001;
+  pointer-events: none;
 }
 
 .modal--item .modal__overlay {
@@ -669,6 +670,7 @@
   background: rgba(0, 0, 0, 0.7);
   cursor: pointer;
   z-index: 10999 !important;
+  pointer-events: auto;
 }
 
 .modal__content--item {
@@ -680,7 +682,7 @@
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
   overflow: hidden;
   z-index: 11002 !important;
-  z-index: 2001;
+  pointer-events: auto;
   animation: scaleIn 0.3s ease-out;
 }
 
