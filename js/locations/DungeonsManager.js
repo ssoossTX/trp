@@ -70,13 +70,22 @@ export class DungeonsManager {
    */
   static createDungeonCard(dungeon) {
     const progress = gameState.player.dungeonsProgress[dungeon.id] || {};
-    const isAvailable = gameState.player.level >= dungeon.requiredLevel;
     const statusClass = progress.completed ? 'status-completed' : progress.started ? 'status-in-progress' : 'status-not-started';
     const statusText = progress.completed ? `✓ Пройдено` : progress.started ? `⏱ В процессе` : `○ Не начато`;
 
+    // Маппинг названий подземелий на картинки
+    const dungeonImages = {
+      'Развалины в лесу': '/trp/assets/img/развалины.jpg',
+      'Кристальные пещеры': '/trp/assets/img/пещера.jpg',
+      'Храм Тьмы': '/trp/assets/img/храм1.jpg',
+      'Древняя библиотека': '/trp/assets/img/библиотека.jpg'
+    };
+
+    const imagePath = dungeonImages[dungeon.name] || '';
+
     return `
       <div class="dungeon-card" id="dungeon-card-${dungeon.id}">
-        <div class="dungeon-card-header" style="background: linear-gradient(135deg, ${dungeon.difficultyColor} 0%, #2c3e50 100%);">
+        <div class="dungeon-card-header" style="background: linear-gradient(135deg, ${dungeon.difficultyColor} 0%, #2c3e50 100%); ${imagePath ? `background-image: url('${imagePath}'); background-size: cover; background-position: center;` : ''}">
           <h3 class="dungeon-card-title">${dungeon.name}</h3>
           <div class="difficulty-badge">${dungeon.difficulty}</div>
         </div>
@@ -97,9 +106,20 @@ export class DungeonsManager {
     const detailsContainer = DOMManager.getElementById('dungeonDetails');
     const isAvailable = gameState.player.level >= dungeon.requiredLevel;
 
+    // Маппинг названий подземелий на картинки
+    const dungeonImages = {
+      'Развалины в лесу': '/trp/assets/img/развалины.jpg',
+      'Кристальные пещеры': '/trp/assets/img/пещера.jpg',
+      'Храм Тьмы': '/trp/assets/img/храм1.jpg',
+      'Древняя библиотека': '/trp/assets/img/библиотека.jpg'
+    };
+
+    const imagePath = dungeonImages[dungeon.name] || '';
+    const headerStyle = imagePath ? `background: linear-gradient(135deg, ${dungeon.difficultyColor}99 0%, ${dungeon.difficultyColor}99 100%), url('${imagePath}'); background-size: cover; background-position: center;` : `background: linear-gradient(135deg, ${dungeon.difficultyColor} 0%, #2c3e50 100%);`;
+
     detailsContainer.innerHTML = `
       <div class="dungeon-details-content">
-        <div class="dungeon-details-header" style="background: linear-gradient(135deg, ${dungeon.difficultyColor} 0%, #2c3e50 100%);">
+        <div class="dungeon-details-header" style="${headerStyle}">
           <h1 class="dungeon-details-title">${dungeon.name}</h1>
           <button class="dungeon-close-btn" onclick="DungeonsManager.closeDungeonDetails()">✕</button>
         </div>
