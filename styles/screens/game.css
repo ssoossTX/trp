@@ -1,4 +1,20 @@
 /* ===== ОСНОВНОЙ ЭКРАН ИГРЫ ===== */
+
+.screen-description {
+  color: #000000;
+  margin: var(--spacing-md) 0;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.screen-profile-info {
+  color: #000000;
+}
+
+.screen-profile-info p {
+  color: #000000;
+}
+
 #main-game-ui {
   /* Фоновое изображение */
   background-image: url('/trp/assets/img/background.jpg');
