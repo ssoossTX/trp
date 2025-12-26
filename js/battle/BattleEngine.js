@@ -281,11 +281,12 @@ export class BattleEngine {
     const modal = DOMManager.getElementById('dungeonExitConfirmModal');
     const confirmBtn = DOMManager.getElementById('confirmExitDungeonBtn');
     const cancelBtn = DOMManager.getElementById('cancelExitDungeonBtn');
+    const overlay = modal?.querySelector('.modal__overlay');
 
     if (!modal || !confirmBtn || !cancelBtn) return;
 
-    // Показываем модаль
-    modal.style.display = 'flex';
+    // Показываем модаль используя класс active
+    DOMManager.openModal('dungeonExitConfirmModal');
 
     // Удаляем старые обработчики если они есть
     if (confirmBtn._dungeonConfirmHandler) {
@@ -293,6 +294,9 @@ export class BattleEngine {
     }
     if (cancelBtn._dungeonCancelHandler) {
       cancelBtn.removeEventListener('click', cancelBtn._dungeonCancelHandler);
+    }
+    if (overlay && overlay._dungeonOverlayHandler) {
+      overlay.removeEventListener('click', overlay._dungeonOverlayHandler);
     }
 
     // Обработчик подтверждения выхода
@@ -308,36 +312,59 @@ export class BattleEngine {
         console.error('Ошибка при подтверждении выхода из подземелья:', error);
       } finally {
         // Закрываем модаль
-        modal.style.display = 'none';
+        DOMManager.closeModal('dungeonExitConfirmModal');
         
         // Удаляем обработчики
         confirmBtn.removeEventListener('click', handleConfirm);
         cancelBtn.removeEventListener('click', handleCancel);
+        if (overlay) {
+          overlay.removeEventListener('click', handleOverlayClick);
+        }
         
         // Очищаем сохраненные ссылки
         confirmBtn._dungeonConfirmHandler = null;
         cancelBtn._dungeonCancelHandler = null;
+        if (overlay) {
+          overlay._dungeonOverlayHandler = null;
+        }
       }
     };
 
     // Обработчик отмены
     const handleCancel = () => {
-      modal.style.display = 'none';
+      DOMManager.closeModal('dungeonExitConfirmModal');
       confirmBtn.removeEventListener('click', handleConfirm);
       cancelBtn.removeEventListener('click', handleCancel);
+      if (overlay) {
+        overlay.removeEventListener('click', handleOverlayClick);
+      }
       
       // Очищаем сохраненные ссылки
       confirmBtn._dungeonConfirmHandler = null;
       cancelBtn._dungeonCancelHandler = null;
+      if (overlay) {
+        overlay._dungeonOverlayHandler = null;
+      }
+    };
+
+    // Обработчик клика на overlay
+    const handleOverlayClick = () => {
+      handleCancel();
     };
 
     // Сохраняем ссылки на обработчики
     confirmBtn._dungeonConfirmHandler = handleConfirm;
     cancelBtn._dungeonCancelHandler = handleCancel;
+    if (overlay) {
+      overlay._dungeonOverlayHandler = handleOverlayClick;
+    }
 
     // Прикрепляем обработчики
     confirmBtn.addEventListener('click', handleConfirm);
     cancelBtn.addEventListener('click', handleCancel);
+    if (overlay) {
+      overlay.addEventListener('click', handleOverlayClick);
+    }
   }
 
   /**
