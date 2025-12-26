@@ -39,11 +39,13 @@ export class InventoryManager {
 
     if (!inventory || inventory.length === 0) {
       container.innerHTML = '';
+      container.classList.add('hidden');
       emptyMessage.classList.remove('hidden');
       return;
     }
 
     emptyMessage.classList.add('hidden');
+    container.classList.remove('hidden');
 
     // Группируем одинаковые предметы
     const groupedItems = this.groupItems(inventory);

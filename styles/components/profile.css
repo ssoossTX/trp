@@ -160,6 +160,10 @@
   min-height: 120px;
 }
 
+.inventory-grid.hidden {
+  display: none;
+}
+
 .inventory-item {
   display: flex;
   flex-direction: column;
