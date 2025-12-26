@@ -1,0 +1,84 @@
+/* ===== НАСТРОЙКИ ИГРЫ ===== */
+
+.screen-header-with-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.screen-header-with-btn .game-screen__exit-btn {
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.settings-group {
+  background: rgba(52, 73, 94, 0.5);
+  border: 2px solid #34495e;
+  border-radius: 12px;
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
+}
+
+.settings-group__title {
+  color: #ecf0f1;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin: 0 0 var(--spacing-md) 0;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: var(--spacing-md);
+}
+
+.settings-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-md) 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.settings-item:last-child {
+  border-bottom: none;
+}
+
+.settings-item__label {
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 600;
+}
+
+.settings-item__control {
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: center;
+}
+
+.settings-toggle {
+  width: 50px;
+  height: 24px;
+  background: #34495e;
+  border: 2px solid #34495e;
+  border-radius: 12px;
+  cursor: pointer;
+  position: relative;
+  transition: all var(--transition-normal);
+}
+
+.settings-toggle.active {
+  background: #27ae60;
+  border-color: #27ae60;
+}
+
+.settings-toggle::after {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background: white;
+  border-radius: 10px;
+  top: 2px;
+  left: 2px;
+  transition: left var(--transition-normal);
+}
+
+.settings-toggle.active::after {
+  left: 26px;
+}

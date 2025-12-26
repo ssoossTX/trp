@@ -1,0 +1,52 @@
+/* ===== ПРОФИЛЬ ПЕРСОНАЖА ===== */
+
+.screen-header-with-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.screen-header-with-btn .game-screen__exit-btn {
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.profile-section {
+  background: rgba(52, 73, 94, 0.5);
+  border: 2px solid #34495e;
+  border-radius: 12px;
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
+}
+
+.profile-section__title {
+  color: #ecf0f1;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin: 0 0 var(--spacing-md) 0;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: var(--spacing-md);
+}
+
+.profile-stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-sm) 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.profile-stat:last-child {
+  border-bottom: none;
+}
+
+.profile-stat__label {
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 600;
+}
+
+.profile-stat__value {
+  color: #3498db;
+  font-weight: bold;
+  font-size: 1.1rem;
+}

@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="styles/screens/quests.css">
     <link rel="stylesheet" href="styles/screens/crafts.css">
     <link rel="stylesheet" href="styles/screens/dungeons.css">
+    <link rel="stylesheet" href="styles/screens/profile.css">
+    <link rel="stylesheet" href="styles/screens/settings.css">
 </head>
 <body>
     <!-- Loading Screen -->
@@ -94,12 +96,12 @@
     <!-- ===== WORLD SCREEN ===== -->
     <div class="screen hidden" id="world-screen">
         <div class="game-screen__container">
-            <button class="game-screen__exit-btn" id="worldExitBtn">
-                <img src="/trp/assets/img/выход.png" alt="Назад">
-            </button>
             <div class="game-screen__content">
-                <div class="world__header">
+                <div class="world__header screen-header-with-btn">
                     <h2>Исследуемые земли</h2>
+                    <button class="game-screen__exit-btn" id="worldExitBtn">
+                        <img src="/trp/assets/img/выход.png" alt="Назад">
+                    </button>
                     <p class="subtitle world__subtitle">Выберите место для приключения</p>
                 </div>
 
@@ -176,12 +178,12 @@
     <!-- ===== QUESTS SCREEN ===== -->
     <div class="screen hidden" id="quests-screen">
         <div class="game-screen__container">
-            <button class="game-screen__exit-btn" id="questsExitBtn">
-                <img src="/trp/assets/img/выход.png" alt="Назад">
-            </button>
             <div class="game-screen__content">
-                <div class="content-block">
+                <div class="content-block screen-header-with-btn">
                     <h2>📜 Квесты</h2>
+                    <button class="game-screen__exit-btn" id="questsExitBtn">
+                        <img src="/trp/assets/img/выход.png" alt="Назад">
+                    </button>
                     <p>Различные задания от жителей мира. Выполняйте их для получения опыта, золота и репутации.</p>
                 </div>
                 <div class="content-block">
@@ -197,12 +199,12 @@
     <!-- ===== CRAFTS SCREEN ===== -->
     <div class="screen hidden" id="craft-screen">
         <div class="game-screen__container">
-            <button class="game-screen__exit-btn" id="craftExitBtn">
-                <img src="/trp/assets/img/выход.png" alt="Назад">
-            </button>
             <div class="game-screen__content">
-                <div class="content-block">
-                    <h2>🔨 Крафт и улучшение</h2>
+                <div class="content-block screen-header-with-btn">
+                    <h2>🔨 Крафт</h2>
+                    <button class="game-screen__exit-btn" id="craftExitBtn">
+                        <img src="/trp/assets/img/выход.png" alt="Назад">
+                    </button>
                     <p>Создавайте новые предметы и улучшайте своё снаряжение используя собранные материалы.</p>
                 </div>
                 <div class="content-block">
@@ -218,12 +220,12 @@
     <!-- ===== PROFILE SCREEN ===== -->
     <div class="screen hidden" id="profile-screen">
         <div class="game-screen__container">
-            <button class="game-screen__exit-btn" id="profileExitBtn">
-                <img src="/trp/assets/img/выход.png" alt="Назад">
-            </button>
             <div class="game-screen__content">
-                <div class="content-block">
-                    <h2>🛡️ Профиль персонажа</h2>
+                <div class="content-block screen-header-with-btn">
+                    <h2>🛡️ Профиль</h2>
+                    <button class="game-screen__exit-btn" id="profileExitBtn">
+                        <img src="/trp/assets/img/выход.png" alt="Назад">
+                    </button>
                     <p><strong>Имя:</strong> <span id="charName">Герой</span></p>
                     <p><strong>Класс:</strong> <span id="charClass">-</span></p>
                     <p><strong>Уровень:</strong> <span id="profile-level">Уровень: 1</span></p>
@@ -281,12 +283,12 @@
     <!-- ===== SETTINGS SCREEN ===== -->
     <div class="screen hidden" id="settings-screen">
         <div class="game-screen__container">
-            <button class="game-screen__exit-btn" id="settingsExitBtn">
-                <img src="/trp/assets/img/выход.png" alt="Назад">
-            </button>
             <div class="game-screen__content">
-                <div class="content-block">
+                <div class="content-block screen-header-with-btn">
                     <h2>⚙️ Настройки</h2>
+                    <button class="game-screen__exit-btn" id="settingsExitBtn">
+                        <img src="/trp/assets/img/выход.png" alt="Назад">
+                    </button>
                     <p>Управление параметрами игры и аудио.</p>
                 </div>
                 <div class="content-block">
