@@ -154,6 +154,10 @@
   grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   gap: var(--spacing-md);
   margin-top: var(--spacing-lg);
+  background-color: #e8e8e8;
+  padding: var(--spacing-lg);
+  border-radius: 8px;
+  min-height: 120px;
 }
 
 .inventory-item {
