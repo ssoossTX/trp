@@ -142,6 +142,9 @@ export class LocationsManager {
       return;
     }
 
+    // Закрываем модальное окно
+    this.closeLocationModal();
+
     // Восстанавливаем ресурсы при входе на локацию
     gameState.restoreResources();
 
