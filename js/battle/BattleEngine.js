@@ -282,26 +282,31 @@ export class BattleEngine {
     const confirmBtn = DOMManager.getElementById('confirmExitDungeonBtn');
     const cancelBtn = DOMManager.getElementById('cancelExitDungeonBtn');
 
-    if (!modal) return;
+    if (!modal || !confirmBtn || !cancelBtn) return;
 
     // Показываем модаль
     modal.style.display = 'flex';
 
     // Обработчик подтверждения выхода
     const handleConfirm = () => {
-      // Помечаем поражение
-      gameState.battle.isInBattle = false;
-      gameState.battle.playerHp = 0;
-      
-      // Закрываем модаль
-      modal.style.display = 'none';
-      
-      // Обрабатываем поражение в подземелье
-      DungeonsManager.onDungeonPlayerDefeated();
-
-      // Удаляем обработчики
-      confirmBtn.removeEventListener('click', handleConfirm);
-      cancelBtn.removeEventListener('click', handleCancel);
+      try {
+        // Помечаем поражение
+        gameState.battle.isInBattle = false;
+        gameState.battle.playerHp = 0;
+        
+        // Закрываем модаль
+        modal.style.display = 'none';
+        
+        // Обрабатываем поражение в подземелье
+        DungeonsManager.onDungeonPlayerDefeated();
+      } catch (error) {
+        console.error('Ошибка при подтверждении выхода из подземелья:', error);
+        modal.style.display = 'none';
+      } finally {
+        // Удаляем обработчики
+        confirmBtn.removeEventListener('click', handleConfirm);
+        cancelBtn.removeEventListener('click', handleCancel);
+      }
     };
 
     // Обработчик отмены
@@ -310,6 +315,14 @@ export class BattleEngine {
       confirmBtn.removeEventListener('click', handleConfirm);
       cancelBtn.removeEventListener('click', handleCancel);
     };
+
+    // Удаляем старые обработчики перед добавлением новых
+    confirmBtn.removeEventListener('click', confirmBtn._handleConfirm);
+    cancelBtn.removeEventListener('click', cancelBtn._handleCancel);
+    
+    // Сохраняем ссылки на обработчики для последующего удаления
+    confirmBtn._handleConfirm = handleConfirm;
+    cancelBtn._handleCancel = handleCancel;
 
     // Прикрепляем обработчики
     confirmBtn.addEventListener('click', handleConfirm);
