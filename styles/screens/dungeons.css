@@ -3,7 +3,7 @@
   text-align: center;
   margin-bottom: var(--spacing-lg);
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   gap: var(--spacing-lg);
   position: relative;
@@ -14,12 +14,14 @@
   font-size: var(--font-size-xl);
   color: #000000;
   font-weight: bold;
+  flex: 1;
 }
 
 .dungeons-header-title .game-screen__exit-btn {
-  position: static;
-  right: auto;
-  top: auto;
+  position: static !important;
+  right: auto !important;
+  top: auto !important;
+  margin-right: 10px;
 }
 
 .dungeons-container {
