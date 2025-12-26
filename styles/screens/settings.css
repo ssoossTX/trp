@@ -105,3 +105,22 @@
 .settings-toggle.active::after {
   left: 26px;
 }
+
+.content-block input[type="checkbox"] {
+  cursor: pointer;
+}
+
+.content-block p {
+  background-color: transparent;
+}
+
+.screen__content > .content-block:last-of-type {
+  background-color: #e8e8e8;
+  padding: var(--spacing-lg);
+  border-radius: 8px;
+}
+
+.screen__content > .content-block:last-of-type p {
+  margin: var(--spacing-md) 0;
+  color: #333;
+}
