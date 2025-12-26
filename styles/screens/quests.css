@@ -38,8 +38,8 @@
   background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
   border: 2px solid #34495e;
   border-radius: 12px;
-  padding: var(--spacing-lg);
-  margin-bottom: var(--spacing-md);
+  padding: calc(var(--spacing-lg) * 0.85);
+  margin-bottom: calc(var(--spacing-md) * 0.85);
   transition: all var(--transition-normal);
   animation: slideIn 0.4s ease-out;
 }
@@ -69,13 +69,13 @@
 /* Заголовок квеста */
 .quest-card__header {
   display: flex;
-  gap: var(--spacing-md);
-  margin-bottom: var(--spacing-md);
+  gap: calc(var(--spacing-md) * 0.85);
+  margin-bottom: calc(var(--spacing-md) * 0.85);
   align-items: flex-start;
 }
 
 .quest-card__icon {
-  font-size: 1.8rem;
+  font-size: calc(1.8rem * 0.85);
   flex-shrink: 0;
 }
 
@@ -83,21 +83,21 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: var(--spacing-md);
+  gap: calc(var(--spacing-md) * 0.85);
   width: 100%;
 }
 
 .quest-card__title {
   color: white;
-  font-size: 1.1rem;
+  font-size: calc(1.1rem * 0.85);
   margin: 0;
   flex: 1;
 }
 
 .quest-card__difficulty {
-  padding: 4px 12px;
+  padding: calc(4px * 0.85) calc(12px * 0.85);
   border-radius: 20px;
-  font-size: 0.75rem;
+  font-size: calc(0.75rem * 0.85);
   font-weight: bold;
   text-transform: uppercase;
   white-space: nowrap;
@@ -126,21 +126,21 @@
 /* Описание квеста */
 .quest-card__description {
   color: #d3d3d3 !important;
-  font-size: 0.9rem;
-  margin: 0 0 var(--spacing-md) 0;
+  font-size: calc(0.9rem * 0.85);
+  margin: 0 0 calc(var(--spacing-md) * 0.85) 0;
   line-height: 1.5;
 }
 
 /* Статус квеста */
 .quest-card__status {
-  margin-bottom: var(--spacing-md);
+  margin-bottom: calc(var(--spacing-md) * 0.85);
 }
 
 .quest-card__badge {
   display: inline-block;
-  padding: 6px 12px;
+  padding: calc(6px * 0.85) calc(12px * 0.85);
   border-radius: 6px;
-  font-size: 0.85rem;
+  font-size: calc(0.85rem * 0.85);
   font-weight: bold;
 }
 
@@ -162,18 +162,18 @@
 /* Награды квеста */
 .quest-card__rewards {
   display: flex;
-  gap: var(--spacing-md);
-  margin-bottom: var(--spacing-md);
+  gap: calc(var(--spacing-md) * 0.85);
+  margin-bottom: calc(var(--spacing-md) * 0.85);
   flex-wrap: wrap;
 }
 
 .quest-reward {
-  padding: 8px 12px;
+  padding: calc(8px * 0.85) calc(12px * 0.85);
   border-radius: 6px;
-  font-size: 0.85rem;
+  font-size: calc(0.85rem * 0.85);
   font-weight: bold;
   flex: 1;
-  min-width: 120px;
+  min-width: calc(120px * 0.85);
   text-align: center;
 }
 
