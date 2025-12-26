@@ -39,7 +39,7 @@
 }
 
 .profile-info-block {
-  background-color: rgba(128, 128, 128, 0.15);
+  background-color: #e8e8e8;
   border-radius: 12px;
   padding: var(--spacing-lg);
   margin-bottom: var(--spacing-lg);
@@ -62,7 +62,7 @@
 }
 
 .stats-block {
-  background-color: rgba(128, 128, 128, 0.15);
+  background-color: #e8e8e8;
   border-radius: 12px;
   padding: var(--spacing-lg);
   margin-bottom: var(--spacing-lg);
