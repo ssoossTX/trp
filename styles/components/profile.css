@@ -154,6 +154,7 @@
   padding: var(--spacing-lg);
   border-radius: 8px;
   margin-top: var(--spacing-lg);
+  min-height: 120px;
 }
 
 .inventory-grid {
