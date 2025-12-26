@@ -379,7 +379,7 @@
 
 /* ===== МОДАЛЬНОЕ ОКНО ПОДТВЕРЖДЕНИЯ ВЫХОДА ===== */
 .modal--confirm {
-  z-index: 1001;
+  z-index: 11000;
 }
 
 .modal__content--confirm {
