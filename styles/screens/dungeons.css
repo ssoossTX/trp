@@ -86,7 +86,7 @@
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: var(--spacing-lg);
   padding: var(--spacing-lg);
-  background-color: #f8f9fa;
+  background-color: transparent;
   border-radius: var(--radius-md);
   overflow-y: auto;
   flex: 1;
