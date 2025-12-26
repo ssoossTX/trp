@@ -61,6 +61,14 @@
   font-weight: 600;
 }
 
+.stats-block {
+  background-color: rgba(128, 128, 128, 0.15);
+  border-radius: 12px;
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+  border: 1px solid rgba(128, 128, 128, 0.3);
+}
+
 .profile-section {
   background: rgba(52, 73, 94, 0.5);
   border: 2px solid #34495e;
