@@ -133,12 +133,13 @@
   display: none;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  z-index: 10000;
   animation: fadeIn var(--transition-normal) ease;
 }
 
 .modal.active {
-  display: flex;
+  display: flex !important;
+  pointer-events: auto !important;
 }
 
 .modal__content {
@@ -152,6 +153,8 @@
   box-shadow: var(--shadow-lg);
   position: relative;
   animation: slideDown var(--transition-normal) ease;
+  pointer-events: auto !important;
+  z-index: 10001;
 }
 
 .modal__close {
