@@ -28,6 +28,10 @@
   margin-bottom: var(--spacing-md);
 }
 
+.content-block h2 {
+  color: #000000 !important;
+}
+
 .screen-header-with-btn p {
   width: 100%;
   color: #000000;
