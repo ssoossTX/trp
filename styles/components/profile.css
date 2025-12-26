@@ -149,15 +149,21 @@
 }
 
 /* ===== ИНВЕНТАРЬ ===== */
+.inventory-section {
+  background-color: #e8e8e8;
+  padding: var(--spacing-lg);
+  border-radius: 8px;
+  margin-top: var(--spacing-lg);
+}
+
 .inventory-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   gap: var(--spacing-md);
-  margin-top: var(--spacing-lg);
-  background-color: #e8e8e8;
-  padding: var(--spacing-lg);
-  border-radius: 8px;
-  min-height: 120px;
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+  min-height: auto;
 }
 
 .inventory-grid.hidden {
@@ -232,15 +238,15 @@
   text-align: center;
   color: var(--text-light);
   font-style: italic;
-  padding: var(--spacing-lg);
+  padding: 0;
   opacity: 0.7;
-  background-color: #e8e8e8;
-  border-radius: 8px;
+  background-color: transparent;
+  border-radius: 0;
   min-height: 120px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: var(--spacing-lg);
+  margin-top: 0;
 }
 }
 
