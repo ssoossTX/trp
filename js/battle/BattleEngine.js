@@ -287,6 +287,14 @@ export class BattleEngine {
     // Показываем модаль
     modal.style.display = 'flex';
 
+    // Удаляем старые обработчики если они есть
+    if (confirmBtn._dungeonConfirmHandler) {
+      confirmBtn.removeEventListener('click', confirmBtn._dungeonConfirmHandler);
+    }
+    if (cancelBtn._dungeonCancelHandler) {
+      cancelBtn.removeEventListener('click', cancelBtn._dungeonCancelHandler);
+    }
+
     // Обработчик подтверждения выхода
     const handleConfirm = () => {
       try {
@@ -294,18 +302,21 @@ export class BattleEngine {
         gameState.battle.isInBattle = false;
         gameState.battle.playerHp = 0;
         
-        // Закрываем модаль
-        modal.style.display = 'none';
-        
         // Обрабатываем поражение в подземелье
         DungeonsManager.onDungeonPlayerDefeated();
       } catch (error) {
         console.error('Ошибка при подтверждении выхода из подземелья:', error);
-        modal.style.display = 'none';
       } finally {
+        // Закрываем модаль
+        modal.style.display = 'none';
+        
         // Удаляем обработчики
         confirmBtn.removeEventListener('click', handleConfirm);
         cancelBtn.removeEventListener('click', handleCancel);
+        
+        // Очищаем сохраненные ссылки
+        confirmBtn._dungeonConfirmHandler = null;
+        cancelBtn._dungeonCancelHandler = null;
       }
     };
 
@@ -314,15 +325,15 @@ export class BattleEngine {
       modal.style.display = 'none';
       confirmBtn.removeEventListener('click', handleConfirm);
       cancelBtn.removeEventListener('click', handleCancel);
+      
+      // Очищаем сохраненные ссылки
+      confirmBtn._dungeonConfirmHandler = null;
+      cancelBtn._dungeonCancelHandler = null;
     };
 
-    // Удаляем старые обработчики перед добавлением новых
-    confirmBtn.removeEventListener('click', confirmBtn._handleConfirm);
-    cancelBtn.removeEventListener('click', cancelBtn._handleCancel);
-    
-    // Сохраняем ссылки на обработчики для последующего удаления
-    confirmBtn._handleConfirm = handleConfirm;
-    cancelBtn._handleCancel = handleCancel;
+    // Сохраняем ссылки на обработчики
+    confirmBtn._dungeonConfirmHandler = handleConfirm;
+    cancelBtn._dungeonCancelHandler = handleCancel;
 
     // Прикрепляем обработчики
     confirmBtn.addEventListener('click', handleConfirm);
