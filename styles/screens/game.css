@@ -1,10 +1,31 @@
 /* ===== ОСНОВНОЙ ЭКРАН ИГРЫ ===== */
 
+.screen-header-with-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-md);
+  width: 100%;
+}
+
+.screen-header-with-btn h2 {
+  margin: 0;
+  flex: 1;
+}
+
+.screen-header-with-btn .game-screen__exit-btn {
+  margin-right: 10px;
+  flex-shrink: 0;
+  margin: 0;
+}
+
 .screen-description {
   color: #000000;
   margin: var(--spacing-md) 0;
   font-size: 1rem;
   line-height: 1.5;
+  display: block;
+  width: 100%;
 }
 
 .screen-profile-info {
