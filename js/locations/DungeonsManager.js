@@ -55,20 +55,12 @@ export class DungeonsManager {
 
     container.innerHTML = filtered.map(dungeon => this.createDungeonCard(dungeon)).join('');
 
-    // Прикрепляем обработчики к карточкам и кнопкам
+    // Прикрепляем обработчики к карточкам
     filtered.forEach(dungeon => {
       const card = DOMManager.getElementById(`dungeon-card-${dungeon.id}`);
-      const enterBtn = DOMManager.getElementById(`btn-enter-${dungeon.id}`);
 
       if (card) {
         card.addEventListener('click', () => this.showDungeonDetails(dungeon.id));
-      }
-
-      if (enterBtn) {
-        enterBtn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          this.startDungeon(dungeon.id);
-        });
       }
     });
   }
@@ -89,37 +81,7 @@ export class DungeonsManager {
           <div class="difficulty-badge">${dungeon.difficulty}</div>
         </div>
         <div class="dungeon-card-body">
-          <p class="dungeon-description">${dungeon.description}</p>
-          
-          <div class="dungeon-requirements">
-            <div class="requirement">
-              <span class="requirement-icon">📊</span>
-              <span>Уровень: ${dungeon.requiredLevel}</span>
-            </div>
-            <div class="requirement">
-              <span class="requirement-icon">⏱</span>
-              <span>${dungeon.duration}</span>
-            </div>
-          </div>
-
-          <div class="dungeon-rewards">
-            ${dungeon.rewards.map(reward => {
-              if (reward.type === 'gold') {
-                return `<div class="reward-item">💰 ${reward.value} з.</div>`;
-              } else if (reward.type === 'item') {
-                return `<div class="reward-item">⚔️ ${reward.name}</div>`;
-              } else if (reward.type === 'experience') {
-                return `<div class="reward-item">⭐ ${reward.value} опыта</div>`;
-              }
-            }).join('')}
-          </div>
-
           <div class="dungeon-status ${statusClass}">${statusText}</div>
-        </div>
-        <div class="dungeon-card-footer">
-          <button class="btn-enter ${!isAvailable ? 'disabled' : ''}" id="btn-enter-${dungeon.id}" ${!isAvailable ? 'disabled' : ''}>
-            ${isAvailable ? '⚔️ Войти' : `🔒 Уровень ${dungeon.requiredLevel}`}
-          </button>
         </div>
       </div>
     `;
