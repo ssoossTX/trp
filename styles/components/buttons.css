@@ -382,6 +382,14 @@
   z-index: 11000;
 }
 
+.modal--confirm .modal__overlay {
+  z-index: 10999 !important;
+}
+
+.modal--confirm .modal__content--confirm {
+  z-index: 11001 !important;
+}
+
 .modal__content--confirm {
   border-left: 5px solid #e74c3c;
   max-width: 450px;

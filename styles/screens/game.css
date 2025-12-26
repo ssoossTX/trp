@@ -400,10 +400,6 @@
   z-index: 9990 !important;
 }
 
-.modal--confirm .modal__overlay {
-  z-index: 10999 !important;
-}
-
 .location-modal .modal__content {
   position: relative !important;
   background: white !important;
