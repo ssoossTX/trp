@@ -457,7 +457,7 @@
   height: 100%;
   align-items: center;
   justify-content: center;
-  z-index: 2000;
+  z-index: 11000;
   pointer-events: none;
 }
 
