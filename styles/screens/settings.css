@@ -1,5 +1,30 @@
 /* ===== НАСТРОЙКИ ИГРЫ ===== */
 
+.screen-header-with-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.screen-header-with-btn .game-screen__exit-btn {
+  margin-right: 10px;
+  flex-shrink: 0;
+  align-self: flex-start;
+}
+
+.screen-header-with-btn h2 {
+  width: 100%;
+  margin-bottom: var(--spacing-md);
+}
+
+.screen-header-with-btn p {
+  width: 100%;
+  color: #000000;
+  margin-bottom: var(--spacing-md);
+}
+
 .settings-group {
   background: rgba(52, 73, 94, 0.5);
   border: 2px solid #34495e;

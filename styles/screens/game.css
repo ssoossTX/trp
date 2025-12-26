@@ -1,48 +1,4 @@
 /* ===== ОСНОВНОЙ ЭКРАН ИГРЫ ===== */
-
-.screen-header-with-btn {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: var(--spacing-md);
-  width: 100%;
-}
-
-.screen-header-with-btn h2 {
-  margin: 0;
-  flex: 0 1 auto;
-  order: 1;
-}
-
-.screen-header-with-btn .game-screen__exit-btn {
-  margin: 0;
-  flex-shrink: 0;
-  order: 2;
-}
-
-.screen-header-with-btn .screen-description {
-  order: 3;
-  flex-basis: 100%;
-  margin: var(--spacing-md) 0 0 0;
-}
-
-.screen-description {
-  color: #000000;
-  font-size: 1rem;
-  line-height: 1.5;
-  display: block;
-  width: 100%;
-}
-
-.screen-profile-info {
-  color: #000000;
-}
-
-.screen-profile-info p {
-  color: #000000;
-}
-
 #main-game-ui {
   /* Фоновое изображение */
   background-image: url('/trp/assets/img/background.jpg');
@@ -200,7 +156,7 @@
 }
 
 .content-block p {
-  color: var(--text-primary);
+  color: #000000;
   line-height: 1.6;
   margin-bottom: var(--spacing-sm);
 }
@@ -211,10 +167,16 @@
   margin-bottom: var(--spacing-lg);
 }
 
+.world__header h2 {
+  margin-bottom: var(--spacing-md);
+}
+
 .world__subtitle {
   color: #000000;
   font-size: var(--font-size-sm);
   font-style: italic;
+  display: block;
+  margin-top: var(--spacing-md);
 }
 
 .player-level-indicator {
