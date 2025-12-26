@@ -1,4 +1,16 @@
 /* Вкладка подземелий */
+.dungeons-header-title {
+  text-align: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+.dungeons-header-title h2 {
+  margin: 0;
+  font-size: var(--font-size-xl);
+  color: #000000;
+  font-weight: bold;
+}
+
 .dungeons-container {
   display: flex;
   flex-direction: column;
