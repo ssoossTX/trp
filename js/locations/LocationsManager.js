@@ -8,7 +8,6 @@ import { BattleEngine } from '../battle/BattleEngine.js';
 import { BattleUI } from '../battle/BattleUI.js';
 import { getRandomElement } from '../utils/helpers.js';
 import { GAME_CONSTANTS } from '../utils/constants.js';
-import { ImageCache } from '../utils/ImageCache.js';
 
 export class LocationsManager {
   /**
@@ -52,14 +51,13 @@ export class LocationsManager {
     const locations = dataLoader.getLocations();
 
     const locationImages = {
-      'city': 'город.jpg',
-      'forest': 'лес.jpg',
-      'mountains': 'горы.jpg'
+      'city': '/trp/assets/img/город.jpg',
+      'forest': '/trp/assets/img/лес.jpg',
+      'mountains': '/trp/assets/img/горы.jpg'
     };
 
     locationsGrid.innerHTML = Object.entries(locations).map(([key, location]) => {
-      const imageName = locationImages[key];
-      const imagePath = ImageCache.getImageUrl(imageName) || `/trp/assets/img/${imageName}`;
+      const imagePath = locationImages[key] || location.icon;
       return `
         <button class="location-btn" onclick="window.LocationsManager.showLocationModal('${key}')">
           <div class="location-btn__icon"><img src="${imagePath}" alt="${location.name}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;"></div>

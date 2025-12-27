@@ -6,7 +6,6 @@ import { gameState } from '../core/GameState.js';
 import { calculatePercent } from '../utils/helpers.js';
 import { GAME_CONSTANTS } from '../utils/constants.js';
 import { UIManager } from '../ui/UIManager.js';
-import { ImageCache } from '../utils/ImageCache.js';
 
 export class BattleUI {
   static battleLogs = [];
@@ -57,14 +56,7 @@ export class BattleUI {
     const enemyImage = DOMManager.getElementById('enemyImage');
     if (enemyImage) {
       if (enemy.image) {
-        // Используем URL из кеша или прямой путь
-        const imageUrl = ImageCache.getImageUrl(enemy.image);
-        if (imageUrl) {
-          enemyImage.src = imageUrl;
-        } else {
-          // Fallback к прямому пути, если картинка не в кеше
-          enemyImage.src = `/trp/assets/img/enemies/${enemy.image}`;
-        }
+        enemyImage.src = `/trp/assets/img/enemies/${enemy.image}`;
         enemyImage.alt = enemy.name;
         console.log(`[BattleUI] Изображение врага установлено: ${enemy.image}`);
       } else {

@@ -14,7 +14,6 @@ import { UIManager } from './ui/UIManager.js';
 import { BattleEngine } from './battle/BattleEngine.js';
 import { Logger, delay } from './utils/helpers.js';
 import { GAME_CONSTANTS, APP_EVENTS } from './utils/constants.js';
-import { ImageCache } from './utils/ImageCache.js';
 
 /**
  * Главный класс приложения
@@ -26,10 +25,6 @@ class Game {
   async init() {
     try {
       Logger.log('Инициализация игры...');
-
-      // Предзагружаем все картинки
-      Logger.log('Предзагрузка картинок...');
-      await ImageCache.preloadImages();
 
       // Загружаем данные
       const dataLoaded = await dataLoader.load();
