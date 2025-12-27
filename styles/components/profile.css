@@ -179,7 +179,6 @@
   background-color: #e8e8e8;
   padding: var(--spacing-lg);
   border-radius: 8px;
-  min-height: 120px;
 }
 
 .inventory-grid.hidden {
@@ -201,6 +200,7 @@
   transition: all var(--transition-normal);
   position: relative;
   aspect-ratio: 1 / 1;
+  box-sizing: border-box;
   box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
 }
 
