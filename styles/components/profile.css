@@ -293,21 +293,28 @@
 
   .inventory-grid {
     grid-template-columns: repeat(3, 1fr);
-    padding: var(--spacing-sm);
-    gap: var(--spacing-sm);
+    padding: 4px;
+    gap: 4px;
   }
 
   .inventory-item {
     aspect-ratio: 1 / 1;
-    padding: var(--spacing-sm);
+    padding: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
   }
 
   .inventory-item__icon {
-    font-size: 1.5em;
+    font-size: 1.2em;
   }
 
   .inventory-item__name {
-    font-size: var(--font-size-xs);
+    font-size: 10px;
+    line-height: 1;
+  }
+
+  .inventory-item__rarity {
+    font-size: 8px;
+    padding: 1px 3px;
   }
 }
 
