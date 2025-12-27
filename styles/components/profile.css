@@ -318,30 +318,7 @@
   }
 }
 
-@media (max-width: 600px) {
-  .inventory-grid {
-    grid-template-columns: repeat(3, 1fr);
-    padding: var(--spacing-md);
-    gap: var(--spacing-sm);
-  }
 
-  .inventory-item {
-    aspect-ratio: 1 / 1;
-    padding: var(--spacing-sm);
-  }
-
-  .inventory-item__icon {
-    font-size: 1.5em;
-  }
-
-  .inventory-item__name {
-    font-size: var(--font-size-xs);
-  }
-
-  .inventory-empty {
-    padding: var(--spacing-md) !important;
-  }
-}
 /* ===== СИСТЕМА ПРОКАЧКИ ХАРАКТЕРИСТИК ===== */
 
 .stats-upgrade-container {
