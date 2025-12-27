@@ -9,6 +9,7 @@ import { BattleEngine } from '../battle/BattleEngine.js';
 import { BattleUI } from '../battle/BattleUI.js';
 import { UIManager } from '../ui/UIManager.js';
 import { QuestsManager } from '../quests/QuestsManager.js';
+import { ImageCache } from '../utils/ImageCache.js';
 
 export class DungeonsManager {
   static dungeons = [];
@@ -73,15 +74,16 @@ export class DungeonsManager {
     const statusClass = progress.completed ? 'status-completed' : progress.started ? 'status-in-progress' : 'status-not-started';
     const statusText = progress.completed ? `✓ Пройдено` : progress.started ? `⏱ В процессе` : `○ Не начато`;
 
-    // Маппинг названий подземелий на картинки
+    // Маппинг названий подземелий на картинки (названия файлов)
     const dungeonImages = {
-      'Развалины в лесу': '/trp/assets/img/развалины.jpg',
-      'Кристальные пещеры': '/trp/assets/img/пещера.jpg',
-      'Храм Тьмы': '/trp/assets/img/храм1.jpg',
-      'Древняя библиотека': '/trp/assets/img/библиотека.jpg'
+      'Развалины в лесу': 'развалины.jpg',
+      'Кристальные пещеры': 'пещера.jpg',
+      'Храм Тьмы': 'храм1.jpg',
+      'Древняя библиотека': 'библиотека.jpg'
     };
 
-    const imagePath = dungeonImages[dungeon.name] || '';
+    const imageName = dungeonImages[dungeon.name];
+    const imagePath = imageName ? ImageCache.getImageUrl(imageName) || `/trp/assets/img/${imageName}` : '';
 
     return `
       <div class="dungeon-card" id="dungeon-card-${dungeon.id}">

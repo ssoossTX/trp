@@ -5,6 +5,7 @@ import { DOMManager } from '../core/DOMManager.js';
 import { gameState } from '../core/GameState.js';
 import { dataLoader } from '../data/DataLoader.js';
 import { Logger } from '../utils/helpers.js';
+import { ImageCache } from '../utils/ImageCache.js';
 
 export class CraftsManager {
   static crafts = [];
@@ -109,6 +110,7 @@ export class CraftsManager {
   static showCraftCompleteNotification(craft) {
     const notification = document.createElement('div');
     notification.className = 'craft-notification craft-notification--complete';
+    const imagePath = craft.output.image ? (ImageCache.getImageUrl(craft.output.image) || `/trp/assets/img/${craft.output.image}`) : '';
     notification.innerHTML = `
       <div class="craft-notification__content">
         <div class="craft-notification__header">
@@ -116,7 +118,7 @@ export class CraftsManager {
           <h3>Крафт завершен!</h3>
         </div>
         <div class="craft-notification__item">
-          ${craft.output.image ? `<img src="/trp/assets/img/${craft.output.image}" alt="${craft.output.name}" style="width: 50px; height: 50px; object-fit: contain; border-radius: 4px;">` : `<span class="craft-notification__item-icon">${craft.output.icon}</span>`}
+          ${craft.output.image ? `<img src="${imagePath}" alt="${craft.output.name}" style="width: 50px; height: 50px; object-fit: contain; border-radius: 4px;">` : `<span class="craft-notification__item-icon">${craft.output.icon}</span>`}
           <p class="craft-notification__item-name">${craft.output.name}</p>
         </div>
       </div>
@@ -182,6 +184,8 @@ export class CraftsManager {
       </div>
     `).join('');
 
+    const outputImagePath = craft.output.image ? (ImageCache.getImageUrl(craft.output.image) || `/trp/assets/img/${craft.output.image}`) : '';
+
     return `
       <div class="craft-card" data-craft-id="${craft.id}">
         <div class="craft-card__header">
@@ -198,7 +202,7 @@ export class CraftsManager {
 
           <div class="craft-card__output">
             <div class="craft-card__output-item">
-              ${craft.output.image ? `<img src="/trp/assets/img/${craft.output.image}" alt="${craft.output.name}" class="craft-card__output-image">` : `<span class="craft-card__output-icon">${craft.output.icon}</span>`}
+              ${craft.output.image ? `<img src="${outputImagePath}" alt="${craft.output.name}" class="craft-card__output-image">` : `<span class="craft-card__output-icon">${craft.output.icon}</span>`}
               <div class="craft-card__output-info">
                 <div class="craft-card__output-name">${craft.output.name}</div>
                 <div class="craft-card__output-quantity">x${craft.output.quantity}</div>

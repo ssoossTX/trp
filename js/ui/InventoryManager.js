@@ -3,6 +3,7 @@
  */
 import { DOMManager } from '../core/DOMManager.js';
 import { gameState } from '../core/GameState.js';
+import { ImageCache } from '../utils/ImageCache.js';
 
 export class InventoryManager {
   /**
@@ -49,19 +50,22 @@ export class InventoryManager {
 
     // Группируем одинаковые предметы
     const groupedItems = this.groupItems(inventory);
-
-    container.innerHTML = groupedItems.map((item) => `
+{
+      const imagePath = item.image ? (ImageCache.getImageUrl(item.image) || `/trp/assets/img/${item.image}`) : '';
+      return `
       <div class="inventory-item inventory-item--${item.rarity || 'common'}" 
            data-item-name="${item.name}" 
            data-item-rarity="${item.rarity || 'common'}"
            style="cursor: pointer;">
         <div class="inventory-item__icon">
-          ${item.image ? `<img src="/trp/assets/img/${item.image}" alt="${item.name}" style="width: 50px; height: 50px; object-fit: contain; border-radius: 4px; background: rgba(0,0,0,0.1); padding: 4px;">` : item.icon}
+          ${item.image ? `<img src="${imagePath}" alt="${item.name}" style="width: 50px; height: 50px; object-fit: contain; border-radius: 4px; background: rgba(0,0,0,0.1); padding: 4px;">` : item.icon}
         </div>
         <div class="inventory-item__name">${item.name}</div>
         <div class="inventory-item__rarity">${this.rarityName(item.rarity || 'common')}</div>
         ${item.quantity > 1 ? `<div class="inventory-item__quantity">x${item.quantity}</div>` : ''}
       </div>
+    `;
+    } </div>
     `).join('');
 
     // Прикрепляем обработчики клика

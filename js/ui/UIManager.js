@@ -13,6 +13,7 @@ import { CraftsManager } from '../crafts/CraftsManager.js';
 import { InventoryManager } from './InventoryManager.js';
 import { GAME_CONSTANTS } from '../utils/constants.js';
 import { Logger } from '../utils/helpers.js';
+import { ImageCache } from '../utils/ImageCache.js';
 import { StatsUI } from './StatsUI.js';
 
 export class UIManager {
@@ -333,7 +334,7 @@ export class UIManager {
 
     container.innerHTML = abilities.map(ability => {
       const imageName = abilityImages[ability.name] || 'placeholder.jpg';
-      const imagePath = `/trp/assets/img/${imageName}`;
+      const imagePath = ImageCache.getImageUrl(imageName) || `/trp/assets/img/${imageName}`;
       return `
       <div class="ability-card ability-card--active">
         <div class="ability-card__header">
