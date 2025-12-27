@@ -3,7 +3,6 @@
  */
 import { DOMManager } from '../core/DOMManager.js';
 import { gameState } from '../core/GameState.js';
-import { ImageCache } from '../utils/ImageCache.js';
 
 export class InventoryManager {
   /**
