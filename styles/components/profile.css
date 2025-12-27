@@ -149,7 +149,7 @@
 }
 
 /* ===== ИНВЕНТАРЬ ===== */
-.inventory-section {
+.content-block .inventory-section {
   background-color: #e8e8e8 !important;
   padding: var(--spacing-lg) !important;
   border-radius: 8px !important;
