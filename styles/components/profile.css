@@ -153,8 +153,13 @@
   background-color: #e8e8e8 !important;
   padding: var(--spacing-lg) !important;
   border-radius: 8px !important;
-  margin-top: var(--spacing-lg) !important;
+  margin-top: 0 !important;
   min-height: 120px !important;
+  display: block !important;
+}
+
+.content-block h2 + .inventory-section {
+  margin-top: var(--spacing-lg) !important;
 }
 
 .inventory-grid {
