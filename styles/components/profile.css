@@ -149,6 +149,17 @@
 }
 
 /* ===== ИНВЕНТАРЬ ===== */
+.content-block:has(.inventory-section) {
+  background-color: transparent !important;
+  padding: 0 !important;
+}
+
+.content-block:has(.inventory-section) > h2 {
+  background-color: transparent !important;
+  padding: var(--spacing-lg) !important;
+  border-radius: 0 !important;
+}
+
 .content-block .inventory-section {
   background-color: transparent !important;
   padding: 0 !important;
