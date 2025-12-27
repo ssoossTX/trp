@@ -156,7 +156,7 @@
 
 .content-block:has(.inventory-section) > h2 {
   background-color: transparent !important;
-  padding: var(--spacing-lg) !important;
+  padding: var(--spacing-lg) var(--spacing-lg) 0 var(--spacing-lg) !important;
   border-radius: 0 !important;
 }
 
