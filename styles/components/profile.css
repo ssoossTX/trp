@@ -293,14 +293,17 @@
 
   .inventory-grid {
     grid-template-columns: repeat(3, 1fr);
+    padding: var(--spacing-sm);
+    gap: var(--spacing-sm);
   }
 
   .inventory-item {
     aspect-ratio: 1 / 1;
+    padding: var(--spacing-sm);
   }
 
   .inventory-item__icon {
-    font-size: 2em;
+    font-size: 1.5em;
   }
 
   .inventory-item__name {
