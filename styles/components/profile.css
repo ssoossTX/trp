@@ -150,16 +150,33 @@
 
 /* ===== ИНВЕНТАРЬ ===== */
 .content-block .inventory-section {
-  background-color: #e8e8e8 !important;
-  padding: var(--spacing-lg) !important;
-  border-radius: 8px !important;
+  background-color: transparent;
+  padding: 0 !important;
+  border-radius: 0 !important;
   margin-top: 0 !important;
-  min-height: 120px !important;
+  min-height: auto !important;
   display: block !important;
 }
 
 .content-block h2 + .inventory-section {
   margin-top: var(--spacing-lg) !important;
+}
+
+/* Серый фон только для заголовка инвентаря */
+.content-block:has(.inventory-section) {
+  background-color: #e8e8e8;
+  padding: var(--spacing-lg);
+  border-radius: 8px;
+  border: 1px solid rgba(128, 128, 128, 0.3);
+}
+
+.content-block:has(.inventory-section) h2 {
+  margin-top: 0;
+  margin-bottom: var(--spacing-lg);
+}
+
+.content-block:has(.inventory-section) .inventory-section {
+  margin-top: 0;
 }
 
 .inventory-grid {
