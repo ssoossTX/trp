@@ -254,12 +254,12 @@
   text-align: center;
   color: var(--text-light);
   font-style: italic;
-  padding: var(--spacing-lg);
+  padding: var(--spacing-lg) !important;
   opacity: 0.7;
-  background-color: #e8e8e8;
-  border-radius: 8px;
-  min-height: 120px;
-  display: flex;
+  background-color: #e8e8e8 !important;
+  border-radius: 8px !important;
+  min-height: 120px !important;
+  display: flex !important;
   align-items: center;
   justify-content: center;
   margin-top: 0;
