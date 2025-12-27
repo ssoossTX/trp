@@ -150,11 +150,10 @@
 
 /* ===== ИНВЕНТАРЬ ===== */
 .content-block .inventory-section {
-  background-color: transparent;
+  background-color: transparent !important;
   padding: 0 !important;
   border-radius: 0 !important;
   margin-top: 0 !important;
-  min-height: auto !important;
   display: block !important;
 }
 
@@ -162,31 +161,14 @@
   margin-top: var(--spacing-lg) !important;
 }
 
-/* Серый фон только для заголовка инвентаря */
-.content-block:has(.inventory-section) {
-  background-color: #e8e8e8;
-  padding: var(--spacing-lg);
-  border-radius: 8px;
-  border: 1px solid rgba(128, 128, 128, 0.3);
-}
-
-.content-block:has(.inventory-section) h2 {
-  margin-top: 0;
-  margin-bottom: var(--spacing-lg);
-}
-
-.content-block:has(.inventory-section) .inventory-section {
-  margin-top: 0;
-}
-
 .inventory-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   gap: var(--spacing-md);
-  background-color: transparent;
-  padding: 0;
-  border-radius: 0;
-  min-height: auto;
+  background-color: #e8e8e8;
+  padding: var(--spacing-lg);
+  border-radius: 8px;
+  min-height: 120px;
 }
 
 .inventory-grid.hidden {
@@ -261,10 +243,10 @@
   text-align: center;
   color: var(--text-light);
   font-style: italic;
-  padding: 0;
+  padding: var(--spacing-lg);
   opacity: 0.7;
-  background-color: transparent;
-  border-radius: 0;
+  background-color: #e8e8e8;
+  border-radius: 8px;
   min-height: 120px;
   display: flex;
   align-items: center;
