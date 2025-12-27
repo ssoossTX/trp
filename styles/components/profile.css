@@ -174,7 +174,7 @@
 
 .inventory-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
   gap: var(--spacing-md);
   background-color: #e8e8e8;
   padding: var(--spacing-lg);
@@ -200,7 +200,7 @@
   cursor: pointer;
   transition: all var(--transition-normal);
   position: relative;
-  min-height: 120px;
+  aspect-ratio: 1 / 1;
   box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
 }
 
@@ -284,11 +284,11 @@
   }
 
   .inventory-grid {
-    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
   }
 
   .inventory-item {
-    min-height: 100px;
+    aspect-ratio: 1 / 1;
   }
 
   .inventory-item__icon {
