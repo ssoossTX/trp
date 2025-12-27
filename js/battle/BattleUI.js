@@ -15,11 +15,6 @@ export class BattleUI {
    */
   static show() {
     this.battleLogs = [];
-    // Очищаем старое изображение врага перед началом новой боя
-    const enemyImage = DOMManager.getElementById('enemyImage');
-    if (enemyImage) {
-      enemyImage.src = '';
-    }
     DOMManager.hideScreen(GAME_CONSTANTS.MAIN_GAME_SCREEN_ID);
     DOMManager.showScreen(GAME_CONSTANTS.BATTLE_SCREEN_ID);
     this.setupEventListeners();
@@ -53,17 +48,12 @@ export class BattleUI {
     
     DOMManager.setText('enemyName', enemyNameDisplay);
     
-    const enemyImage = DOMManager.getElementById('enemyImage');
-    if (enemyImage) {
-      if (enemy.image) {
+    if (enemy.image) {
+      const enemyImage = DOMManager.getElementById('enemyImage');
+      if (enemyImage) {
         enemyImage.src = `/trp/assets/img/enemies/${enemy.image}`;
         enemyImage.alt = enemy.name;
         console.log(`[BattleUI] Изображение врага установлено: ${enemy.image}`);
-      } else {
-        // Очищаем изображение, если его нет
-        enemyImage.src = '';
-        enemyImage.alt = enemy.name;
-        console.log(`[BattleUI] Изображение врага очищено (враг без картинки)`);
       }
     }
     
