@@ -169,7 +169,7 @@
 }
 
 .content-block h2 + .inventory-section {
-  margin-top: var(--spacing-lg) !important;
+  margin-top: var(--spacing-sm) !important;
 }
 
 .inventory-grid {
