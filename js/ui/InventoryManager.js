@@ -50,8 +50,9 @@ export class InventoryManager {
 
     // Группируем одинаковые предметы
     const groupedItems = this.groupItems(inventory);
-{
-      const imagePath = item.image ? (ImageCache.getImageUrl(item.image) || `/trp/assets/img/${item.image}`) : '';
+
+    container.innerHTML = groupedItems.map((item) => {
+      const imagePath = item.image ? `/trp/assets/img/${item.image}` : '';
       return `
       <div class="inventory-item inventory-item--${item.rarity || 'common'}" 
            data-item-name="${item.name}" 
@@ -65,8 +66,7 @@ export class InventoryManager {
         ${item.quantity > 1 ? `<div class="inventory-item__quantity">x${item.quantity}</div>` : ''}
       </div>
     `;
-    } </div>
-    `).join('');
+    }).join('');
 
     // Прикрепляем обработчики клика
     groupedItems.forEach(item => {
