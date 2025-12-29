@@ -238,7 +238,6 @@ export class ClassSelectionManager {
    */
   static closeAbilityModal() {
     DOMManager.closeModal('abilityModal');
-    selectedClass = null;
     selectedAbility = null;
   }
 

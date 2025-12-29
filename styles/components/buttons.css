@@ -811,9 +811,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 0;
+  padding: 4px 0;
   color: rgba(255, 255, 255, 0.8);
-  font-size: 0.95rem;
+  font-size: 0.85rem;
 }
 
 .item-info__row--full {
@@ -831,8 +831,8 @@
 }
 
 .item-info__row--full .value {
-  margin-top: 6px;
-  line-height: 1.5;
+  margin-top: 3px;
+  line-height: 1.2;
   color: rgba(255, 255, 255, 0.8);
 }
 
@@ -852,7 +852,7 @@
 }
 
 .modal__footer {
-  padding: var(--spacing-lg);
+  padding: 8px;
   text-align: center;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
