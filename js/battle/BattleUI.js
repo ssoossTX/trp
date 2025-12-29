@@ -51,9 +51,21 @@ export class BattleUI {
     if (enemy.image) {
       const enemyImage = DOMManager.getElementById('enemyImage');
       if (enemyImage) {
-        enemyImage.src = `/trp/assets/img/enemies/${enemy.image}`;
-        enemyImage.alt = enemy.name;
-        console.log(`[BattleUI] Изображение врага установлено: ${enemy.image}`);
+        // Проверяем, что враг существует в подземелье (если мы в подземелье)
+        let shouldLoadImage = true;
+        if (gameState.dungeonState) {
+          const dungeonEnemyNames = gameState.dungeonState.dungeonEnemies.map(e => e.name);
+          shouldLoadImage = dungeonEnemyNames.includes(enemy.name);
+        }
+        
+        if (shouldLoadImage) {
+          enemyImage.src = `/trp/assets/img/enemies/${enemy.image}`;
+          enemyImage.alt = enemy.name;
+          console.log(`[BattleUI] Изображение врага установлено: ${enemy.image}`);
+        } else {
+          enemyImage.src = '';
+          console.log(`[BattleUI] Враг "${enemy.name}" не из подземелья, картинка не загружена`);
+        }
       }
     }
     
