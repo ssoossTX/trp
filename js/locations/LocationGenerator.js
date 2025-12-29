@@ -39,15 +39,15 @@ class LocationGenerator {
 
   /**
    * Генерирует объекты на локации (враги, деревья, камни)
-   * Распределение: 50% пусто, 15% враги, 20% деревья, 15% камни
+   * Распределение: 60% пусто, 10% враги, 20% деревья, 10% камни
    */
   generateObjects() {
     const totalCells = this.gridWidth * this.gridHeight - 1; // Минус 1 за спавн игрока
     
     const objectTypes = [
-      { type: 'enemy', emoji: '👹', percentage: 0.15 },
+      { type: 'enemy', emoji: '👹', percentage: 0.10 },
       { type: 'tree', emoji: '🌲', percentage: 0.20 },
-      { type: 'stone', emoji: '🪨', percentage: 0.15 }
+      { type: 'stone', emoji: '🪨', percentage: 0.10 }
     ];
 
     const occupiedCells = new Set();
