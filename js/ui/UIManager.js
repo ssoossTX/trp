@@ -11,6 +11,7 @@ import { DungeonsManager } from '../locations/DungeonsManager.js';
 import { QuestsManager } from '../quests/QuestsManager.js';
 import { CraftsManager } from '../crafts/CraftsManager.js';
 import { InventoryManager } from './InventoryManager.js';
+import { ProfileTabsManager } from './ProfileTabsManager.js';
 import { GAME_CONSTANTS } from '../utils/constants.js';
 import { Logger } from '../utils/helpers.js';
 import { StatsUI } from './StatsUI.js';
@@ -31,6 +32,7 @@ export class UIManager {
     this.updatePlayerProfile();
     this.initTabs();
     this.attachGameEventListeners();
+    ProfileTabsManager.init();
     StatsUI.init();
     
     // Инициализируем все системы
@@ -485,6 +487,7 @@ export class UIManager {
         StatsUI.updateStatsDisplay();
         const player = gameState.getPlayerState();
         InventoryManager.renderInventory(player.inventory);
+        ProfileTabsManager.switchTab('status');
         break;
     }
   }

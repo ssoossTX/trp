@@ -221,28 +221,40 @@
     <div class="screen hidden" id="profile-screen">
         <div class="game-screen__container">
             <div class="game-screen__content">
-                <div class="content-block screen-header-with-btn">
-                    <h2>🛡️ Профиль</h2>
+                <div class="profile-header">
                     <button class="game-screen__exit-btn" id="profileExitBtn">
                         <img src="/trp/assets/img/выход.png" alt="Назад">
                     </button>
                 </div>
-                <div class="profile-info-block">
-                    <p><strong>Имя:</strong> <span id="charName">Герой</span></p>
-                    <p><strong>Класс:</strong> <span id="charClass">-</span></p>
-                    <p><strong>Уровень:</strong> <span id="profile-level">Уровень: 1</span></p>
-                    <p><strong>Опыт:</strong>
-                        <div id="profile-xp-container" style="margin-top: 8px;">
-                            <span id="profile-xp" style="display: block; margin-bottom: 4px;">0/100</span>
-                            <div id="profile-xp-bar" style="width: 100%; height: 12px; background: #333; border-radius: 6px; overflow: hidden;">
-                                <div id="profile-xp-progress" style="height: 100%; background: linear-gradient(90deg, #4CAF50, #8BC34A); width: 0%; transition: width 0.3s ease;"></div>
-                            </div>
-                        </div>
-                    </p>
-                    <p><strong>Начальная способность:</strong> <span id="charAbility">-</span></p>
+                
+                <!-- Вкладки профиля -->
+                <div class="profile-tabs">
+                    <button class="profile-tab active" data-profile-tab="status">🛡️ Статус</button>
+                    <button class="profile-tab" data-profile-tab="stats">⬆️ Хар-ки</button>
+                    <button class="profile-tab" data-profile-tab="abilities">⚡ Скиллы</button>
+                    <button class="profile-tab" data-profile-tab="inventory">🎒 Инвентарь</button>
                 </div>
-                <div class="content-block">
-                    <h2>⬆️ Распределение характеристик</h2>
+
+                <!-- Вкладка "Статус" -->
+                <div class="profile-tab-content active" data-profile-tab="status">
+                    <div class="profile-info-block">
+                        <p><strong>Имя:</strong> <span id="charName">Герой</span></p>
+                        <p><strong>Класс:</strong> <span id="charClass">-</span></p>
+                        <p><strong>Уровень:</strong> <span id="profile-level">Уровень: 1</span></p>
+                        <p><strong>Опыт:</strong>
+                            <div id="profile-xp-container" style="margin-top: 8px;">
+                                <span id="profile-xp" style="display: block; margin-bottom: 4px;">0/100</span>
+                                <div id="profile-xp-bar" style="width: 100%; height: 12px; background: #333; border-radius: 6px; overflow: hidden;">
+                                    <div id="profile-xp-progress" style="height: 100%; background: linear-gradient(90deg, #4CAF50, #8BC34A); width: 0%; transition: width 0.3s ease;"></div>
+                                </div>
+                            </div>
+                        </p>
+                        <p><strong>Начальная способность:</strong> <span id="charAbility">-</span></p>
+                    </div>
+                </div>
+
+                <!-- Вкладка "Характеристики" -->
+                <div class="profile-tab-content" data-profile-tab="stats">
                     <div class="stats-block">
                         <div class="stats-upgrade-container" id="statsUpgradeContainer">
                             <div class="stat-row">
@@ -271,12 +283,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="content-block">
-                    <h2>⚡ Активные способности</h2>
+
+                <!-- Вкладка "Скиллы" -->
+                <div class="profile-tab-content" data-profile-tab="abilities">
                     <div id="activeAbilitiesContainer" class="abilities-grid"></div>
                 </div>
-                <div class="content-block">
-                    <h2>🎒 Инвентарь</h2>
+
+                <!-- Вкладка "Инвентарь" -->
+                <div class="profile-tab-content" data-profile-tab="inventory">
                     <div class="inventory-section">
                         <div id="inventoryContainer" class="inventory-grid"></div>
                         <p id="inventoryEmpty" class="inventory-empty">Инвентарь пуст</p>

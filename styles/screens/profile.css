@@ -1,5 +1,75 @@
 /* ===== ПРОФИЛЬ ПЕРСОНАЖА ===== */
 
+/* Заголовок профиля */
+.profile-header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+.profile-header .game-screen__exit-btn {
+  position: static !important;
+  right: auto !important;
+  top: auto !important;
+  flex-shrink: 0;
+}
+
+/* ===== ТАБЫ ПРОФИЛЯ ===== */
+.profile-tabs {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+  flex-wrap: wrap;
+}
+
+.profile-tab {
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #666;
+  font-weight: 600;
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s ease;
+  position: relative;
+  bottom: -2px;
+}
+
+.profile-tab:hover {
+  color: #000;
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.profile-tab.active {
+  color: #000;
+  border-bottom-color: #3498db;
+}
+
+/* Содержимое табов */
+.profile-tab-content {
+  display: none;
+  animation: fadeIn 0.3s ease-in;
+}
+
+.profile-tab-content.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== БЛОКИ ПРОФИЛЯ ===== */
 .screen-header-with-btn {
   text-align: center;
   margin-bottom: var(--spacing-lg);
