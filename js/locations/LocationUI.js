@@ -117,9 +117,142 @@ class LocationUI {
    * Обработчик движения
    */
   handleMove(direction) {
-    if (locationGenerator.movePlayer(direction)) {
-      this.render();
+    const result = locationGenerator.movePlayer(direction);
+    if (result && result.moved) {
+      if (result.enemy) {
+        // Встреча с врагом - начинаем бой
+        this.startBattleWithEnemy(result.enemy);
+      } else {
+        // Обычное движение
+        this.render();
+      }
     }
+  }
+
+  /**
+   * Начинает бой с врагом
+   */
+  startBattleWithEnemy(enemy) {
+    Logger.log(`Встреча с врагом на позиции ${enemy.x}, ${enemy.y}`);
+    
+    // Импортируем нужные модули для боя
+    import('../battle/BattleEngine.js').then(module => {
+      const { BattleEngine } = module;
+      
+      // Генерируем враг данные на основе эмодзи
+      const enemyData = this.generateEnemyData(enemy);
+      
+      // Скрываем экран локации
+      const locationScreen = document.getElementById('location-screen');
+      if (locationScreen) {
+        locationScreen.classList.add('hidden');
+        locationScreen.classList.remove('visible');
+      }
+      
+      // Запускаем боевой движок
+      BattleEngine.startBattle(enemyData, () => {
+        // Callback при победе
+        this.onBattleVictory();
+      }, () => {
+        // Callback при поражении
+        this.onBattleDefeat();
+      }, () => {
+        // Callback при бегстве
+        this.onBattleFlee();
+      });
+    }).catch(err => Logger.error('Ошибка загрузки BattleEngine:', err));
+  }
+
+  /**
+   * Генерирует данные врага для боя
+   */
+  generateEnemyData(enemy) {
+    const baseEnemies = {
+      '👹': {
+        name: 'Враг',
+        hp: 50,
+        maxHp: 50,
+        damage: 10,
+        level: 1
+      }
+    };
+    
+    const enemyType = baseEnemies[enemy.emoji] || {
+      name: 'Неизвестный враг',
+      hp: 30,
+      maxHp: 30,
+      damage: 8,
+      level: 1
+    };
+    
+    return {
+      ...enemyType,
+      emoji: enemy.emoji
+    };
+  }
+
+  /**
+   * Победа в бою - враг удаляется с локации
+   */
+  onBattleVictory() {
+    Logger.log('Победа в бою!');
+    
+    // Удаляем врага с локации
+    const playerPos = locationGenerator.playerPosition;
+    locationGenerator.currentLocation.objects = locationGenerator.currentLocation.objects.filter(obj =>
+      !(obj.type === 'enemy' && obj.x === playerPos.x && obj.y === playerPos.y)
+    );
+    
+    // Возвращаемся на экран локации
+    const locationScreen = document.getElementById('location-screen');
+    if (locationScreen) {
+      locationScreen.classList.remove('hidden');
+      locationScreen.classList.add('visible');
+    }
+    
+    this.render();
+  }
+
+  /**
+   * Поражение в бою - выход в меню
+   */
+  onBattleDefeat() {
+    Logger.log('Поражение в бою...');
+    
+    // Завершаем локацию
+    locationGenerator.endLocation();
+    
+    // Скрываем экран локации
+    const locationScreen = document.getElementById('location-screen');
+    if (locationScreen) {
+      locationScreen.classList.add('hidden');
+      locationScreen.classList.remove('visible');
+    }
+    
+    // Показываем главное меню
+    const menuScreen = document.getElementById('main-menu-screen');
+    if (menuScreen) {
+      menuScreen.classList.remove('hidden');
+      menuScreen.classList.add('visible');
+    }
+  }
+
+  /**
+   * Бегство из боя - возврат на локацию с сохранением позиции
+   */
+  onBattleFlee() {
+    Logger.log('Вы сбежали из боя!');
+    
+    // Возвращаемся назад на клетку с врагом
+    // Враг остается на локации
+    
+    const locationScreen = document.getElementById('location-screen');
+    if (locationScreen) {
+      locationScreen.classList.remove('hidden');
+      locationScreen.classList.add('visible');
+    }
+    
+    this.render();
   }
 
   /**

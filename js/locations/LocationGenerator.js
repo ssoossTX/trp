@@ -160,10 +160,26 @@ class LocationGenerator {
       this.playerPosition = { x: newX, y: newY };
       this.currentLocation.playerX = newX;
       this.currentLocation.playerY = newY;
-      return true;
+      
+      // Проверяем, есть ли враг на новой позиции
+      const enemy = this.getEnemyAtPosition(newX, newY);
+      if (enemy) {
+        return { moved: true, enemy: enemy };
+      }
+      
+      return { moved: true, enemy: null };
     }
 
-    return false;
+    return { moved: false, enemy: null };
+  }
+
+  /**
+   * Получает врага на конкретной позиции
+   */
+  getEnemyAtPosition(x, y) {
+    return this.currentLocation.objects.find(obj => 
+      obj.type === 'enemy' && obj.x === x && obj.y === y
+    );
   }
 
   /**

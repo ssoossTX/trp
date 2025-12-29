@@ -141,13 +141,22 @@ export class BattleEngine {
     // Показываем модальное окно дропа
     setTimeout(() => {
       BattleUI.showLootModal(enemy.name, loot);
+      
+      // Проверяем, идет ли бой на локации
+      const callbacks = this.getLocationBattleCallbacks();
+      if (callbacks.onVictory) {
+        setTimeout(() => {
+          BattleUI.hide();
+          callbacks.onVictory();
+        }, 2000);
+      }
     }, 500);
     
     // Обновляем только ресурсы на боевом экране
     UIManager.updateResources();
     
-    // Обновляем профиль только если НЕ в подземелье
-    if (!gameState.dungeonState) {
+    // Обновляем профиль только если НЕ в подземелье и НЕ на локации
+    if (!gameState.dungeonState && !this.getLocationBattleCallbacks().onVictory) {
       UIManager.updatePlayerProfile();
     }
 
@@ -225,8 +234,20 @@ export class BattleEngine {
     BattleUI.addLog(`Вы были побеждены ${enemy.name}...`, 'enemy');
     BattleUI.addLog('Вы теряете сознание...', 'enemy');
     
-    // Если в подземелье - сразу обрабатываем поражение
-    if (gameState.dungeonState) {
+    // Проверяем, идет ли бой на локации
+    const callbacks = this.getLocationBattleCallbacks();
+    
+    if (callbacks.onDefeat) {
+      // Бой на локации - возвращаемся в меню
+      BattleUI.disableAttackButton();
+      BattleUI.update();
+      
+      setTimeout(() => {
+        BattleUI.hide();
+        callbacks.onDefeat();
+      }, 2000);
+    } else if (gameState.dungeonState) {
+      // В подземелье - обрабатываем поражение в подземелье
       BattleUI.disableAttackButton();
       BattleUI.update();
       
@@ -236,7 +257,7 @@ export class BattleEngine {
         });
       }, 1000);
     } else {
-      // Обычная локация
+      // Обычная локация (из меню)
       BattleUI.addLog('Нажмите "Покинуть локацию" для возвращения', 'neutral');
       BattleUI.disableAttackButton();
       BattleUI.update();
@@ -252,6 +273,18 @@ export class BattleEngine {
    * Выход из боя
    */
   static fleeBattle() {
+    // Проверяем, идет ли бой на локации
+    const callbacks = this.getLocationBattleCallbacks();
+    if (callbacks.onFlee) {
+      // Боя на локации - возвращаемся на локацию
+      gameState.endBattle();
+      BattleUI.hide();
+      BattleUI.enableAttackButton();
+      callbacks.onFlee();
+      eventManager.emit(APP_EVENTS.BATTLE_ENDED, { result: 'fled' });
+      return;
+    }
+    
     // Проверяем, находимся ли мы в подземелье
     if (gameState.dungeonState) {
       // Показываем модальное окно подтверждения
@@ -620,4 +653,34 @@ export class BattleEngine {
     gameState.decrementAbilityCooldowns();
     this.enemyAttack();
   }
+
+  /**
+   * Инициирует боевой поединок на локации
+   * @param {Object} enemy - Данные врага
+   * @param {Function} onVictory - Callback при победе
+   * @param {Function} onDefeat - Callback при поражении
+   * @param {Function} onFlee - Callback при бегстве
+   */
+  static startBattle(enemy, onVictory, onDefeat, onFlee) {
+    // Сохраняем callbacks
+    this.locationBattleCallbacks = { onVictory, onDefeat, onFlee };
+    
+    // Инициализируем боевую сессию без ID локации
+    gameState.initializeBattle(enemy, 'location-encounter', []);
+    BattleUI.show();
+    BattleUI.update();
+    BattleUI.renderAbilityButtons([]);
+    BattleUI.enableAttackButton();
+    BattleUI.addLog('Боевая встреча началась!', 'neutral');
+    BattleUI.addLog(`Вы встретили ${enemy.name}!`, 'neutral');
+    eventManager.emit(APP_EVENTS.BATTLE_STARTED);
+  }
+
+  /**
+   * Получает callbacks для боя на локации
+   */
+  static getLocationBattleCallbacks() {
+    return this.locationBattleCallbacks || { onVictory: null, onDefeat: null, onFlee: null };
+  }
 }
+
