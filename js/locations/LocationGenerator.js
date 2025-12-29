@@ -6,11 +6,11 @@ import { gameState } from '../core/GameState.js';
 
 class LocationGenerator {
   constructor() {
-    this.gridWidth = 90; // 90 клеток в ширину
-    this.gridHeight = 90; // 90 клеток в высоту
-    this.cellSize = 40; // 40px за клетку
+    this.gridWidth = 45; // 45 клеток в ширину
+    this.gridHeight = 45; // 45 клеток в высоту
+    this.cellSize = 40; // 40px за клетка
     this.currentLocation = null;
-    this.playerPosition = { x: 45, y: 45 }; // Центр сетки
+    this.playerPosition = { x: 22, y: 22 }; // Центр сетки (45/2 = 22.5, округляем в меньшую сторону)
     this.isLocationActive = false;
   }
 
@@ -25,8 +25,8 @@ class LocationGenerator {
       height: this.gridHeight,
       cellSize: this.cellSize,
       objects: [],
-      playerX: 45,
-      playerY: 45
+      playerX: 22,
+      playerY: 22
     };
 
     // Генерируем объекты
@@ -39,12 +39,13 @@ class LocationGenerator {
 
   /**
    * Генерирует объекты на локации (враги, деревья, камни)
+   * Распределение: 50% пусто, 15% враги, 20% деревья, 15% камни
    */
   generateObjects() {
     const objectTypes = [
-      { type: 'enemy', emoji: '👹', weight: 0.4, maxCount: 15 },
-      { type: 'tree', emoji: '🌲', weight: 0.35, maxCount: 25 },
-      { type: 'stone', emoji: '🪨', weight: 0.25, maxCount: 20 }
+      { type: 'enemy', emoji: '👹', weight: 0.15, maxCount: 25 },
+      { type: 'tree', emoji: '🌲', weight: 0.20, maxCount: 40 },
+      { type: 'stone', emoji: '🪨', weight: 0.15, maxCount: 25 }
     ];
 
     const occupiedCells = new Set();
@@ -223,7 +224,7 @@ class LocationGenerator {
    */
   endLocation() {
     this.currentLocation = null;
-    this.playerPosition = { x: 45, y: 45 };
+    this.playerPosition = { x: 22, y: 22 };
     this.isLocationActive = false;
   }
 }
