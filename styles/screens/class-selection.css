@@ -163,19 +163,19 @@
 
 .class-details__header {
   display: flex;
-  gap: var(--spacing-md);
-  margin-bottom: var(--spacing-md);
+  gap: 8px;
+  margin-bottom: 8px;
   align-items: flex-start;
   overflow-x: hidden;
 }
 
 .class-details__image {
-  width: 180px;
-  height: 180px;
+  width: 120px;
+  height: 120px;
   border-radius: var(--radius-lg);
   object-fit: cover;
   object-position: center;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   flex-shrink: 0;
 }
 
@@ -184,54 +184,54 @@
 }
 
 .class-details__title {
-  font-size: 1.8em;
+  font-size: 1.5em;
   color: var(--primary-color);
-  margin: 0 0 var(--spacing-md) 0;
+  margin: 0 0 6px 0;
   font-weight: bold;
   word-wrap: break-word;
   overflow-wrap: break-word;
 }
 
 .class-details__icon {
-  font-size: 3em;
-  margin-right: var(--spacing-md);
+  font-size: 2em;
+  margin-right: 8px;
 }
 
 .class-details__main-desc {
-  font-size: 0.95em;
+  font-size: 0.85em;
   color: var(--text-primary);
-  line-height: 1.5;
-  margin-bottom: var(--spacing-md);
+  line-height: 1.3;
+  margin-bottom: 6px;
   word-wrap: break-word;
 }
 
 /* Характеристики */
 .class-details__stats {
   background: #f8f9fa;
-  padding: var(--spacing-md);
+  padding: 8px;
   border-radius: var(--radius-md);
-  margin-bottom: var(--spacing-md);
+  margin-bottom: 8px;
   overflow-x: hidden;
 }
 
 .class-details__stats h3 {
   color: var(--primary-color);
-  margin: 0 0 var(--spacing-lg) 0;
-  font-size: 1.3em;
+  margin: 0 0 8px 0;
+  font-size: 1.1em;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
 }
 
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  gap: var(--spacing-md);
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 6px;
   overflow-x: hidden;
 }
 
 .stat-item {
   background: white;
-  padding: var(--spacing-sm);
+  padding: 6px 4px;
   border-radius: var(--radius-sm);
   text-align: center;
   min-width: 0;
@@ -239,26 +239,26 @@
 }
 
 .stat-item__label {
-  font-size: 0.7em;
+  font-size: 0.65em;
   color: var(--text-light);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 2px;
+  letter-spacing: 0.3px;
+  margin-bottom: 1px;
   word-break: break-word;
 }
 
 .stat-item__value {
-  font-size: 1.4em;
+  font-size: 1.1em;
   font-weight: bold;
   color: var(--primary-color);
 }
 
 .stat-item__bar {
-  height: 4px;
+  height: 2px;
   background-color: #ecf0f1;
   border-radius: 2px;
   overflow: hidden;
-  margin-top: 4px;
+  margin-top: 2px;
 }
 
 .stat-item__fill {
@@ -270,27 +270,27 @@
 
 /* Способности */
 .class-details__abilities {
-  margin-bottom: var(--spacing-xl);
+  margin-bottom: 12px;
 }
 
 .class-details__abilities h3 {
   color: var(--primary-color);
-  margin: 0 0 var(--spacing-lg) 0;
-  font-size: 1.3em;
+  margin: 0 0 8px 0;
+  font-size: 1.1em;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
 }
 
 .abilities-list {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md);
+  gap: 6px;
 }
 
 .ability-card {
   background: #f8f9fa;
   border-left: 4px solid #3498db;
-  padding: var(--spacing-md);
+  padding: 6px 8px;
   border-radius: var(--radius-sm);
   transition: all 0.3s ease;
 }
@@ -303,49 +303,51 @@
 .ability-card__name {
   font-weight: bold;
   color: var(--primary-color);
-  font-size: 1em;
-  margin-bottom: var(--spacing-xs);
+  font-size: 0.9em;
+  margin-bottom: 2px;
 }
 
 .ability-card__meta {
   display: flex;
-  gap: var(--spacing-md);
-  font-size: 0.85em;
+  gap: 6px;
+  font-size: 0.75em;
   color: #7f8c8d;
-  margin-bottom: var(--spacing-xs);
+  margin-bottom: 2px;
 }
 
 .ability-card__meta-item {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  padding: 2px 8px;
+  gap: 3px;
+  padding: 1px 4px;
   background: rgba(52, 152, 219, 0.1);
   border-radius: 3px;
+  font-size: 0.7em;
 }
 
 .ability-card__desc {
-  font-size: 0.9em;
+  font-size: 0.8em;
   color: #555;
-  line-height: 1.5;
+  line-height: 1.2;
 }
 
 /* Описание */
 .class-details__description {
   background: rgba(52, 152, 219, 0.05);
-  padding: var(--spacing-lg);
+  padding: 8px;
   border-radius: var(--radius-md);
-  margin-bottom: var(--spacing-xl);
-  line-height: 1.8;
+  margin-bottom: 8px;
+  line-height: 1.3;
   color: var(--text-primary);
+  font-size: 0.85em;
 }
 
 .class-details__description h3 {
   color: var(--primary-color);
-  margin: 0 0 var(--spacing-md) 0;
-  font-size: 1.1em;
+  margin: 0 0 4px 0;
+  font-size: 0.95em;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
 }
 
 .class-details__description p {
@@ -355,19 +357,20 @@
 /* Кнопки действия */
 .class-details__actions {
   display: flex;
-  gap: var(--spacing-md);
+  gap: 6px;
   justify-content: flex-end;
+  margin-top: 8px;
 }
 
 .class-details__actions .btn {
-  padding: var(--spacing-md) var(--spacing-lg);
-  font-size: 1em;
+  padding: 6px 12px;
+  font-size: 0.9em;
   font-weight: bold;
   border: none;
   border-radius: var(--radius-sm);
   cursor: pointer;
   transition: all 0.3s ease;
-  min-width: 150px;
+  min-width: 120px;
 }
 
 .btn-choose-class {
