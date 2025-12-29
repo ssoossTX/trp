@@ -163,23 +163,24 @@ class LocationUI {
     // Очищаем viewport
     viewport.innerHTML = '';
 
-    // Создаем контейнер сетки
+    // Создаем контейнер сетки с адаптивными размерами
     const gridContainer = document.createElement('div');
     gridContainer.className = 'location-grid';
     gridContainer.style.display = 'grid';
     gridContainer.style.gridTemplateColumns = `repeat(${this.viewWidth}, 1fr)`;
+    gridContainer.style.gridTemplateRows = `repeat(${this.viewHeight}, 1fr)`;
     gridContainer.style.gap = '2px';
     gridContainer.style.padding = '10px';
     gridContainer.style.background = '#1a1a1a';
     gridContainer.style.borderRadius = '8px';
+    gridContainer.style.width = '100%';
+    gridContainer.style.height = '100%';
 
     // Создаем все клетки
     for (let y = 0; y < this.viewHeight; y++) {
       for (let x = 0; x < this.viewWidth; x++) {
         const cell = document.createElement('div');
         cell.className = 'location-cell';
-        cell.style.width = `${locationGenerator.cellSize}px`;
-        cell.style.height = `${locationGenerator.cellSize}px`;
         cell.style.background = '#2a2a2a';
         cell.style.border = '1px solid #444';
         cell.style.display = 'flex';
@@ -188,6 +189,8 @@ class LocationUI {
         cell.style.fontSize = '24px';
         cell.style.borderRadius = '4px';
         cell.style.cursor = 'default';
+        cell.style.aspectRatio = '1';
+        cell.style.minWidth = '0';
 
         const absX = visibleArea.startX + x;
         const absY = visibleArea.startY + y;
