@@ -204,7 +204,7 @@ class LocationUI {
     Logger.log('Победа в бою!');
     
     // Удаляем врага с локации по его сохраненной позиции
-    if (this.currentBattleEnemyPos) {
+    if (this.currentBattleEnemyPos && locationGenerator.currentLocation) {
       locationGenerator.currentLocation.objects = locationGenerator.currentLocation.objects.filter(obj =>
         !(obj.type === 'enemy' && obj.x === this.currentBattleEnemyPos.x && obj.y === this.currentBattleEnemyPos.y)
       );
