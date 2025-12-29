@@ -28,7 +28,7 @@
 
 .profile-tab {
   padding: var(--spacing-md) var(--spacing-lg);
-  background: none;
+  background-color: #e8e8e8;
   border: none;
   cursor: pointer;
   font-size: clamp(0.75rem, 2.5vw, 1rem);
@@ -41,6 +41,9 @@
   white-space: nowrap;
   flex-shrink: 1;
   min-width: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .profile-tab:hover {
