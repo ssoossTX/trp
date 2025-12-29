@@ -439,7 +439,7 @@
 }
 
 #ability-points-left {
-  color: #000;
+  color: #000 !important;
   font-weight: bold;
   font-size: 1.3em;
 }
