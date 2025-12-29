@@ -273,25 +273,25 @@
 
 .drop-modal__title {
   font-size: var(--font-size-xl);
-  margin: 0 0 var(--spacing-lg) 0;
+  margin: 0 0 8px 0;
   color: var(--accent-color);
   border-bottom: 2px solid var(--light-bg);
-  padding-bottom: var(--spacing-md);
+  padding-bottom: 4px;
 }
 
 .drop-modal__items {
-  margin-bottom: var(--spacing-lg);
+  margin-bottom: 8px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-  gap: var(--spacing-md);
+  gap: 6px;
 }
 
 .drop-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--spacing-sm);
-  padding: var(--spacing-md);
+  gap: 4px;
+  padding: 6px;
   background-color: var(--light-bg);
   border-radius: var(--radius-md);
   border: 2px solid var(--border-color);
@@ -356,10 +356,10 @@
 
 .drop-modal__gold {
   background-color: #fff9e6;
-  padding: var(--spacing-md);
+  padding: 6px;
   border-radius: var(--radius-md);
   border-left: 4px solid #f39c12;
-  margin-bottom: var(--spacing-lg);
+  margin-bottom: 8px;
   font-size: var(--font-size-lg);
 }
 
@@ -369,7 +369,7 @@
 
 .drop-modal__buttons {
   display: flex;
-  gap: var(--spacing-md);
+  gap: 6px;
   justify-content: flex-end;
 }
 
