@@ -665,9 +665,14 @@ export class BattleEngine {
     // Сохраняем callbacks
     this.locationBattleCallbacks = { onVictory, onDefeat, onFlee };
     
-    // Получаем активные способности игрока из gameState
-    const player = gameState.getPlayerState();
-    const activeAbilities = player.ability ? [player.ability] : [];
+    // Получаем активные способности класса
+    const playerClass = gameState.player.class;
+    const classData = dataLoader.getClassByName(playerClass);
+    const activeAbilities = classData && classData.activeAbilities ? classData.activeAbilities : [];
+    
+    // Восстанавливаем HP и Ману перед боем на локации
+    gameState.player.hp = gameState.player.maxHp;
+    gameState.player.mana = gameState.player.maxMana;
     
     // Инициализируем боевую сессию с правильными данными игрока
     gameState.initializeBattle(enemy, 'location-encounter', activeAbilities);

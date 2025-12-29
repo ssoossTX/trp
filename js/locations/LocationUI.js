@@ -270,6 +270,8 @@ class LocationUI {
    * Показывает уведомление о бегстве
    */
   showFleeNotification() {
+    Logger.log('Показываю уведомление о бегстве');
+    
     const notification = document.createElement('div');
     notification.style.cssText = `
       position: fixed;
