@@ -536,12 +536,12 @@
 .ability__options {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md);
-  margin-bottom: var(--spacing-md);
+  gap: 8px;
+  margin-bottom: 8px;
 }
 
 .ability-option {
-  padding: var(--spacing-md) var(--spacing-md);
+  padding: 8px;
   border: 2px solid var(--border-color);
   border-radius: var(--radius-md);
   cursor: pointer;
@@ -550,7 +550,7 @@
 }
 
 .ability-option input[type="radio"] {
-  margin-right: var(--spacing-md);
+  margin-right: 8px;
   cursor: pointer;
 }
 
@@ -567,14 +567,14 @@
 .ability__name {
   font-weight: bold;
   color: var(--primary-color);
-  margin-bottom: 4px;
+  margin-bottom: 2px;
   font-size: 0.95em;
 }
 
 .ability__description {
   color: var(--text-light);
   font-size: 0.8em;
-  line-height: 1.4;
+  line-height: 1.2;
 }
 
 /* Скрытие крестика в модали выбора способности */
