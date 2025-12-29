@@ -332,11 +332,16 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--spacing-md);
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: var(--radius-md);
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: #e8e8e8;
+  border-radius: 0;
   transition: all var(--transition-normal);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: none;
+  margin-bottom: var(--spacing-sm);
+}
+
+.stat-row:last-of-type {
+  margin-bottom: 0;
 }
 
 .stat-row:hover {

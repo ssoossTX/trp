@@ -145,11 +145,8 @@
 }
 
 .stats-block {
-  background-color: #e8e8e8;
-  border-radius: 12px;
-  padding: var(--spacing-lg);
+  padding: 0;
   margin-bottom: var(--spacing-lg);
-  border: 1px solid rgba(128, 128, 128, 0.3);
 }
 
 .profile-section {
