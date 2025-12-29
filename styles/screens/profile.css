@@ -21,7 +21,9 @@
   gap: var(--spacing-md);
   margin-bottom: var(--spacing-lg);
   border-bottom: 2px solid rgba(0, 0, 0, 0.1);
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .profile-tab {
@@ -29,13 +31,16 @@
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: clamp(0.75rem, 2.5vw, 1rem);
   color: #666;
   font-weight: 600;
   border-bottom: 3px solid transparent;
   transition: all 0.3s ease;
   position: relative;
   bottom: -2px;
+  white-space: nowrap;
+  flex-shrink: 1;
+  min-width: 0;
 }
 
 .profile-tab:hover {
