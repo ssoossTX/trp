@@ -67,8 +67,8 @@
 /* Фильтры */
 .dungeons-filters {
   display: flex;
-  gap: var(--spacing-md);
-  padding: var(--spacing-lg);
+  gap: 6px;
+  padding: 8px;
   background-color: #d3d3d3;
   border-radius: var(--radius-md);
   flex-wrap: wrap;
@@ -76,7 +76,7 @@
 
 .filter-group {
   display: flex;
-  gap: var(--spacing-sm);
+  gap: 4px;
   align-items: center;
 }
 
@@ -86,7 +86,7 @@
 }
 
 .filter-group select {
-  padding: var(--spacing-sm) var(--spacing-md);
+  padding: 4px 6px;
   border: 1px solid #bdc3c7;
   border-radius: var(--radius-sm);
   font-size: var(--font-size-sm);
@@ -170,21 +170,16 @@
 .dungeon-requirements {
   display: flex;
   gap: var(--spacing-sm);
-  font-size: clamp(0.7rem, 2vw, 0.875rem);
-  padding: 6px;
+  font-size: var(--font-size-sm);
+  padding: var(--spacing-sm);
   background-color: #ecf0f1;
   border-radius: var(--radius-sm);
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  align-items: center;
 }
 
 .requirement {
   display: flex;
   align-items: center;
   gap: 4px;
-  white-space: nowrap;
-  flex-shrink: 0;
 }
 
 .requirement-icon {
