@@ -107,7 +107,7 @@ class LocationGenerator {
   isValidMove(x, y) {
     if (!this.currentLocation) return false;
     
-    // Проверяем границы
+    // Проверяем границы (валидные координаты: 0 до 89 включительно для 90x90 сетки)
     if (x < 0 || x >= this.gridWidth || y < 0 || y >= this.gridHeight) {
       return false;
     }
@@ -146,6 +146,11 @@ class LocationGenerator {
         break;
       default:
         return false;
+    }
+
+    // Проверяем границы перед попыткой движения
+    if (newX < 0 || newX >= this.gridWidth || newY < 0 || newY >= this.gridHeight) {
+      return false;
     }
 
     if (this.isValidMove(newX, newY)) {
