@@ -42,23 +42,25 @@ class LocationGenerator {
    * Распределение: 50% пусто, 15% враги, 20% деревья, 15% камни
    */
   generateObjects() {
+    const totalCells = this.gridWidth * this.gridHeight - 1; // Минус 1 за спавн игрока
+    
     const objectTypes = [
-      { type: 'enemy', emoji: '👹', weight: 0.15, maxCount: 25 },
-      { type: 'tree', emoji: '🌲', weight: 0.20, maxCount: 40 },
-      { type: 'stone', emoji: '🪨', weight: 0.15, maxCount: 25 }
+      { type: 'enemy', emoji: '👹', percentage: 0.15 },
+      { type: 'tree', emoji: '🌲', percentage: 0.20 },
+      { type: 'stone', emoji: '🪨', percentage: 0.15 }
     ];
 
     const occupiedCells = new Set();
     
     // Помечаем клетку с игроком как занятую
-    occupiedCells.add(this.getcellKey(45, 45));
+    occupiedCells.add(this.getcellKey(22, 22));
 
     // Для каждого типа объекта генерируем необходимое количество
     objectTypes.forEach(objType => {
-      const count = Math.floor(this.gridWidth * this.gridHeight * objType.weight / 100);
+      const count = Math.round(totalCells * objType.percentage);
       let created = 0;
 
-      while (created < Math.min(count, objType.maxCount)) {
+      while (created < count) {
         const x = Math.floor(Math.random() * this.gridWidth);
         const y = Math.floor(Math.random() * this.gridHeight);
         const cellKey = this.getcellKey(x, y);
