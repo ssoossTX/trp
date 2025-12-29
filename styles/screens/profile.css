@@ -124,15 +124,15 @@
 .profile-info-block {
   background-color: #e8e8e8;
   border-radius: 12px;
-  padding: var(--spacing-lg);
+  padding: 12px;
   margin-bottom: var(--spacing-lg);
   border: 1px solid rgba(128, 128, 128, 0.3);
 }
 
 .profile-info-block p {
   color: #000000;
-  margin-bottom: var(--spacing-md);
-  line-height: 1.6;
+  margin-bottom: 6px;
+  line-height: 1.4;
 }
 
 .profile-info-block p:last-child {
