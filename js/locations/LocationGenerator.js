@@ -88,13 +88,18 @@ class LocationGenerator {
   }
 
   /**
-   * Проверяет, занята ли клетка объектом
+   * Проверяет, занята ли клетка объектом (деревом или камнем)
+   * Враги НЕ являются препятствием - на них можно наступить для запуска боя
    */
   isCellOccupied(x, y) {
     if (!this.currentLocation) return false;
     
     const cellKey = this.getcellKey(x, y);
-    return this.currentLocation.objects.some(obj => this.getObjectCellKey(obj) === cellKey);
+    // Проверяем только деревья и камни, враги не блокируют проход
+    return this.currentLocation.objects.some(obj => {
+      if (obj.type === 'enemy') return false; // Враги не препятствие
+      return this.getObjectCellKey(obj) === cellKey;
+    });
   }
 
   /**
