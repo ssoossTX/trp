@@ -334,10 +334,12 @@
   display: flex;
   border-bottom: 2px solid #ecf0f1;
   gap: 0;
+  flex-wrap: nowrap;
+  overflow-x: auto;
 }
 
 .dungeon-tab {
-  padding: var(--spacing-md) var(--spacing-lg);
+  padding: 8px 6px;
   background: none;
   border: none;
   cursor: pointer;
@@ -345,6 +347,10 @@
   color: #7f8c8d;
   transition: all var(--transition-normal);
   position: relative;
+  font-size: clamp(0.75rem, 2.5vw, 1rem);
+  white-space: nowrap;
+  flex: 1;
+  text-align: center;
 }
 
 .dungeon-tab:hover {
