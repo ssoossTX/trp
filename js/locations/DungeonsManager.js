@@ -346,6 +346,7 @@ export class DungeonsManager {
         name: cleanName,
         level: enemyLevel,
         isBoss: isBoss,
+        isDungeonEnemy: true,
         maxHp: maxHp,
         hp: maxHp,
         currentHp: maxHp,
