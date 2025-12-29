@@ -155,11 +155,15 @@ export class BattleEngine {
       
       // Проверяем, идет ли бой на локации
       const callbacks = this.getLocationBattleCallbacks();
+      Logger.log(`playerWins: callbacks.onVictory = ${!!callbacks.onVictory}, callbacks = ${JSON.stringify(Object.keys(callbacks))}`);
       if (callbacks.onVictory) {
         setTimeout(() => {
+          Logger.log('playerWins: вызываем onVictory callback');
           BattleUI.hide();
           callbacks.onVictory();
         }, 2000);
+      } else {
+        Logger.log('playerWins: onVictory callback не найден!');
       }
     }, 500);
     
@@ -671,6 +675,7 @@ export class BattleEngine {
    * @param {Function} onVictory - Callback при победе
    * @param {Function} onDefeat - Callback при поражении
    * @param {Function} onFlee - Callback при бегстве
+    Logger.log(`startBattle: установили callbacks. onVictory = ${!!onVictory}, onDefeat = ${!!onDefeat}, onFlee = ${!!onFlee}`);
    */
   static startBattle(enemy, onVictory, onDefeat, onFlee) {
     // Сохраняем callbacks
