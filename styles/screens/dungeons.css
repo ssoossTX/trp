@@ -170,16 +170,21 @@
 .dungeon-requirements {
   display: flex;
   gap: var(--spacing-sm);
-  font-size: var(--font-size-sm);
-  padding: var(--spacing-sm);
+  font-size: clamp(0.7rem, 2vw, 0.875rem);
+  padding: 6px;
   background-color: #ecf0f1;
   border-radius: var(--radius-sm);
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  align-items: center;
 }
 
 .requirement {
   display: flex;
   align-items: center;
   gap: 4px;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .requirement-icon {
