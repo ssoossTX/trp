@@ -665,11 +665,15 @@ export class BattleEngine {
     // Сохраняем callbacks
     this.locationBattleCallbacks = { onVictory, onDefeat, onFlee };
     
-    // Инициализируем боевую сессию без ID локации
-    gameState.initializeBattle(enemy, 'location-encounter', []);
+    // Получаем активные способности игрока из gameState
+    const player = gameState.getPlayerState();
+    const activeAbilities = player.ability ? [player.ability] : [];
+    
+    // Инициализируем боевую сессию с правильными данными игрока
+    gameState.initializeBattle(enemy, 'location-encounter', activeAbilities);
     BattleUI.show();
     BattleUI.update();
-    BattleUI.renderAbilityButtons([]);
+    BattleUI.renderAbilityButtons(activeAbilities);
     BattleUI.enableAttackButton();
     BattleUI.addLog('Боевая встреча началась!', 'neutral');
     BattleUI.addLog(`Вы встретили ${enemy.name}!`, 'neutral');

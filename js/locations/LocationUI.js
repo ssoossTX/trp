@@ -10,6 +10,7 @@ class LocationUI {
     this.viewWidth = 10; // 10 клеток в ширину
     this.viewHeight = 10; // 10 клеток в высоту
     this.isVisible = false;
+    this.currentBattleEnemyPos = null; // Позиция текущего врага в бою
   }
 
   /**
@@ -135,6 +136,9 @@ class LocationUI {
   startBattleWithEnemy(enemy) {
     Logger.log(`Встреча с врагом на позиции ${enemy.x}, ${enemy.y}`);
     
+    // Сохраняем позицию врага для последующего удаления при победе
+    this.currentBattleEnemyPos = { x: enemy.x, y: enemy.y };
+    
     // Импортируем нужные модули для боя
     import('../battle/BattleEngine.js').then(module => {
       const { BattleEngine } = module;
@@ -197,11 +201,13 @@ class LocationUI {
   onBattleVictory() {
     Logger.log('Победа в бою!');
     
-    // Удаляем врага с локации
-    const playerPos = locationGenerator.playerPosition;
-    locationGenerator.currentLocation.objects = locationGenerator.currentLocation.objects.filter(obj =>
-      !(obj.type === 'enemy' && obj.x === playerPos.x && obj.y === playerPos.y)
-    );
+    // Удаляем врага с локации по его сохраненной позиции
+    if (this.currentBattleEnemyPos) {
+      locationGenerator.currentLocation.objects = locationGenerator.currentLocation.objects.filter(obj =>
+        !(obj.type === 'enemy' && obj.x === this.currentBattleEnemyPos.x && obj.y === this.currentBattleEnemyPos.y)
+      );
+      this.currentBattleEnemyPos = null; // Сбрасываем позицию врага
+    }
     
     // Возвращаемся на экран локации
     const locationScreen = document.getElementById('location-screen');
@@ -243,8 +249,10 @@ class LocationUI {
   onBattleFlee() {
     Logger.log('Вы сбежали из боя!');
     
-    // Показываем уведомление о бегстве
-    this.showFleeNotification();
+    // Показываем уведомление о бегстве только если это боя на локации
+    if (this.currentBattleEnemyPos) {
+      this.showFleeNotification();
+    }
     
     // Возвращаемся назад на клетку с врагом
     // Враг остается на локации

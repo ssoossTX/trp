@@ -269,6 +269,7 @@ export class BattleUI {
     const battleLogsCloseBtn = DOMManager.getElementById('battleLogsCloseBtn');
     const closeBattleLogsBtn = DOMManager.getElementById('closeBattleLogsBtn');
     const battleLogsModal = DOMManager.getElementById('battleLogsModal');
+    const fleeBtn = DOMManager.getElementById('fleeBtn');
 
     if (battleLogsBtn) {
       battleLogsBtn.addEventListener('click', () => this.showBattleLogs());
@@ -287,5 +288,13 @@ export class BattleUI {
         }
       });
     }
+
+    // Импортируем BattleEngine для обработки бегства
+    import('./BattleEngine.js').then(module => {
+      const { BattleEngine } = module;
+      if (fleeBtn) {
+        fleeBtn.addEventListener('click', () => BattleEngine.fleeBattle());
+      }
+    });
   }
 }
