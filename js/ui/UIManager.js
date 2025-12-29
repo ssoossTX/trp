@@ -292,8 +292,15 @@ export class UIManager {
         module.DungeonsManager.onDungeonEnemyDefeated();
       });
     } else {
-      // Обычная локация - возвращаемся на карту
-      BattleEngine.fleeBattle();
+      // Проверяем, есть ли callback для боя на локации
+      const callbacks = BattleEngine.getLocationBattleCallbacks();
+      if (callbacks && callbacks.onVictory) {
+        // Бой на локации - вызываем onVictory callback
+        callbacks.onVictory();
+      } else {
+        // Обычная локация - возвращаемся на карту
+        BattleEngine.fleeBattle();
+      }
     }
   }
 

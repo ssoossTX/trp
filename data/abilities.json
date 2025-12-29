@@ -6,3 +6,17 @@
   { "name": "Древний артефакт", "description": "+15% к уменьшению получаемого урона", "type": "damage_reduction", "multiplier": 0.85 },
   { "name": "Боевой опыт", "description": "+5% к получению опыта после боёв", "type": "xp", "multiplier": 1.05 }
 ]
+[Game] Бой завершился: win
+BattleEngine.js:158 Uncaught ReferenceError: Logger is not defined
+    at BattleEngine.js:158:7
+(anonymous) @ BattleEngine.js:158
+setTimeout
+playerWins @ BattleEngine.js:153
+useActiveAbility @ BattleEngine.js:496
+onclick @ trp/:465
+helpers.js:86 [Game] 💰 Получено 10 золота! Всего: 10
+helpers.js:86 [Game] [UIManager] Уровень и опыт синхронизированы: Уровень: 1, 0 / 100
+helpers.js:86 [Game] Бой завершён
+helpers.js:86 [Game] Вы сбежали из боя!
+helpers.js:86 [Game] Показываю уведомление о бегстве
+helpers.js:86 [Game] Бой завершился: fled
