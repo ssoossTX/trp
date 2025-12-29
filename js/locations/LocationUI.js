@@ -243,6 +243,9 @@ class LocationUI {
   onBattleFlee() {
     Logger.log('Вы сбежали из боя!');
     
+    // Показываем уведомление о бегстве
+    this.showFleeNotification();
+    
     // Возвращаемся назад на клетку с врагом
     // Враг остается на локации
     
@@ -253,6 +256,70 @@ class LocationUI {
     }
     
     this.render();
+  }
+
+  /**
+   * Показывает уведомление о бегстве
+   */
+  showFleeNotification() {
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+      color: white;
+      padding: 20px 40px;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: bold;
+      box-shadow: 0 10px 40px rgba(255, 107, 107, 0.4);
+      z-index: 10000;
+      text-align: center;
+      border: 2px solid #ff8a8f;
+      animation: slideIn 0.3s ease-out;
+    `;
+    notification.textContent = '⚔️ Вы сбежали от противника, но не без ранения!';
+    
+    // Добавляем CSS анимацию
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translate(-50%, -70%);
+        }
+        to {
+          opacity: 1;
+          transform: translate(-50%, -50%);
+        }
+      }
+      @keyframes slideOut {
+        from {
+          opacity: 1;
+          transform: translate(-50%, -50%);
+        }
+        to {
+          opacity: 0;
+          transform: translate(-50%, -30%);
+        }
+      }
+    `;
+    if (!document.querySelector('style[data-flee-notification]')) {
+      style.setAttribute('data-flee-notification', 'true');
+      document.head.appendChild(style);
+    }
+    
+    document.body.appendChild(notification);
+    
+    // Удаляем уведомление через 2.5 секунды с анимацией исчезновения
+    setTimeout(() => {
+      notification.style.animation = 'slideOut 0.3s ease-in';
+      setTimeout(() => {
+        notification.remove();
+      }, 300);
+    }, 2200);
   }
 
   /**
