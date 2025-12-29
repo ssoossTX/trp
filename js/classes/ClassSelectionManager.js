@@ -98,11 +98,6 @@ export class ClassSelectionManager {
           </div>
         </div>
 
-        <div class="class-details__description">
-          <h3>Описание класса</h3>
-          <p>${selectedClass.details}</p>
-        </div>
-
         <div class="class-details__actions">
           <button class="btn btn-back" onclick="window.classSelectionManager.closeClassDetails()">Вернуться назад</button>
           <button class="btn btn-choose-class" onclick="window.classSelectionManager.openAbilityModal()">Выбрать класс</button>
