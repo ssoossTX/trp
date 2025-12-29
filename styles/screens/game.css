@@ -473,27 +473,35 @@
 }
 
 .modal__stats {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-wrap: nowrap;
   gap: 6px;
   margin-bottom: 8px;
+  overflow-x: auto;
+  justify-content: space-between;
 }
 
 .modal__stat {
   background: var(--light-bg);
-  padding: 6px;
+  padding: 6px 4px;
   border-radius: var(--radius-sm);
   text-align: center;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  white-space: nowrap;
 }
 
 .modal__stat-label {
-  font-size: var(--font-size-sm);
+  font-size: clamp(0.6rem, 1.5vw, 0.75rem);
   color: var(--text-light);
-  margin-bottom: 0.5em;
+  margin-bottom: 0.25em;
 }
 
 .modal__stat-value {
-  font-size: var(--font-size-lg);
+  font-size: clamp(0.75rem, 2vw, 1rem);
   font-weight: bold;
   color: var(--primary-color);
 }
