@@ -30,6 +30,7 @@
   padding: var(--spacing-md) var(--spacing-lg);
   background-color: #e8e8e8;
   border: none;
+  border-radius: 8px;
   cursor: pointer;
   font-size: clamp(0.75rem, 2.5vw, 1rem);
   color: #666;
