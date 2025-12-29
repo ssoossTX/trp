@@ -113,7 +113,7 @@ export class LocationsManager {
       </div>
 
       <div class="modal__buttons">
-        <button class="modal__btn modal__btn-primary" onclick="window.LocationsManager.startExploration('${locationId}')">🗡️ Исследовать</button>
+        <button class="modal__btn modal__btn-primary" onclick="window.LocationsManager.startExploration('${locationId}')">Исследовать</button>
         <button class="modal__btn modal__btn-secondary" onclick="window.LocationsManager.closeLocationModal()">Закрыть</button>
       </div>
     `;
