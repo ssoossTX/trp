@@ -176,6 +176,7 @@ class LocationUI {
         name: 'Враг',
         hp: 50,
         maxHp: 50,
+        attack: 10,
         damage: 10,
         level: 1
       }
@@ -185,6 +186,7 @@ class LocationUI {
       name: 'Неизвестный враг',
       hp: 30,
       maxHp: 30,
+      attack: 8,
       damage: 8,
       level: 1
     };

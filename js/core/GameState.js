@@ -100,21 +100,44 @@ class GameState {
    * @returns {number} Множитель бонуса (1.0 если нет бонуса)
    */
   getAbilityBonus(type) {
-    if (!this.player.selectedAbility) return 1.0;
+    // Сначала проверяем выбранную способность (для подземелий и обычных боев)
+    if (this.player.selectedAbility) {
+      const abilityMap = {
+        'Усиленный удар': { type: 'damage', multiplier: 1.1 },
+        'Крепкое тело': { type: 'hp', multiplier: 1.1 },
+        'Магический резерв': { type: 'mana', multiplier: 1.1 },
+        'Боевая хватка': { type: 'agility', multiplier: 1.05 },
+        'Древний артефакт': { type: 'damage_reduction', multiplier: 0.85 },
+        'Боевой опыт': { type: 'xp', multiplier: 1.05 }
+      };
 
-    const abilityMap = {
-      'Усиленный удар': { type: 'damage', multiplier: 1.1 },
-      'Крепкое тело': { type: 'hp', multiplier: 1.1 },
-      'Магический резерв': { type: 'mana', multiplier: 1.1 },
-      'Боевая хватка': { type: 'agility', multiplier: 1.05 },
-      'Древний артефакт': { type: 'damage_reduction', multiplier: 0.85 },
-      'Боевой опыт': { type: 'xp', multiplier: 1.05 }
-    };
-
-    const ability = abilityMap[this.player.selectedAbility];
-    if (ability && ability.type === type) {
-      return ability.multiplier;
+      const ability = abilityMap[this.player.selectedAbility];
+      if (ability && ability.type === type) {
+        return ability.multiplier;
+      }
     }
+    
+    // Если нет выбранной способности, проверяем активные способности боя (для локации)
+    if (this.battle && this.battle.activeAbilities && this.battle.activeAbilities.length > 0) {
+      const abilityMap = {
+        'Усиленный удар': { type: 'damage', multiplier: 1.1 },
+        'Крепкое тело': { type: 'hp', multiplier: 1.1 },
+        'Магический резерв': { type: 'mana', multiplier: 1.1 },
+        'Боевая хватка': { type: 'agility', multiplier: 1.05 },
+        'Древний артефакт': { type: 'damage_reduction', multiplier: 0.85 },
+        'Боевой опыт': { type: 'xp', multiplier: 1.05 }
+      };
+
+      // Проверяем каждую активную способность
+      for (const ability of this.battle.activeAbilities) {
+        const abilityName = typeof ability === 'string' ? ability : ability.name;
+        const abilityData = abilityMap[abilityName];
+        if (abilityData && abilityData.type === type) {
+          return abilityData.multiplier;
+        }
+      }
+    }
+    
     return 1.0;
   }
 

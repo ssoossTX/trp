@@ -78,7 +78,13 @@ export class BattleEngine {
 
     // Стандартная вражеская атака
     const enemy = gameState.battle.currentEnemy;
-    let damage = calculateDamage(enemy.attack, GAME_CONSTANTS.ENEMY_DAMAGE_VARIANCE);
+    const enemyDamage = enemy.attack || enemy.damage || 5; // Fallback на 5 если нет поля
+    let damage = calculateDamage(enemyDamage, GAME_CONSTANTS.ENEMY_DAMAGE_VARIANCE);
+    
+    // Защита от NaN
+    if (isNaN(damage)) {
+      damage = enemyDamage;
+    }
     
     // Применяем проклятие слабости (враг наносит в 2 раза меньше урона)
     damage = gameState.applyWeaknessCurse(damage);
@@ -89,6 +95,11 @@ export class BattleEngine {
     // Применяем бонус уменьшения урона от выбранной способности
     const damageReductionMultiplier = gameState.getAbilityBonus('damage_reduction');
     damage = Math.round(damage * damageReductionMultiplier);
+    
+    // Еще одна защита от NaN перед вычитанием
+    if (isNaN(damage) || damage < 0) {
+      damage = 1; // Минимум 1 урон
+    }
 
     gameState.battle.playerHp -= damage;
     BattleUI.addLog(`${enemy.name} нанёс ${damage} урона!`, 'enemy');
