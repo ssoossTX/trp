@@ -124,3 +124,27 @@
   margin: var(--spacing-md) 0;
   color: #333;
 }
+.test-location-btn {
+  width: 100%;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #6ab3ff 0%, #4a8acc 100%);
+  color: white;
+  border: 2px solid #3a7aaa;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.test-location-btn:hover {
+  background: linear-gradient(135deg, #7ac3ff 0%, #5a9adc 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(90, 150, 200, 0.3);
+  border-color: #5a9acc;
+}
+
+.test-location-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 6px rgba(90, 150, 200, 0.2);
+}

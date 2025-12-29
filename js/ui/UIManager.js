@@ -8,6 +8,7 @@ import { BattleUI } from '../battle/BattleUI.js';
 import { dataLoader } from '../data/DataLoader.js';
 import { LocationsManager } from '../locations/LocationsManager.js';
 import { DungeonsManager } from '../locations/DungeonsManager.js';
+import { locationUI } from '../locations/LocationUI.js';
 import { QuestsManager } from '../quests/QuestsManager.js';
 import { CraftsManager } from '../crafts/CraftsManager.js';
 import { InventoryManager } from './InventoryManager.js';
@@ -557,6 +558,15 @@ export class UIManager {
           this.updateMenuResources();
         });
       }
+    }
+
+    // Инициализируем кнопку тестирования локации
+    const testLocationBtn = DOMManager.getElementById('testLocationBtn');
+    if (testLocationBtn) {
+      testLocationBtn.addEventListener('click', () => {
+        this.hideAllScreens();
+        locationUI.startTestLocation();
+      });
     }
   }
 }
