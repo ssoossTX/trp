@@ -267,7 +267,8 @@
 }
 /* ===== МОДАЛЬНОЕ ОКНО ДРОПА ===== */
 .drop-modal__content {
-  min-width: 400px;
+  width: 100%;
+  max-width: clamp(300px, 90vw, 500px);
 }
 
 .drop-modal__title {
