@@ -251,17 +251,17 @@ class LocationUI {
   onBattleFlee() {
     Logger.log('Вы сбежали из боя!');
     
+    // Показываем уведомление о бегстве только если это была боя на локации
+    if (this.currentBattleEnemyPos) {
+      this.showFleeNotification();
+    }
+    
     // Удаляем врага с локации по его сохраненной позиции
     if (this.currentBattleEnemyPos && locationGenerator.currentLocation) {
       locationGenerator.currentLocation.objects = locationGenerator.currentLocation.objects.filter(obj =>
         !(obj.type === 'enemy' && obj.x === this.currentBattleEnemyPos.x && obj.y === this.currentBattleEnemyPos.y)
       );
       this.currentBattleEnemyPos = null; // Сбрасываем позицию врага
-    }
-    
-    // Показываем уведомление о бегстве только если это была боя на локации
-    if (this.currentBattleEnemyPos) {
-      this.showFleeNotification();
     }
     
     const locationScreen = document.getElementById('location-screen');
