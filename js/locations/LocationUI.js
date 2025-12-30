@@ -13,6 +13,7 @@ class LocationUI {
     this.isVisible = false;
     this.currentBattleEnemyPos = null; // Позиция текущего врага в бою
     this.isFleeingBattle = false; // Флаг для предотвращения множественных вызовов бегства
+    this.exploredCells = new Map(); // Map для хранения разведанных клеток и их объектов
   }
 
   /**
@@ -490,6 +491,7 @@ class LocationUI {
 
         const absX = visibleArea.startX + x;
         const absY = visibleArea.startY + y;
+        const cellKey = `${absX},${absY}`;
 
         // Проверяем, здесь ли игрок
         if (absX === visibleArea.playerAbsoluteX && absY === visibleArea.playerAbsoluteY) {
@@ -509,11 +511,22 @@ class LocationUI {
             if (objectOnCell) {
               cell.textContent = objectOnCell.emoji;
               cell.style.background = '#2a3a2a';
+              // Сохраняем разведанную клетку
+              this.exploredCells.set(cellKey, objectOnCell);
             }
           } else {
-            // Скрытые области - серые пустые клетки
-            cell.style.background = '#1a1a1a';
-            cell.style.borderColor = '#333';
+            // Проверяем, разведана ли эта клетка ранее
+            if (this.exploredCells.has(cellKey)) {
+              const exploredObject = this.exploredCells.get(cellKey);
+              cell.textContent = exploredObject.emoji;
+              // Отображаем разведанные объекты с полупрозрачностью
+              cell.style.background = '#1a2a1a';
+              cell.style.opacity = '0.6';
+            } else {
+              // Неразведанные области - темные пустые клетки
+              cell.style.background = '#1a1a1a';
+              cell.style.borderColor = '#333';
+            }
           }
         }
 
@@ -550,6 +563,7 @@ class LocationUI {
    */
   startTestLocation() {
     Logger.log('Запуск тестовой локации...');
+    this.exploredCells.clear(); // Очищаем разведанные клетки для новой локации
     locationGenerator.generateLocation();
     this.openLocation();
   }
