@@ -417,6 +417,9 @@ class LocationUI {
    * Открывает и показывает локацию
    */
   openLocation() {
+    // Очищаем счетчик ранений при входе на локацию
+    gameState.player.wounds = 0;
+    
     const screen = document.getElementById('location-screen');
     screen?.classList.remove('hidden');
     screen?.classList.add('visible');
