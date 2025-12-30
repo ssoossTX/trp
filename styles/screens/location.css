@@ -100,21 +100,21 @@
   margin-top: auto;
   display: flex;
   align-items: flex-start;
-  justify-content: space-between;
+  justify-content: center;
   gap: 15px;
+  position: relative;
 }
 
 .controls-grid {
   display: grid;
   grid-template-columns: repeat(3, 60px);
   gap: 8px;
-  margin: 0 auto;
 }
 
 #locationExitBtn {
-  position: relative;
-  top: auto;
-  right: auto;
+  position: absolute;
+  top: 15px;
+  right: 15px;
   width: 60px;
   height: 60px;
   z-index: auto;
