@@ -171,6 +171,23 @@ class LocationUI {
   }
 
   /**
+   * Очищает врага из разведанных клеток по его позиции
+   */
+  clearEnemyFromExplored(enemyPos) {
+    if (!enemyPos) return;
+    
+    const cellKey = `${enemyPos.x},${enemyPos.y}`;
+    // Если клетка была разведана с врагом, удаляем врага из разведанной памяти
+    if (this.exploredCells.has(cellKey)) {
+      const exploredObject = this.exploredCells.get(cellKey);
+      if (exploredObject.type === 'enemy') {
+        // Удаляем врага из разведанных клеток
+        this.exploredCells.delete(cellKey);
+      }
+    }
+  }
+
+  /**
    * Генерирует данные врага для боя
    */
   generateEnemyData(enemy) {
@@ -211,6 +228,8 @@ class LocationUI {
       locationGenerator.currentLocation.objects = locationGenerator.currentLocation.objects.filter(obj =>
         !(obj.type === 'enemy' && obj.x === this.currentBattleEnemyPos.x && obj.y === this.currentBattleEnemyPos.y)
       );
+      // Очищаем врага из разведанных клеток
+      this.clearEnemyFromExplored(this.currentBattleEnemyPos);
       this.currentBattleEnemyPos = null; // Сбрасываем позицию врага
     }
     
@@ -272,6 +291,8 @@ class LocationUI {
       locationGenerator.currentLocation.objects = locationGenerator.currentLocation.objects.filter(obj =>
         !(obj.type === 'enemy' && obj.x === this.currentBattleEnemyPos.x && obj.y === this.currentBattleEnemyPos.y)
       );
+      // Очищаем врага из разведанных клеток
+      this.clearEnemyFromExplored(this.currentBattleEnemyPos);
       this.currentBattleEnemyPos = null; // Сбрасываем позицию врага
     }
     
