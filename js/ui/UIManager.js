@@ -517,6 +517,10 @@ export class UIManager {
   static updateMenuResources() {
     const player = gameState.getPlayerState();
     
+    // Очищаем состояние тестовой генерации локации и ранения
+    locationUI.closeLocation();
+    gameState.player.wounds = 0;
+    
     DOMManager.setText('menu-level', `Уровень: ${player.level}`);
     DOMManager.setText('menu-xp', `${player.experience} / ${player.requiredExperienceForLevel}`);
     DOMManager.setText('menu-maxHp', `Max HP: ${player.maxHp}`);
