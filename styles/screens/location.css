@@ -104,6 +104,10 @@
   background: rgba(0, 0, 0, 0.3);
   border-radius: 8px;
   border: 1px solid #444;
+  margin-top: auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
 }
 
 .controls-grid {
