@@ -40,9 +40,13 @@ class LocationGenerator {
   /**
    * Генерирует объекты на локации (враги, деревья, камни)
    * Распределение: 60% пусто, 10% враги, 20% деревья, 10% камни
+   * В радиусе 3 клеток от игрока ничего не спавнится
    */
   generateObjects() {
     const totalCells = this.gridWidth * this.gridHeight - 1; // Минус 1 за спавн игрока
+    const playerX = 22;
+    const playerY = 22;
+    const noSpawnRadius = 3; // Радиус без спавна
     
     const objectTypes = [
       { type: 'enemy', emoji: '👹', percentage: 0.10 },
@@ -53,7 +57,18 @@ class LocationGenerator {
     const occupiedCells = new Set();
     
     // Помечаем клетку с игроком как занятую
-    occupiedCells.add(this.getcellKey(22, 22));
+    occupiedCells.add(this.getcellKey(playerX, playerY));
+    
+    // Помечаем все клетки в радиусе 3 от игрока как запрещённые для спавна
+    for (let dx = -noSpawnRadius; dx <= noSpawnRadius; dx++) {
+      for (let dy = -noSpawnRadius; dy <= noSpawnRadius; dy++) {
+        const x = playerX + dx;
+        const y = playerY + dy;
+        if (x >= 0 && x < this.gridWidth && y >= 0 && y < this.gridHeight) {
+          occupiedCells.add(this.getcellKey(x, y));
+        }
+      }
+    }
 
     // Для каждого типа объекта генерируем необходимое количество
     objectTypes.forEach(objType => {
