@@ -112,6 +112,12 @@
 
 #locationExitBtn {
   margin-left: auto;
+  position: relative;
+  top: auto;
+  right: auto;
+  width: 60px;
+  height: 60px;
+  z-index: auto;
 }
 
 .controls-spacer {
