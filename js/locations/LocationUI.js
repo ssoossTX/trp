@@ -52,9 +52,6 @@ class LocationUI {
 
             <!-- Управление -->
             <div class="location-screen__controls">
-              <button class="game-screen__exit-btn" id="locationExitBtn">
-                <img src="/trp/assets/img/выход.png" alt="Назад">
-              </button>
               <div class="controls-grid">
                 <button class="control-btn up" id="btnUp" title="Вверх">⭡</button>
                 <div class="controls-spacer"></div>
@@ -62,6 +59,9 @@ class LocationUI {
                 <button class="control-btn down" id="btnDown" title="Вниз">⭣</button>
                 <button class="control-btn right" id="btnRight" title="Вправо">⭢</button>
               </div>
+              <button class="game-screen__exit-btn" id="locationExitBtn">
+                <img src="/trp/assets/img/выход.png" alt="Назад">
+              </button>
             </div>
           </div>
         </div>

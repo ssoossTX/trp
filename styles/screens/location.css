@@ -106,7 +106,7 @@
   border: 1px solid #444;
   margin-top: auto;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   gap: 15px;
 }
