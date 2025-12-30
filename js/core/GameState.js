@@ -159,9 +159,13 @@ class GameState {
     };
     this.battle.currentLocation = locationId;
     
+    // Применяем штраф HP за ранения (-10% за каждое ранение)
+    const hpPenaltyMultiplier = Math.max(0, 1 - (this.player.wounds * 0.1));
+    const adjustedMaxHp = Math.round(this.player.maxHp * hpPenaltyMultiplier);
+    
     // Копируем уже рассчитанные (с бонусами) значения ресурсов
-    this.battle.playerMaxHp = this.player.maxHp;
-    this.battle.playerHp = this.player.hp;
+    this.battle.playerMaxHp = adjustedMaxHp;
+    this.battle.playerHp = Math.round(this.player.hp * hpPenaltyMultiplier);
     this.battle.playerMaxMana = this.player.maxMana;
     this.battle.playerMana = this.player.mana;
     this.battle.isInBattle = true;

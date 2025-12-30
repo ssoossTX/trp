@@ -26,6 +26,13 @@ export class BattleEngine {
     BattleUI.enableAttackButton();
     BattleUI.addLog('Боевая встреча началась!', 'neutral');
     BattleUI.addLog(`Вы встретили ${enemy.name}!`, 'neutral');
+    
+    // Показываем штраф за ранения, если они есть
+    if (gameState.player.wounds > 0) {
+      const hpPenalty = gameState.player.wounds * 10;
+      BattleUI.addLog(`⚠️ У вас ${gameState.player.wounds} ранений! HP снижен на ${hpPenalty}%`, 'warning');
+    }
+    
     eventManager.emit(APP_EVENTS.BATTLE_STARTED);
   }
 
