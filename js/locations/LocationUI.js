@@ -3,6 +3,7 @@
  */
 import { locationGenerator } from './LocationGenerator.js';
 import { Logger } from '../utils/helpers.js';
+import { gameState } from '../core/GameState.js';
 
 class LocationUI {
   constructor() {
@@ -251,6 +252,10 @@ class LocationUI {
   onBattleFlee() {
     Logger.log('Вы сбежали из боя!');
     
+    // Добавляем ранение при бегстве
+    gameState.player.wounds = (gameState.player.wounds || 0) + 1;
+    Logger.log(`Ранения: ${gameState.player.wounds}/5`);
+    
     // Показываем уведомление о бегстве только если это была боя на локации
     if (this.currentBattleEnemyPos) {
       this.showFleeNotification();
@@ -264,6 +269,12 @@ class LocationUI {
       this.currentBattleEnemyPos = null; // Сбрасываем позицию врага
     }
     
+    // Проверяем достигли ли мы 5 ранений
+    if (gameState.player.wounds >= 5) {
+      this.showDeathNotification();
+      return;
+    }
+    
     const locationScreen = document.getElementById('location-screen');
     if (locationScreen) {
       locationScreen.classList.remove('hidden');
@@ -274,6 +285,50 @@ class LocationUI {
   }
 
   /**
+   * Показывает уведомление о смерти при 5 ранениях
+   */
+  showDeathNotification() {
+    const notification = document.createElement('div');
+    notification.className = 'flee-notification death-notification';
+    notification.innerHTML = `
+      <div class="flee-notification__content">
+        <h3>💀 Вы умерли и потеряли часть дроппа</h3>
+        <p>Ранения: 5/5</p>
+      </div>
+    `;
+    document.body.appendChild(notification);
+
+    // Через 2 секунды возвращаемся в меню
+    setTimeout(() => {
+      notification.remove();
+      this.exitToMenu();
+    }, 2000);
+  }
+
+  /**
+   * Выход в главное меню
+   */
+  exitToMenu() {
+    // Завершаем локацию
+    locationGenerator.endLocation();
+    
+    // Скрываем экран локации
+    const locationScreen = document.getElementById('location-screen');
+    if (locationScreen) {
+      locationScreen.classList.add('hidden');
+      locationScreen.classList.remove('visible');
+    }
+    
+    // Показываем главное меню
+    const menuScreen = document.getElementById('main-menu-screen');
+    if (menuScreen) {
+      menuScreen.classList.remove('hidden');
+      menuScreen.classList.add('visible');
+    }
+    
+    // Сбрасываем счетчик ранений
+    gameState.player.wounds = 0;
+  }  /**
    * Показывает уведомление о бегстве
    */
   showFleeNotification() {

@@ -252,3 +252,57 @@
     font-size: 18px;
   }
 }
+
+/* Flee Notification Styles */
+.flee-notification {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10000;
+  animation: slideIn 0.3s ease-out;
+}
+
+.flee-notification__content {
+  background: rgba(0, 0, 0, 0.95);
+  border: 2px solid #ff6b6b;
+  border-radius: 12px;
+  padding: 30px;
+  text-align: center;
+  color: #fff;
+  box-shadow: 0 0 20px rgba(255, 107, 107, 0.5);
+  min-width: 300px;
+}
+
+.flee-notification__content h3 {
+  margin: 0 0 10px 0;
+  font-size: 24px;
+  color: #ff6b6b;
+}
+
+.flee-notification__content p {
+  margin: 5px 0;
+  font-size: 16px;
+  color: #ccc;
+}
+
+.death-notification .flee-notification__content {
+  border-color: #ff3333;
+  background: linear-gradient(135deg, rgba(20, 0, 0, 0.95), rgba(40, 0, 0, 0.95));
+}
+
+.death-notification .flee-notification__content h3 {
+  color: #ff3333;
+  text-shadow: 0 0 10px rgba(255, 51, 51, 0.5);
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}

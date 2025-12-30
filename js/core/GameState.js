@@ -23,7 +23,8 @@ class GameState {
       maxMana: 50,
       gold: 0,
       inventory: [],
-      dungeonsProgress: {} // Прогресс по подземельям
+      dungeonsProgress: {}, // Прогресс по подземельям
+      wounds: 0 // Счетчик ранений при бегстве из боев на локации (макс 5)
     };
 
     this.battle = {
