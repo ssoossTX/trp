@@ -263,11 +263,6 @@ class LocationUI {
     gameState.player.wounds = (gameState.player.wounds || 0) + 1;
     Logger.log(`Ранения: ${gameState.player.wounds}/5`);
     
-    // Показываем уведомление о бегстве только если это была боя на локации
-    if (this.currentBattleEnemyPos) {
-      this.showFleeNotification();
-    }
-    
     // Удаляем врага с локации по его сохраненной позиции
     if (this.currentBattleEnemyPos && locationGenerator.currentLocation) {
       locationGenerator.currentLocation.objects = locationGenerator.currentLocation.objects.filter(obj =>
@@ -276,11 +271,16 @@ class LocationUI {
       this.currentBattleEnemyPos = null; // Сбрасываем позицию врага
     }
     
-    // Проверяем достигли ли мы 5 ранений
+    // Проверяем достигли ли мы 5 ранений ПЕРЕД показом уведомления о бегстве
     if (gameState.player.wounds >= 5) {
       this.showDeathNotification();
       this.isFleeingBattle = false; // Сбрасываем флаг
       return;
+    }
+    
+    // Показываем уведомление о бегстве только если это была боя на локации и не достигли 5 ранений
+    if (this.currentBattleEnemyPos !== null) {
+      this.showFleeNotification();
     }
     
     const locationScreen = document.getElementById('location-screen');
