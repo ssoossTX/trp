@@ -1,14 +1,5 @@
 /* ===== СИСТЕМА КРАФТОВ ===== */
 
-#crafts-screen {
-  background-image: url('/trp/assets/img/background.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-color: #2c3e50;
-}
-
 .screen-header-with-btn {
   text-align: center;
   margin-bottom: var(--spacing-lg);
