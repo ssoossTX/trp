@@ -325,6 +325,9 @@ class LocationUI {
     // Завершаем локацию
     locationGenerator.endLocation();
     
+    // Очищаем ранения при выходе из локации
+    gameState.player.wounds = 0;
+    
     // Скрываем экран локации
     const locationScreen = document.getElementById('location-screen');
     if (locationScreen) {
@@ -437,6 +440,9 @@ class LocationUI {
     screen?.classList.add('hidden');
     screen?.classList.remove('visible');
     this.isVisible = false;
+
+    // Очищаем ранения при выходе из локации
+    gameState.player.wounds = 0;
 
     // Возвращаемся в меню
     const menuScreen = document.getElementById('main-menu-screen');
