@@ -106,8 +106,9 @@
   border: 1px solid #444;
   margin-top: auto;
   display: flex;
-  align-items: flex-end;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 15px;
 }
 
 .controls-grid {
@@ -115,7 +116,6 @@
   grid-template-columns: repeat(3, 60px);
   gap: 8px;
   justify-content: center;
-  margin: 0 auto;
 }
 
 .controls-spacer {
