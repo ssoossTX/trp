@@ -547,12 +547,17 @@ class LocationUI {
     
     if (statsDiv && stats) {
       const { playerAbsoluteX, playerAbsoluteY } = locationGenerator.getVisibleArea(this.viewWidth, this.viewHeight);
+      const wounds = gameState.player.wounds;
+      const woundPenalty = wounds * 10;
+      const woundDisplay = wounds > 0 ? `<span>⚠️ Ранения: ${wounds}/5 (-${woundPenalty}% HP)</span>` : '';
+      
       statsDiv.innerHTML = `
         <div class="stats-info">
           <span>👹 Враги: ${stats.enemies}</span>
           <span>🌲 Деревья: ${stats.trees}</span>
           <span>🪨 Камни: ${stats.stones}</span>
           <span>📍 Позиция: ${playerAbsoluteX},${playerAbsoluteY}</span>
+          ${woundDisplay}
         </div>
       `;
     }
