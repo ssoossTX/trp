@@ -495,11 +495,10 @@ class LocationUI {
           cell.style.borderColor = '#6ab3ff';
           cell.style.boxShadow = '0 0 8px rgba(106, 179, 255, 0.5)';
         } else {
-          // Проверяем расстояние от игрока до этой клетки
-          const distance = Math.max(
-            Math.abs(absX - visibleArea.playerAbsoluteX),
-            Math.abs(absY - visibleArea.playerAbsoluteY)
-          );
+          // Проверяем расстояние от игрока до этой клетки (используем Евклидово расстояние для круглой видимости)
+          const dx = absX - visibleArea.playerAbsoluteX;
+          const dy = absY - visibleArea.playerAbsoluteY;
+          const distance = Math.sqrt(dx * dx + dy * dy);
 
           // Показываем объекты только в радиусе видимости
           if (distance <= visibilityRadius) {
