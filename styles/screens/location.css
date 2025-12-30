@@ -99,8 +99,8 @@
   border: 1px solid #444;
   margin-top: auto;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: space-between;
   gap: 15px;
 }
 
@@ -108,10 +108,10 @@
   display: grid;
   grid-template-columns: repeat(3, 60px);
   gap: 8px;
+  margin: 0 auto;
 }
 
 #locationExitBtn {
-  margin-left: auto;
   position: relative;
   top: auto;
   right: auto;
