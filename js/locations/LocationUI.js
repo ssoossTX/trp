@@ -467,6 +467,8 @@ class LocationUI {
     gridContainer.style.width = '100%';
     gridContainer.style.height = '100%';
 
+    const visibilityRadius = 3; // Радиус видимости
+
     // Создаем все клетки
     for (let y = 0; y < this.viewHeight; y++) {
       for (let x = 0; x < this.viewWidth; x++) {
@@ -486,18 +488,31 @@ class LocationUI {
         const absX = visibleArea.startX + x;
         const absY = visibleArea.startY + y;
 
-        // Проверяем, есть ли объект на этой клетке
-        const objectOnCell = visibleArea.objects.find(obj => obj.x === absX && obj.y === absY);
-
         // Проверяем, здесь ли игрок
         if (absX === visibleArea.playerAbsoluteX && absY === visibleArea.playerAbsoluteY) {
           cell.textContent = '🧙';
           cell.style.background = '#3a5a7a';
           cell.style.borderColor = '#6ab3ff';
           cell.style.boxShadow = '0 0 8px rgba(106, 179, 255, 0.5)';
-        } else if (objectOnCell) {
-          cell.textContent = objectOnCell.emoji;
-          cell.style.background = '#2a3a2a';
+        } else {
+          // Проверяем расстояние от игрока до этой клетки
+          const distance = Math.max(
+            Math.abs(absX - visibleArea.playerAbsoluteX),
+            Math.abs(absY - visibleArea.playerAbsoluteY)
+          );
+
+          // Показываем объекты только в радиусе видимости
+          if (distance <= visibilityRadius) {
+            const objectOnCell = visibleArea.objects.find(obj => obj.x === absX && obj.y === absY);
+            if (objectOnCell) {
+              cell.textContent = objectOnCell.emoji;
+              cell.style.background = '#2a3a2a';
+            }
+          } else {
+            // Скрытые области - серые пустые клетки
+            cell.style.background = '#1a1a1a';
+            cell.style.borderColor = '#333';
+          }
         }
 
         gridContainer.appendChild(cell);
