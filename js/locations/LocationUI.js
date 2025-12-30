@@ -12,6 +12,7 @@ class LocationUI {
     this.viewHeight = 10; // 10 клеток в высоту
     this.isVisible = false;
     this.currentBattleEnemyPos = null; // Позиция текущего врага в бою
+    this.isFleeingBattle = false; // Флаг для предотвращения множественных вызовов бегства
   }
 
   /**
@@ -250,6 +251,12 @@ class LocationUI {
    * Бегство из боя - возврат на локацию с сохранением позиции
    */
   onBattleFlee() {
+    // Защита от множественных вызовов
+    if (this.isFleeingBattle) {
+      return;
+    }
+    this.isFleeingBattle = true;
+    
     Logger.log('Вы сбежали из боя!');
     
     // Добавляем ранение при бегстве
@@ -272,6 +279,7 @@ class LocationUI {
     // Проверяем достигли ли мы 5 ранений
     if (gameState.player.wounds >= 5) {
       this.showDeathNotification();
+      this.isFleeingBattle = false; // Сбрасываем флаг
       return;
     }
     
@@ -282,6 +290,7 @@ class LocationUI {
     }
     
     this.render();
+    this.isFleeingBattle = false; // Сбрасываем флаг
   }
 
   /**
@@ -352,7 +361,13 @@ class LocationUI {
       border: 2px solid #ff8a8f;
       animation: slideIn 0.3s ease-out;
     `;
-    notification.textContent = '⚔️ Вы сбежали от противника, но не без ранения!';
+    
+    // Отображаем уведомление с счетчиком ранений
+    const wounds = gameState.player.wounds || 0;
+    notification.innerHTML = `
+      <div>⚔️ Вы сбежали от противника, но не без ранения!</div>
+      <div style="margin-top: 10px; font-size: 16px;">Ранения: ${wounds}/5</div>
+    `;
     
     // Добавляем CSS анимацию
     const style = document.createElement('style');
