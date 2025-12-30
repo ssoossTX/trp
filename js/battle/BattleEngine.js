@@ -247,14 +247,23 @@ export class BattleEngine {
     const callbacks = this.getLocationBattleCallbacks();
     
     if (callbacks.onDefeat) {
-      // Бой на локации - возвращаемся в меню
+      // Бой на локации - сразу скрываем UI боя и показываем уведомление о смерти
       BattleUI.disableAttackButton();
       BattleUI.update();
       
       setTimeout(() => {
         BattleUI.hide();
-        callbacks.onDefeat();
-      }, 2000);
+        // Импортируем locationUI и вызываем showDeathNotification для правильной очистки
+        import('../locations/LocationUI.js').then(module => {
+          const locationUI = module.locationUI;
+          if (locationUI) {
+            locationUI.showDeathNotification();
+          } else {
+            // Fallback - просто выходим в меню
+            callbacks.onDefeat();
+          }
+        });
+      }, 0); // Сразу же выполняем без задержки
     } else if (gameState.dungeonState) {
       // В подземелье - обрабатываем поражение в подземелье
       BattleUI.disableAttackButton();
