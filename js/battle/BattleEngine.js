@@ -153,14 +153,20 @@ export class BattleEngine {
     setTimeout(() => {
       BattleUI.showLootModal(enemy.name, loot);
       
-      // Проверяем, идет ли бой на локации
-      const callbacks = this.getLocationBattleCallbacks();
-      if (callbacks.onVictory) {
-        setTimeout(() => {
+      // Автозакрытие модали дропа через 3 секунды
+      setTimeout(() => {
+        const callbacks = this.getLocationBattleCallbacks();
+        
+        // Если это боя на локации - вызываем onVictory
+        if (callbacks.onVictory) {
           BattleUI.hide();
           callbacks.onVictory();
-        }, 2000);
-      }
+        }
+        // Иначе закрываем модаль дропа обычным образом
+        else {
+          UIManager.closeLootModal();
+        }
+      }, 3000);
     }, 500);
     
     // Обновляем только ресурсы на боевом экране
