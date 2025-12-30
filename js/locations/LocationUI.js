@@ -405,6 +405,7 @@ class LocationUI {
       notification.style.animation = 'slideOut 0.3s ease-in';
       setTimeout(() => {
         notification.remove();
+        this.isFleeingBattle = false; // Сбрасываем флаг после удаления уведомления
       }, 300);
     }, 2200);
   }

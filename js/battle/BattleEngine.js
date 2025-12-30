@@ -282,7 +282,12 @@ export class BattleEngine {
       gameState.endBattle();
       BattleUI.hide();
       BattleUI.enableAttackButton();
-      callbacks.onFlee();
+      
+      // Сохраняем callback и сразу обнуляем, чтобы не вызвался повторно
+      const onFleeCallback = callbacks.onFlee;
+      this.locationBattleCallbacks = { onVictory: null, onDefeat: null, onFlee: null };
+      
+      onFleeCallback();
       eventManager.emit(APP_EVENTS.BATTLE_ENDED, { result: 'fled' });
       return;
     }
