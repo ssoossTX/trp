@@ -311,11 +311,19 @@ class LocationUI {
     `;
     document.body.appendChild(notification);
 
-    // Через 2 секунды возвращаемся в меню
+    // Сразу же покидаем генерируемую локацию
+    this.exitToMenu();
+
+    // Через 3 секунды очищаем состояние и ранения полностью
     setTimeout(() => {
       notification.remove();
-      this.exitToMenu();
-    }, 2000);
+      // Убедительная очистка состояния локации
+      locationGenerator.endLocation();
+      this.isVisible = false;
+      this.exploredCells.clear();
+      // Полная очистка ранений
+      gameState.player.wounds = 0;
+    }, 3000);
   }
 
   /**
