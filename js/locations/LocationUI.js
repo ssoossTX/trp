@@ -14,6 +14,7 @@ class LocationUI {
     this.currentBattleEnemyPos = null; // Позиция текущего врага в бою
     this.isFleeingBattle = false; // Флаг для предотвращения множественных вызовов бегства
     this.exploredCells = new Map(); // Map для хранения разведанных клеток и их объектов
+    this.battleCallbacks = null; // Коллбэки для боевых локаций из мира
   }
 
   /**
@@ -159,13 +160,25 @@ class LocationUI {
       // Запускаем боевой движок
       BattleEngine.startBattle(enemyData, () => {
         // Callback при победе
-        this.onBattleVictory();
+        if (this.battleCallbacks?.onVictory) {
+          this.battleCallbacks.onVictory();
+        } else {
+          this.onBattleVictory();
+        }
       }, () => {
         // Callback при поражении
-        this.onBattleDefeat();
+        if (this.battleCallbacks?.onDefeat) {
+          this.battleCallbacks.onDefeat();
+        } else {
+          this.onBattleDefeat();
+        }
       }, () => {
         // Callback при бегстве
-        this.onBattleFlee();
+        if (this.battleCallbacks?.onFlee) {
+          this.battleCallbacks.onFlee();
+        } else {
+          this.onBattleFlee();
+        }
       });
     }).catch(err => Logger.error('Ошибка загрузки BattleEngine:', err));
   }
