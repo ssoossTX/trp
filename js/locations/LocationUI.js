@@ -15,6 +15,7 @@ class LocationUI {
     this.isFleeingBattle = false; // Флаг для предотвращения множественных вызовов бегства
     this.exploredCells = new Map(); // Map для хранения разведанных клеток и их объектов
     this.battleCallbacks = null; // Коллбэки для боевых локаций из мира
+    this.externalCallbacks = null; // ВНЕШНИЕ коллбэки для управления переходом в меню из LocationsManager
   }
 
   /**
@@ -160,26 +161,14 @@ class LocationUI {
       // Запускаем боевой движок
       const locationId = locationGenerator.currentLocation?.locationId || 'location-encounter';
       BattleEngine.startBattle(enemyData, () => {
-        // Callback при победе
-        if (this.battleCallbacks?.onVictory) {
-          this.battleCallbacks.onVictory();
-        } else {
-          this.onBattleVictory();
-        }
+        // Callback при победе - используем внутренний метод
+        this.onBattleVictory();
       }, () => {
-        // Callback при поражении
-        if (this.battleCallbacks?.onDefeat) {
-          this.battleCallbacks.onDefeat();
-        } else {
-          this.onBattleDefeat();
-        }
+        // Callback при поражении - используем внутренний метод
+        this.onBattleDefeat();
       }, () => {
-        // Callback при бегстве
-        if (this.battleCallbacks?.onFlee) {
-          this.battleCallbacks.onFlee();
-        } else {
-          this.onBattleFlee();
-        }
+        // Callback при бегстве - используем внутренний метод
+        this.onBattleFlee();
       }, locationId);
     }).catch(err => Logger.error('Ошибка загрузки BattleEngine:', err));
   }
@@ -264,12 +253,14 @@ class LocationUI {
       this.currentBattleEnemyPos = null; // Сбрасываем позицию врага
     }
     
-    // Закрываем экран боя и возвращаемся на экран локации
-    import('../battle/BattleUI.js').then(module => {
-      const { BattleUI } = module;
-      BattleUI.hide();
-    }).catch(err => Logger.error('Ошибка загрузки BattleUI:', err));
+    // Закрываем боевой экран
+    const battleScreen = document.getElementById('battle-screen');
+    if (battleScreen) {
+      battleScreen.classList.add('hidden');
+      battleScreen.classList.remove('visible');
+    }
     
+    // Показываем экран локации для продолжения исследования
     const locationScreen = document.getElementById('location-screen');
     if (locationScreen) {
       locationScreen.classList.remove('hidden');
@@ -337,6 +328,13 @@ class LocationUI {
       this.showDeathNotification();
       this.isFleeingBattle = false; // Сбрасываем флаг
       return;
+    }
+    
+    // Закрываем боевой экран
+    const battleScreen = document.getElementById('battle-screen');
+    if (battleScreen) {
+      battleScreen.classList.add('hidden');
+      battleScreen.classList.remove('visible');
     }
     
     // Показываем уведомление о бегстве только если это была боя на локации и не достигли 5 ранений
@@ -500,11 +498,11 @@ class LocationUI {
    * Открывает боевую локацию из мира (LocationsManager)
    * @param {string} locationId - ID локации (city, forest, mountains)
    * @param {Array} locationEnemies - Враги из этой локации
-   * @param {Function} onVictory - Callback при победе
-   * @param {Function} onDefeat - Callback при поражении
-   * @param {Function} onFlee - Callback при бегстве
+   * @param {Function} onExternalVictory - Коллбэк из LocationsManager при победе (возврат в меню)
+   * @param {Function} onExternalDefeat - Коллбэк из LocationsManager при поражении (возврат в меню)
+   * @param {Function} onExternalFlee - Коллбэк из LocationsManager при бегстве (возврат в меню)
    */
-  openBattleLocation(locationId, locationEnemies, onVictory, onDefeat, onFlee) {
+  openBattleLocation(locationId, locationEnemies, onExternalVictory, onExternalDefeat, onExternalFlee) {
     // Очищаем счетчик ранений при входе на локацию
     gameState.player.wounds = 0;
     
@@ -514,11 +512,18 @@ class LocationUI {
     // Восстанавливаем ресурсы игрока
     gameState.restoreResources();
     
-    // Сохраняем callbacks
+    // Сохраняем ВНЕШНИЕ коллбэки из LocationsManager для возврата в меню
+    this.externalCallbacks = {
+      onVictory: onExternalVictory,
+      onDefeat: onExternalDefeat,
+      onFlee: onExternalFlee
+    };
+    
+    // ВНУТРЕННИЕ коллбэки для управления локацией
     this.battleCallbacks = {
-      onVictory: onVictory,
-      onDefeat: onDefeat,
-      onFlee: onFlee
+      onVictory: null, // Будет использован внутренний onBattleVictory()
+      onDefeat: null,  // Будет использован внутренний onBattleDefeat()
+      onFlee: null     // Будет использован внутренний onBattleFlee()
     };
     
     // Очищаем исследованные клетки и флаг бегства

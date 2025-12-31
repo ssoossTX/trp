@@ -285,9 +285,6 @@ export class UIManager {
     
     this.closeLootModal();
     
-    // Закрываем экран боя
-    BattleUI.hide();
-    
     // Проверяем находимся ли мы в подземелье
     if (gameState.dungeonState) {
       // В подземелье переходим к следующему врагу
@@ -299,7 +296,7 @@ export class UIManager {
       const callbacks = BattleEngine.getLocationBattleCallbacks();
       if (callbacks && callbacks.onVictory) {
         // Бой на боевой локации - вызываем onVictory callback
-        // Он вернет игрока в LocationUI для продолжения исследования
+        // Он закроет BattleUI и вернет игрока в LocationUI для продолжения исследования
         callbacks.onVictory();
       } else {
         // Обычная локация из меню - возвращаемся на карту

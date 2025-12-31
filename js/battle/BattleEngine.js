@@ -296,13 +296,13 @@ export class BattleEngine {
     if (callbacks.onFlee) {
       // Боя на локации - возвращаемся на локацию
       gameState.endBattle();
-      BattleUI.hide();
       BattleUI.enableAttackButton();
       
       // Сохраняем callback и сразу обнуляем, чтобы не вызвался повторно
       const onFleeCallback = callbacks.onFlee;
       this.locationBattleCallbacks = { onVictory: null, onDefeat: null, onFlee: null };
       
+      // onFlee callback закроет боевой экран и покажет локацию
       onFleeCallback();
       eventManager.emit(APP_EVENTS.BATTLE_ENDED, { result: 'fled' });
       return;
