@@ -215,6 +215,7 @@ class LocationUI {
         damage: enemy.templateData.attack,
         level: enemy.templateData.level || 1,
         emoji: enemy.emoji,
+        image: enemy.templateData.image || null, // Передаем картинку врага
         reward: enemy.templateData.reward // Сохраняем дроп
       };
     }
