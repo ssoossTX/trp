@@ -572,12 +572,5 @@ export class UIManager {
     }
 
     // Инициализируем кнопку тестирования локации
-    const testLocationBtn = DOMManager.getElementById('testLocationBtn');
-    if (testLocationBtn) {
-      testLocationBtn.addEventListener('click', () => {
-        this.hideAllScreens();
-        locationUI.startTestLocation();
-      });
-    }
   }
 }

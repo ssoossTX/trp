@@ -191,6 +191,21 @@ class LocationUI {
    * Генерирует данные врага для боя
    */
   generateEnemyData(enemy) {
+    // Если враг имеет templateData из боевой локации, используем его
+    if (enemy.templateData) {
+      return {
+        name: enemy.templateData.name,
+        hp: enemy.templateData.hp,
+        maxHp: enemy.templateData.hp,
+        attack: enemy.templateData.attack,
+        damage: enemy.templateData.attack,
+        level: enemy.templateData.level || 1,
+        emoji: enemy.emoji,
+        reward: enemy.templateData.reward // Сохраняем дроп
+      };
+    }
+    
+    // Fallback для обычных врагов без templateData
     const baseEnemies = {
       '👹': {
         name: 'Враг',
@@ -452,6 +467,42 @@ class LocationUI {
   openLocation() {
     // Очищаем счетчик ранений при входе на локацию
     gameState.player.wounds = 0;
+    
+    const screen = document.getElementById('location-screen');
+    screen?.classList.remove('hidden');
+    screen?.classList.add('visible');
+    this.isVisible = true;
+    this.render();
+  }
+
+  /**
+   * Открывает боевую локацию из мира (LocationsManager)
+   * @param {string} locationId - ID локации (city, forest, mountains)
+   * @param {Array} locationEnemies - Враги из этой локации
+   * @param {Function} onVictory - Callback при победе
+   * @param {Function} onDefeat - Callback при поражении
+   * @param {Function} onFlee - Callback при бегстве
+   */
+  openBattleLocation(locationId, locationEnemies, onVictory, onDefeat, onFlee) {
+    // Очищаем счетчик ранений при входе на локацию
+    gameState.player.wounds = 0;
+    
+    // Генерируем боевую локацию с врагами из этой локации
+    locationGenerator.generateBattleLocation(locationId, locationEnemies);
+    
+    // Восстанавливаем ресурсы игрока
+    gameState.restoreResources();
+    
+    // Сохраняем callbacks
+    this.battleCallbacks = {
+      onVictory: onVictory,
+      onDefeat: onDefeat,
+      onFlee: onFlee
+    };
+    
+    // Очищаем исследованные клетки и флаг бегства
+    this.exploredCells.clear();
+    this.isFleeingBattle = false;
     
     const screen = document.getElementById('location-screen');
     screen?.classList.remove('hidden');

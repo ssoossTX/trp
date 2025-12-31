@@ -4,9 +4,6 @@
 import { DOMManager } from '../core/DOMManager.js';
 import { gameState } from '../core/GameState.js';
 import { dataLoader } from '../data/DataLoader.js';
-import { BattleEngine } from '../battle/BattleEngine.js';
-import { BattleUI } from '../battle/BattleUI.js';
-import { getRandomElement } from '../utils/helpers.js';
 import { GAME_CONSTANTS } from '../utils/constants.js';
 
 export class LocationsManager {
@@ -133,7 +130,7 @@ export class LocationsManager {
   }
 
   /**
-   * Запускает исследование локации
+   * Запускает исследование локации (генерирует локацию для боя)
    */
   static startExploration(locationId) {
     const location = dataLoader.getLocationById(locationId);
@@ -145,20 +142,88 @@ export class LocationsManager {
     // Закрываем модальное окно
     this.closeLocationModal();
 
-    // Восстанавливаем ресурсы при входе на локацию
-    gameState.restoreResources();
+    // Импортируем locationUI для открытия боевой локации
+    import('../locations/LocationUI.js').then(module => {
+      const { locationUI } = module;
+      
+      // Открываем боевую локацию через locationUI
+      locationUI.openBattleLocation(
+        locationId,
+        location.enemies,
+        () => {
+          // Callback при победе - возврат в меню
+          this.onBattleVictory(location);
+        },
+        () => {
+          // Callback при поражении - возврат в меню
+          this.onBattleDefeat();
+        },
+        () => {
+          // Callback при бегстве - возврат в меню
+          this.onBattleFlee();
+        }
+      );
+    }).catch(err => {
+      console.error('Ошибка загрузки LocationUI:', err);
+      alert('Ошибка при запуске исследования');
+    });
+  }
 
-    const randomEnemy = getRandomElement(location.enemies);
+  /**
+   * Обработчик победы в боевой локации
+   */
+  static onBattleVictory(location) {
+    // Восстанавливаем ресурсы после боя
+    gameState.restoreResources();
     
-    // Получаем активные способности класса
-    const playerClass = gameState.player.class;
-    const classData = dataLoader.getClassByName(playerClass);
-    const activeAbilities = classData && classData.activeAbilities ? classData.activeAbilities : [];
+    // Закрываем экран локации и возвращаемся в меню
+    const locationScreen = document.getElementById('location-screen');
+    if (locationScreen) {
+      locationScreen.classList.add('hidden');
+      locationScreen.classList.remove('visible');
+    }
     
-    BattleEngine.initiateBattle(randomEnemy, locationId, activeAbilities);
+    const menuScreen = document.getElementById('main-menu-screen');
+    if (menuScreen) {
+      menuScreen.classList.remove('hidden');
+      menuScreen.classList.add('visible');
+    }
+  }
+
+  /**
+   * Обработчик поражения в боевой локации
+   */
+  static onBattleDefeat() {
+    // Закрываем экран локации и возвращаемся в меню
+    const locationScreen = document.getElementById('location-screen');
+    if (locationScreen) {
+      locationScreen.classList.add('hidden');
+      locationScreen.classList.remove('visible');
+    }
     
-    // Показываем экран боя
-    BattleUI.show();
+    const menuScreen = document.getElementById('main-menu-screen');
+    if (menuScreen) {
+      menuScreen.classList.remove('hidden');
+      menuScreen.classList.add('visible');
+    }
+  }
+
+  /**
+   * Обработчик бегства в боевой локации
+   */
+  static onBattleFlee() {
+    // Закрываем экран локации и возвращаемся в меню
+    const locationScreen = document.getElementById('location-screen');
+    if (locationScreen) {
+      locationScreen.classList.add('hidden');
+      locationScreen.classList.remove('visible');
+    }
+    
+    const menuScreen = document.getElementById('main-menu-screen');
+    if (menuScreen) {
+      menuScreen.classList.remove('hidden');
+      menuScreen.classList.add('visible');
+    }
   }
 
   /**

@@ -258,6 +258,117 @@ class LocationGenerator {
   }
 
   /**
+   * Генерирует локацию для боя с врагами из конкретной локации
+   * @param {string} locationId - ID локации (city, forest, mountains)
+   * @param {Array} enemies - Враги из этой локации
+   */
+  generateBattleLocation(locationId, enemies) {
+    Logger.log(`Генерация боевой локации: ${locationId}`);
+    
+    this.currentLocation = {
+      width: this.gridWidth,
+      height: this.gridHeight,
+      cellSize: this.cellSize,
+      objects: [],
+      playerX: 22,
+      playerY: 22,
+      locationId: locationId,
+      enemies: enemies // Сохраняем враги для использования при генерации
+    };
+
+    // Генерируем объекты с врагами из этой локации
+    this.generateObjectsForBattle(enemies);
+    this.isLocationActive = true;
+    
+    Logger.log(`Боевая локация создана для ${locationId}`);
+    return this.currentLocation;
+  }
+
+  /**
+   * Генерирует объекты с учетом врагов локации
+   * @param {Array} locationEnemies - Враги из локации
+   */
+  generateObjectsForBattle(locationEnemies) {
+    const totalCells = this.gridWidth * this.gridHeight - 1;
+    const playerX = 22;
+    const playerY = 22;
+    const noSpawnRadius = 3;
+    
+    // Из врагов локации выбираем несколько для спавна (примерно 10% как обычно)
+    const enemyPercentage = 0.10;
+    const enemyCount = Math.max(1, Math.round(totalCells * enemyPercentage));
+    
+    const objectTypes = [
+      { type: 'enemy', emoji: '👹', percentage: 0, count: enemyCount }, // Враги будут обработаны отдельно
+      { type: 'tree', emoji: '🌲', percentage: 0.20 },
+      { type: 'stone', emoji: '🪨', percentage: 0.10 }
+    ];
+
+    const occupiedCells = new Set();
+    
+    // Помечаем клетку с игроком как занятую
+    occupiedCells.add(this.getcellKey(playerX, playerY));
+    
+    // Помечаем все клетки в радиусе 3 от игрока как запрещённые для спавна
+    for (let dx = -noSpawnRadius; dx <= noSpawnRadius; dx++) {
+      for (let dy = -noSpawnRadius; dy <= noSpawnRadius; dy++) {
+        const x = playerX + dx;
+        const y = playerY + dy;
+        if (x >= 0 && x < this.gridWidth && y >= 0 && y < this.gridHeight) {
+          occupiedCells.add(this.getcellKey(x, y));
+        }
+      }
+    }
+
+    // Спавним врагов из локации
+    let enemiesCreated = 0;
+    while (enemiesCreated < enemyCount && locationEnemies && locationEnemies.length > 0) {
+      const x = Math.floor(Math.random() * this.gridWidth);
+      const y = Math.floor(Math.random() * this.gridHeight);
+      const cellKey = this.getcellKey(x, y);
+
+      if (!occupiedCells.has(cellKey)) {
+        // Случайно выбираем врага из локации
+        const enemyTemplate = locationEnemies[Math.floor(Math.random() * locationEnemies.length)];
+        this.currentLocation.objects.push({
+          type: 'enemy',
+          x: x,
+          y: y,
+          emoji: '👹',
+          id: `enemy_${x}_${y}`,
+          templateData: enemyTemplate // Сохраняем оригинальные данные врага для дропа
+        });
+        occupiedCells.add(cellKey);
+        enemiesCreated++;
+      }
+    }
+
+    // Спавним деревья и камни
+    objectTypes.slice(1).forEach(objType => {
+      const count = Math.round(totalCells * objType.percentage);
+      let created = 0;
+
+      while (created < count) {
+        const x = Math.floor(Math.random() * this.gridWidth);
+        const y = Math.floor(Math.random() * this.gridHeight);
+        const cellKey = this.getcellKey(x, y);
+
+        if (!occupiedCells.has(cellKey)) {
+          this.currentLocation.objects.push({
+            type: objType.type,
+            x: x,
+            y: y,
+            emoji: objType.emoji,
+            id: `${objType.type}_${x}_${y}`
+          });
+          occupiedCells.add(cellKey);
+          created++;
+        }
+      }
+    });
+  }
+
+  /**
    * Заканчивает текущую локацию
    */
   endLocation() {
