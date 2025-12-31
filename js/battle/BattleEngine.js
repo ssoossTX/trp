@@ -685,7 +685,7 @@ export class BattleEngine {
    * @param {Function} onFlee - Callback при бегстве
     Logger.log(`startBattle: установили callbacks. onVictory = ${!!onVictory}, onDefeat = ${!!onDefeat}, onFlee = ${!!onFlee}`);
    */
-  static startBattle(enemy, onVictory, onDefeat, onFlee) {
+  static startBattle(enemy, onVictory, onDefeat, onFlee, locationId = 'location-encounter') {
     // Сохраняем callbacks
     this.locationBattleCallbacks = { onVictory, onDefeat, onFlee };
     
@@ -699,7 +699,7 @@ export class BattleEngine {
     gameState.player.mana = gameState.player.maxMana;
     
     // Инициализируем боевую сессию с правильными данными игрока
-    gameState.initializeBattle(enemy, 'location-encounter', activeAbilities);
+    gameState.initializeBattle(enemy, locationId, activeAbilities);
     BattleUI.show();
     BattleUI.update();
     BattleUI.renderAbilityButtons(activeAbilities);

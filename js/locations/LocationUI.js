@@ -158,6 +158,7 @@ class LocationUI {
       }
       
       // Запускаем боевой движок
+      const locationId = locationGenerator.currentLocation?.locationId || 'location-encounter';
       BattleEngine.startBattle(enemyData, () => {
         // Callback при победе
         if (this.battleCallbacks?.onVictory) {
@@ -179,7 +180,7 @@ class LocationUI {
         } else {
           this.onBattleFlee();
         }
-      });
+      }, locationId);
     }).catch(err => Logger.error('Ошибка загрузки BattleEngine:', err));
   }
 
@@ -241,7 +242,8 @@ class LocationUI {
     
     return {
       ...enemyType,
-      emoji: enemy.emoji
+      emoji: enemy.emoji,
+      image: null // Нет изображения для fallback врагов
     };
   }
 

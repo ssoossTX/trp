@@ -48,7 +48,7 @@ export class BattleUI {
     
     DOMManager.setText('enemyName', enemyNameDisplay);
     
-    if (enemy.image && !enemy.isDungeonEnemy) {
+    if (enemy.image) {
       const enemyImage = DOMManager.getElementById('enemyImage');
       if (enemyImage) {
         enemyImage.src = `/trp/assets/img/enemies/${enemy.image}`;
@@ -56,7 +56,7 @@ export class BattleUI {
         console.log(`[BattleUI] Изображение врага установлено: ${enemy.image}`);
       }
     } else {
-      // Если у врага нет картинки или это враг подземелья, очищаем старую
+      // Если у врага нет картинки, очищаем старую
       const enemyImage = DOMManager.getElementById('enemyImage');
       if (enemyImage) {
         enemyImage.src = '';
