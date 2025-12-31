@@ -264,7 +264,12 @@ class LocationUI {
       this.currentBattleEnemyPos = null; // Сбрасываем позицию врага
     }
     
-    // Возвращаемся на экран локации
+    // Закрываем экран боя и возвращаемся на экран локации
+    import('../battle/BattleUI.js').then(module => {
+      const { BattleUI } = module;
+      BattleUI.hide();
+    }).catch(err => Logger.error('Ошибка загрузки BattleUI:', err));
+    
     const locationScreen = document.getElementById('location-screen');
     if (locationScreen) {
       locationScreen.classList.remove('hidden');

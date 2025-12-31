@@ -293,7 +293,17 @@ export class BattleUI {
     import('./BattleEngine.js').then(module => {
       const { BattleEngine } = module;
       if (fleeBtn) {
-        fleeBtn.addEventListener('click', () => BattleEngine.fleeBattle());
+        fleeBtn.addEventListener('click', () => {
+          // Проверяем есть ли callback для боя на локации
+          const callbacks = BattleEngine.getLocationBattleCallbacks();
+          if (callbacks && callbacks.onFlee) {
+            // На боевой локации - вызываем callback для бегства
+            BattleEngine.fleeBattle();
+          } else {
+            // Обычное бегство
+            BattleEngine.fleeBattle();
+          }
+        });
       }
     });
   }

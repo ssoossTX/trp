@@ -285,6 +285,9 @@ export class UIManager {
     
     this.closeLootModal();
     
+    // Закрываем экран боя
+    BattleUI.hide();
+    
     // Проверяем находимся ли мы в подземелье
     if (gameState.dungeonState) {
       // В подземелье переходим к следующему врагу
@@ -292,13 +295,14 @@ export class UIManager {
         module.DungeonsManager.onDungeonEnemyDefeated();
       });
     } else {
-      // Проверяем, есть ли callback для боя на локации
+      // Проверяем, есть ли callback для боя на локации (LocationUI)
       const callbacks = BattleEngine.getLocationBattleCallbacks();
       if (callbacks && callbacks.onVictory) {
-        // Бой на локации - вызываем onVictory callback
+        // Бой на боевой локации - вызываем onVictory callback
+        // Он вернет игрока в LocationUI для продолжения исследования
         callbacks.onVictory();
       } else {
-        // Обычная локация - возвращаемся на карту
+        // Обычная локация из меню - возвращаемся на карту
         BattleEngine.fleeBattle();
       }
     }
