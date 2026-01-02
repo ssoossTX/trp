@@ -3,6 +3,7 @@
  */
 import { Logger } from '../utils/helpers.js';
 import { gameState } from '../core/GameState.js';
+import { getLocationObjectsConfig } from '../config/locationObjectsConfig.js';
 
 class LocationGenerator {
   constructor() {
@@ -38,21 +39,14 @@ class LocationGenerator {
   }
 
   /**
-   * Генерирует объекты на локации (враги, деревья, камни)
-   * Распределение: 60% пусто, 10% враги, 20% деревья, 10% камни
+   * Генерирует объекты на локации на основе конфига локации
    * В радиусе 3 клеток от игрока ничего не спавнится
    */
-  generateObjects() {
+  generateObjects(locationId = null) {
     const totalCells = this.gridWidth * this.gridHeight - 1; // Минус 1 за спавн игрока
     const playerX = 22;
     const playerY = 22;
     const noSpawnRadius = 3; // Радиус без спавна
-    
-    const objectTypes = [
-      { type: 'enemy', emoji: '👹', percentage: 0.10 },
-      { type: 'tree', emoji: '🌲', percentage: 0.20 },
-      { type: 'stone', emoji: '🪨', percentage: 0.10 }
-    ];
 
     const occupiedCells = new Set();
     
@@ -70,29 +64,35 @@ class LocationGenerator {
       }
     }
 
-    // Для каждого типа объекта генерируем необходимое количество
-    objectTypes.forEach(objType => {
-      const count = Math.round(totalCells * objType.percentage);
-      let created = 0;
+    // Получаем конфиг объектов для локации
+    const objectsConfig = locationId ? getLocationObjectsConfig(locationId) : null;
 
-      while (created < count) {
-        const x = Math.floor(Math.random() * this.gridWidth);
-        const y = Math.floor(Math.random() * this.gridHeight);
-        const cellKey = this.getcellKey(x, y);
+    if (objectsConfig && objectsConfig.objects) {
+      // Генерируем объекты на основе конфига
+      objectsConfig.objects.forEach(objConfig => {
+        const count = Math.round(totalCells * objConfig.percentage);
+        let created = 0;
 
-        if (!occupiedCells.has(cellKey)) {
-          this.currentLocation.objects.push({
-            type: objType.type,
-            x: x,
-            y: y,
-            emoji: objType.emoji,
-            id: `${objType.type}_${x}_${y}`
-          });
-          occupiedCells.add(cellKey);
-          created++;
+        while (created < count) {
+          const x = Math.floor(Math.random() * this.gridWidth);
+          const y = Math.floor(Math.random() * this.gridHeight);
+          const cellKey = this.getcellKey(x, y);
+
+          if (!occupiedCells.has(cellKey)) {
+            this.currentLocation.objects.push({
+              type: objConfig.type,
+              x: x,
+              y: y,
+              image: objConfig.image,
+              name: objConfig.name,
+              id: `${objConfig.type}_${x}_${y}`
+            });
+            occupiedCells.add(cellKey);
+            created++;
+          }
         }
-      }
-    });
+      });
+    }
   }
 
   /**
@@ -277,7 +277,7 @@ class LocationGenerator {
     };
 
     // Генерируем объекты с врагами из этой локации
-    this.generateObjectsForBattle(enemies);
+    this.generateObjectsForBattle(locationId, enemies);
     this.isLocationActive = true;
     
     Logger.log(`Боевая локация создана для ${locationId}`);
@@ -286,23 +286,21 @@ class LocationGenerator {
 
   /**
    * Генерирует объекты с учетом врагов локации
+   * @param {string} locationId - ID локации
    * @param {Array} locationEnemies - Враги из локации
    */
-  generateObjectsForBattle(locationEnemies) {
+  generateObjectsForBattle(locationId, locationEnemies) {
     const totalCells = this.gridWidth * this.gridHeight - 1;
     const playerX = 22;
     const playerY = 22;
     const noSpawnRadius = 3;
     
-    // Из врагов локации выбираем несколько для спавна (примерно 10% как обычно)
-    const enemyPercentage = 0.10;
-    const enemyCount = Math.max(1, Math.round(totalCells * enemyPercentage));
+    // Получаем конфиг объектов для локации
+    const objectsConfig = getLocationObjectsConfig(locationId);
     
-    const objectTypes = [
-      { type: 'enemy', emoji: '👹', percentage: 0, count: enemyCount }, // Враги будут обработаны отдельно
-      { type: 'tree', emoji: '🌲', percentage: 0.20 },
-      { type: 'stone', emoji: '🪨', percentage: 0.10 }
-    ];
+    // Из врагов локации выбираем несколько для спавна (5% как в конфиге)
+    const enemyPercentage = objectsConfig?.enemies || 0.05;
+    const enemyCount = Math.max(1, Math.round(totalCells * enemyPercentage));
 
     const occupiedCells = new Set();
     
@@ -334,7 +332,8 @@ class LocationGenerator {
           type: 'enemy',
           x: x,
           y: y,
-          emoji: '👹',
+          image: `/trp/assets/img/enemies/${enemyTemplate.image}`,
+          name: enemyTemplate.name,
           id: `enemy_${x}_${y}`,
           templateData: enemyTemplate // Сохраняем оригинальные данные врага для дропа
         });
@@ -343,29 +342,32 @@ class LocationGenerator {
       }
     }
 
-    // Спавним деревья и камни
-    objectTypes.slice(1).forEach(objType => {
-      const count = Math.round(totalCells * objType.percentage);
-      let created = 0;
+    // Спавним остальные объекты на основе конфига
+    if (objectsConfig && objectsConfig.objects) {
+      objectsConfig.objects.forEach(objConfig => {
+        const count = Math.round(totalCells * objConfig.percentage);
+        let created = 0;
 
-      while (created < count) {
-        const x = Math.floor(Math.random() * this.gridWidth);
-        const y = Math.floor(Math.random() * this.gridHeight);
-        const cellKey = this.getcellKey(x, y);
+        while (created < count) {
+          const x = Math.floor(Math.random() * this.gridWidth);
+          const y = Math.floor(Math.random() * this.gridHeight);
+          const cellKey = this.getcellKey(x, y);
 
-        if (!occupiedCells.has(cellKey)) {
-          this.currentLocation.objects.push({
-            type: objType.type,
-            x: x,
-            y: y,
-            emoji: objType.emoji,
-            id: `${objType.type}_${x}_${y}`
-          });
-          occupiedCells.add(cellKey);
-          created++;
+          if (!occupiedCells.has(cellKey)) {
+            this.currentLocation.objects.push({
+              type: objConfig.type,
+              x: x,
+              y: y,
+              image: objConfig.image,
+              name: objConfig.name,
+              id: `${objConfig.type}_${x}_${y}`
+            });
+            occupiedCells.add(cellKey);
+            created++;
+          }
         }
-      }
-    });
+      });
+    }
   }
 
   /**

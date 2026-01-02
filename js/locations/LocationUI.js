@@ -203,38 +203,35 @@ class LocationUI {
         attack: enemy.templateData.attack,
         damage: enemy.templateData.attack,
         level: enemy.templateData.level || 1,
-        emoji: enemy.emoji,
-        image: enemy.templateData.image || null, // Передаем картинку врага
+        image: `/trp/assets/img/enemies/${enemy.templateData.image}` || null, // Путь к картинке врага
         reward: enemy.templateData.reward // Сохраняем дроп
       };
     }
     
     // Fallback для обычных врагов без templateData
     const baseEnemies = {
-      '👹': {
+      'unknown': {
         name: 'Враг',
         hp: 50,
         maxHp: 50,
         attack: 10,
         damage: 10,
-        level: 1
+        level: 1,
+        image: null
       }
     };
     
-    const enemyType = baseEnemies[enemy.emoji] || {
+    const enemyType = baseEnemies[enemy.type] || {
       name: 'Неизвестный враг',
       hp: 30,
       maxHp: 30,
       attack: 8,
       damage: 8,
-      level: 1
+      level: 1,
+      image: null
     };
     
-    return {
-      ...enemyType,
-      emoji: enemy.emoji,
-      image: null // Нет изображения для fallback врагов
-    };
+    return enemyType;
   }
 
   /**
@@ -600,6 +597,8 @@ class LocationUI {
         cell.style.cursor = 'default';
         cell.style.aspectRatio = '1';
         cell.style.minWidth = '0';
+        cell.style.overflow = 'hidden';
+        cell.style.position = 'relative';
 
         const absX = visibleArea.startX + x;
         const absY = visibleArea.startY + y;
@@ -621,7 +620,7 @@ class LocationUI {
           if (distance <= visibilityRadius) {
             const objectOnCell = visibleArea.objects.find(obj => obj.x === absX && obj.y === absY);
             if (objectOnCell) {
-              cell.textContent = objectOnCell.emoji;
+              this.renderObjectInCell(cell, objectOnCell);
               cell.style.background = '#2a3a2a';
               // Сохраняем разведанную клетку
               this.exploredCells.set(cellKey, objectOnCell);
@@ -630,7 +629,7 @@ class LocationUI {
             // Проверяем, разведана ли эта клетка ранее
             if (this.exploredCells.has(cellKey)) {
               const exploredObject = this.exploredCells.get(cellKey);
-              cell.textContent = exploredObject.emoji;
+              this.renderObjectInCell(cell, exploredObject);
               // Отображаем разведанные объекты с полупрозрачностью
               cell.style.background = '#1a2a1a';
               cell.style.opacity = '0.6';
@@ -648,6 +647,32 @@ class LocationUI {
 
     viewport.appendChild(gridContainer);
     this.updateStats();
+  }
+
+  /**
+   * Рендерит объект в клетке (картинка или emoji)
+   */
+  renderObjectInCell(cell, objectData) {
+    if (objectData.image) {
+      // Создаем img элемент если есть путь картинки
+      const img = document.createElement('img');
+      img.src = objectData.image;
+      img.alt = objectData.name || 'Object';
+      img.style.width = '100%';
+      img.style.height = '100%';
+      img.style.objectFit = 'cover';
+      img.style.objectPosition = 'center';
+      img.style.pointerEvents = 'none';
+      img.onerror = () => {
+        // Если картинка не загрузилась, показываем fallback
+        img.remove();
+        cell.textContent = '❓';
+      };
+      cell.appendChild(img);
+    } else if (objectData.emoji) {
+      // Fallback на emoji если нет картинки
+      cell.textContent = objectData.emoji;
+    }
   }
 
   /**
