@@ -891,10 +891,11 @@ class LocationUI {
     const hpPenalty = wounds * 10;
     
     // Расчет эффективного HP с учетом ранений
-    const maxHp = player.hp || 100;
-    const currentHp = Math.max(1, Math.round(maxHp * (100 - hpPenalty) / 100));
-    const maxMana = player.mana || 50;
-    const currentMana = player.currentMana || maxMana;
+    const maxHp = player.maxHp || player.hp || 100;
+    const currentHp = player.hp || maxHp; // Текущее HP из gameState
+    const effectiveHp = Math.max(1, Math.round(currentHp * (100 - hpPenalty) / 100));
+    const maxMana = player.maxMana || player.mana || 50;
+    const currentMana = player.currentMana || player.mana || maxMana;
     
     // Обновляем портрет игрока
     const playerClass = player.class;
@@ -912,7 +913,7 @@ class LocationUI {
     const hpBar = document.getElementById('playerHpBar');
     const hpText = document.getElementById('playerHpText');
     if (hpBar) hpBar.style.width = Math.max(0, hpPercent) + '%';
-    if (hpText) hpText.textContent = `${currentHp}/${maxHp}`;
+    if (hpText) hpText.textContent = `${effectiveHp}/${maxHp}`;
     
     // Обновляем Mana полоску
     const manaPercent = (currentMana / maxMana) * 100;
