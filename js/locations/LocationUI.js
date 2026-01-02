@@ -69,6 +69,7 @@ class LocationUI {
     this.viewHeight = 10; // 10 клеток в высоту
     this.cellSize = 60; // размер одной ячейки в пиксела
     this.isVisible = false;
+    this.isInBattle = false; // Флаг боевой локации - блокирует движение
     this.currentBattleEnemyPos = null; // Позиция текущего врага в бою
     this.isFleeingBattle = false; // Флаг для предотвращения множественных вызовов бегства
     this.exploredCells = new Map(); // Map для хранения разведанных клеток и их объектов
@@ -175,6 +176,36 @@ class LocationUI {
   }
 
   /**
+   * Отключает кнопки управления
+   */
+  disableMovementButtons() {
+    const buttons = ['btnUp', 'btnDown', 'btnLeft', 'btnRight'];
+    buttons.forEach(btnId => {
+      const btn = document.getElementById(btnId);
+      if (btn) {
+        btn.disabled = true;
+        btn.style.opacity = '0.5';
+        btn.style.cursor = 'not-allowed';
+      }
+    });
+  }
+
+  /**
+   * Включает кнопки управления
+   */
+  enableMovementButtons() {
+    const buttons = ['btnUp', 'btnDown', 'btnLeft', 'btnRight'];
+    buttons.forEach(btnId => {
+      const btn = document.getElementById(btnId);
+      if (btn) {
+        btn.disabled = false;
+        btn.style.opacity = '1';
+        btn.style.cursor = 'pointer';
+      }
+    });
+  }
+
+  /**
    * Обработчик нажатия клавиш
    */
   handleKeyPress(e) {
@@ -211,6 +242,12 @@ class LocationUI {
    * Обработчик движения
    */
   handleMove(direction) {
+    // Блокируем движение если идёт боевая локация
+    if (this.isInBattle) {
+      Logger.log('Вы не можете двигаться во время боя!');
+      return;
+    }
+
     const result = locationGenerator.movePlayer(direction);
     if (result && result.moved) {
       if (result.enemy) {
@@ -228,6 +265,12 @@ class LocationUI {
    */
   startBattleWithEnemy(enemy) {
     Logger.log(`Встреча с врагом на позиции ${enemy.x}, ${enemy.y}`);
+    
+    // Устанавливаем флаг боевой локации
+    this.isInBattle = true;
+    
+    // Отключаем кнопки управления
+    this.disableMovementButtons();
     
     // Сохраняем позицию врага для последующего удаления при победе
     this.currentBattleEnemyPos = { x: enemy.x, y: enemy.y };
@@ -328,6 +371,10 @@ class LocationUI {
   onBattleVictory() {
     Logger.log('Победа в бою!');
     
+    // Сбрасываем флаг боевой локации
+    this.isInBattle = false;
+    this.enableMovementButtons();
+    
     // Удаляем врага с локации по его сохраненной позиции
     if (this.currentBattleEnemyPos && locationGenerator.currentLocation) {
       locationGenerator.currentLocation.objects = locationGenerator.currentLocation.objects.filter(obj =>
@@ -361,6 +408,10 @@ class LocationUI {
   onBattleDefeat() {
     Logger.log('Поражение в бою...');
     
+    // Сбрасываем флаг боевой локации
+    this.isInBattle = false;
+    this.enableMovementButtons();
+    
     // Завершаем локацию
     locationGenerator.endLocation();
     
@@ -388,6 +439,10 @@ class LocationUI {
       return;
     }
     this.isFleeingBattle = true;
+    
+    // Сбрасываем флаг боевой локации при бегстве
+    this.isInBattle = false;
+    this.enableMovementButtons();
     
     Logger.log('Вы сбежали из боя!');
     
