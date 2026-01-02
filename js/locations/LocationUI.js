@@ -686,11 +686,8 @@ class LocationUI {
           ctx.strokeRect(screenX, screenY, cellSize, cellSize);
           ctx.shadowColor = 'transparent';
 
-          // Рисуем игрока (эмодзи в центре)
-          ctx.font = 'bold 40px Arial';
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
-          ctx.fillText('🧙', screenX + cellSize / 2, screenY + cellSize / 2);
+          // Рисуем игрока (картинка класса или fallback)
+          this.renderPlayerOnCanvas(ctx, screenX, screenY, cellSize);
         } else {
           // Проверяем расстояние от игрока до этой клетки
           const dx = absX - visibleArea.playerAbsoluteX;
@@ -761,6 +758,47 @@ class LocationUI {
         });
       }
     }
+  }
+
+  /**
+   * Рисует игрока на canvas (картинка его класса)
+   */
+  renderPlayerOnCanvas(ctx, x, y, cellSize) {
+    const playerClass = gameState.player.class;
+    if (!playerClass) {
+      // Fallback если класс не установлен
+      ctx.font = 'bold 40px Arial';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillStyle = '#fff';
+      ctx.fillText('🧙', x + cellSize / 2, y + cellSize / 2);
+      return;
+    }
+
+    // Генерируем путь к картинке класса
+    const fileName = playerClass.toLowerCase().replace(/ /g, '_');
+    const imagePath = `/trp/assets/img/enemies/${fileName}.jpg`;
+
+    const img = this.imageCache.getImage(imagePath);
+    if (img) {
+      // Рисуем картинку игрока с padding
+      const padding = 4;
+      const imgSize = cellSize - padding * 2;
+      ctx.drawImage(img, x + padding, y + padding, imgSize, imgSize);
+    } else {
+      // Загружаем картинку если ещё не загружена
+      this.imageCache.loadImage(imagePath).then(() => {
+        this.render(); // Перерисовываем когда картинка загрузится
+      }).catch(() => {
+        // Fallback на эмодзи если не смогли загрузить
+        ctx.font = 'bold 40px Arial';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillStyle = '#fff';
+        ctx.fillText('🧙', x + cellSize / 2, y + cellSize / 2);
+      });
+    }
+  }
   }
 
   /**
