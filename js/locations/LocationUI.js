@@ -146,13 +146,13 @@ class LocationUI {
                 </button>
                 <div class="controls-spacer"></div>
                 <button class="control-btn left" id="btnLeft" title="Влево">
-                  <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M22 12l-8-8v6H2v4h12v6l8-8z" transform="rotate(180 12 12)"/></svg>
+                  <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M2 12l8-8v6h12v4H10v6l-8-8z"/></svg>
                 </button>
                 <button class="control-btn down" id="btnDown" title="Вниз">
                   <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M12 22l-8-8h6V2h4v12h6l-8 8z"/></svg>
                 </button>
                 <button class="control-btn right" id="btnRight" title="Вправо">
-                  <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M2 12l8-8v6h12v4H10v6l-8-8z"/></svg>
+                  <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M22 12l-8-8v6H2v4h12v6l8-8z"/></svg>
                 </button>
               </div>
               <button class="game-screen__exit-btn" id="locationExitBtn">
