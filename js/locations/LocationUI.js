@@ -896,6 +896,8 @@ class LocationUI {
     const maxMana = player.maxMana || 50;
     const currentMana = player.mana || maxMana;
     
+    console.log('[LocationUI.updateStats]', { 'player.maxHp': player.maxHp, 'player.maxMana': player.maxMana, 'player.mana': player.mana, maxHp, currentHp, maxMana, currentMana });
+    
     // Обновляем портрет игрока
     const playerClass = player.class;
     if (playerClass) {
