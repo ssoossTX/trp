@@ -65,9 +65,9 @@ class LocationUI {
     this.canvas = null;
     this.ctx = null;
     this.imageCache = new ImageCache();
-    this.viewWidth = 10; // 10 клеток в ширину
-    this.viewHeight = 10; // 10 клеток в высоту
-    this.cellSize = 60; // размер одной ячейки в пиксела
+    this.viewWidth = 8; // 8 клеток в ширину (вместо 10)
+    this.viewHeight = 8; // 8 клеток в высоту (вместо 10)
+    this.cellSize = 80; // размер одной ячейки в пиксела (вместо 60)
     this.isVisible = false;
     this.isInBattle = false; // Флаг боевой локации - блокирует движение
     this.currentBattleEnemyPos = null; // Позиция текущего врага в бою
