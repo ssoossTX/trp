@@ -664,6 +664,7 @@ class LocationUI {
     
     // Разрешаем движение при входе на локацию
     this.isInBattle = false;
+    this.enableMovementButtons();
     
     const screen = document.getElementById('location-screen');
     screen?.classList.remove('hidden');

@@ -40,7 +40,7 @@ export class BattleUI {
     const maxHp = gameState.player.maxHp || 100;
     const currentHp = gameState.battle.playerHp || maxHp;
     const maxMana = gameState.player.maxMana || 50;
-    const currentMana = gameState.player.mana || maxMana;
+    const currentMana = gameState.battle.playerMana || maxMana;
 
     console.log(`[BattleUI] Обновляю интерфейс для врага: ${enemy.name}`);
     
