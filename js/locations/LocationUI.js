@@ -291,7 +291,7 @@ class LocationUI {
         attack: enemy.templateData.attack,
         damage: enemy.templateData.attack,
         level: enemy.templateData.level || 1,
-        image: `/trp/assets/img/enemies/${enemy.templateData.image}` || null, // Путь к картинке врага
+        image: enemy.templateData.image || null, // Только имя файла
         reward: enemy.templateData.reward // Сохраняем дроп
       };
     }
