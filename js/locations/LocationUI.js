@@ -5,11 +5,69 @@ import { locationGenerator } from './LocationGenerator.js';
 import { Logger } from '../utils/helpers.js';
 import { gameState } from '../core/GameState.js';
 
+/**
+ * ImageCache - кэширует загруженные картинки
+ */
+class ImageCache {
+  constructor() {
+    this.cache = new Map();
+    this.loadingPromises = new Map();
+  }
+
+  /**
+   * Загружает картинку асинхронно и кэширует
+   */
+  async loadImage(path) {
+    if (this.cache.has(path)) {
+      return this.cache.get(path);
+    }
+
+    if (this.loadingPromises.has(path)) {
+      return this.loadingPromises.get(path);
+    }
+
+    const promise = new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => {
+        this.cache.set(path, img);
+        this.loadingPromises.delete(path);
+        resolve(img);
+      };
+      img.onerror = () => {
+        this.loadingPromises.delete(path);
+        reject(new Error(`Failed to load image: ${path}`));
+      };
+      img.src = path;
+    });
+
+    this.loadingPromises.set(path, promise);
+    return promise;
+  }
+
+  /**
+   * Получает картинку из кэша (если загружена)
+   */
+  getImage(path) {
+    return this.cache.get(path) || null;
+  }
+
+  /**
+   * Очищает кэш
+   */
+  clear() {
+    this.cache.clear();
+    this.loadingPromises.clear();
+  }
+}
+
 class LocationUI {
   constructor() {
     this.canvas = null;
+    this.ctx = null;
+    this.imageCache = new ImageCache();
     this.viewWidth = 10; // 10 клеток в ширину
     this.viewHeight = 10; // 10 клеток в высоту
+    this.cellSize = 60; // размер одной ячейки в пиксела
     this.isVisible = false;
     this.currentBattleEnemyPos = null; // Позиция текущего врага в бою
     this.isFleeingBattle = false; // Флаг для предотвращения множественных вызовов бегства
@@ -47,9 +105,9 @@ class LocationUI {
               <div class="location-stats" id="locationStats"></div>
             </div>
 
-            <!-- Область отображения локации -->
+            <!-- Canvas для отображения локации -->
             <div class="location-screen__viewport" id="locationViewport">
-              <!-- Сетка будет отображаться здесь -->
+              <canvas id="locationCanvas" style="width: 100%; height: 100%; display: block; border-radius: 8px; background: #1a1a1a;"></canvas>
             </div>
 
             <!-- Управление -->
@@ -70,6 +128,36 @@ class LocationUI {
       `;
       document.body.appendChild(locationScreen);
     }
+
+    // Получаем canvas элемент
+    if (!this.canvas) {
+      this.canvas = document.getElementById('locationCanvas');
+      this.ctx = this.canvas?.getContext('2d');
+      this.resizeCanvas();
+    }
+  }
+
+  /**
+   * Пересчитывает размеры canvas
+   */
+  resizeCanvas() {
+    if (!this.canvas) return;
+
+    const viewport = this.canvas.parentElement;
+    if (!viewport) return;
+
+    const rect = viewport.getBoundingClientRect();
+    this.canvas.width = rect.width;
+    this.canvas.height = rect.height;
+
+    // Пересчитываем размер ячейки на основе размера canvas
+    const availableWidth = this.canvas.width;
+    const availableHeight = this.canvas.height;
+    
+    this.cellSize = Math.min(
+      Math.floor(availableWidth / this.viewWidth),
+      Math.floor(availableHeight / this.viewHeight)
+    );
   }
 
   /**
@@ -554,64 +642,57 @@ class LocationUI {
   }
 
   /**
-   * Рендерит текущее состояние локации
+   * Рендерит текущее состояние локации на canvas
    */
   render() {
-    if (!locationGenerator.currentLocation) return;
+    if (!locationGenerator.currentLocation || !this.canvas || !this.ctx) return;
+
+    this.resizeCanvas();
 
     const visibleArea = locationGenerator.getVisibleArea(this.viewWidth, this.viewHeight);
-    const viewport = document.getElementById('locationViewport');
-    
-    if (!viewport) return;
+    const ctx = this.ctx;
+    const cellSize = this.cellSize;
+    const visibilityRadius = 3;
 
-    // Очищаем viewport
-    viewport.innerHTML = '';
+    // Очищаем canvas
+    ctx.fillStyle = '#1a1a1a';
+    ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
-    // Создаем контейнер сетки с адаптивными размерами
-    const gridContainer = document.createElement('div');
-    gridContainer.className = 'location-grid';
-    gridContainer.style.display = 'grid';
-    gridContainer.style.gridTemplateColumns = `repeat(${this.viewWidth}, 1fr)`;
-    gridContainer.style.gridTemplateRows = `repeat(${this.viewHeight}, 1fr)`;
-    gridContainer.style.gap = '2px';
-    gridContainer.style.padding = '10px';
-    gridContainer.style.background = '#1a1a1a';
-    gridContainer.style.borderRadius = '8px';
-    gridContainer.style.width = '100%';
-    gridContainer.style.height = '100%';
-
-    const visibilityRadius = 3; // Радиус видимости
-
-    // Создаем все клетки
+    // Рисуем сетку и объекты
     for (let y = 0; y < this.viewHeight; y++) {
       for (let x = 0; x < this.viewWidth; x++) {
-        const cell = document.createElement('div');
-        cell.className = 'location-cell';
-        cell.style.background = '#2a2a2a';
-        cell.style.border = '1px solid #444';
-        cell.style.display = 'flex';
-        cell.style.alignItems = 'center';
-        cell.style.justifyContent = 'center';
-        cell.style.fontSize = '24px';
-        cell.style.borderRadius = '4px';
-        cell.style.cursor = 'default';
-        cell.style.aspectRatio = '1';
-        cell.style.minWidth = '0';
-        cell.style.overflow = 'hidden';
-        cell.style.position = 'relative';
+        const screenX = x * cellSize;
+        const screenY = y * cellSize;
 
         const absX = visibleArea.startX + x;
         const absY = visibleArea.startY + y;
         const cellKey = `${absX},${absY}`;
 
+        // Рисуем границы клетки
+        ctx.strokeStyle = '#444';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(screenX, screenY, cellSize, cellSize);
+
         // Проверяем, здесь ли игрок
         if (absX === visibleArea.playerAbsoluteX && absY === visibleArea.playerAbsoluteY) {
-          cell.textContent = '🧙';
-          cell.style.background = '#3a5a7a';
-          cell.style.borderColor = '#6ab3ff';
-          cell.style.boxShadow = '0 0 8px rgba(106, 179, 255, 0.5)';
+          // Подсвечиваем клетку игрока
+          ctx.fillStyle = '#3a5a7a';
+          ctx.fillRect(screenX, screenY, cellSize, cellSize);
+          
+          ctx.shadowColor = 'rgba(106, 179, 255, 0.5)';
+          ctx.shadowBlur = 8;
+          ctx.strokeStyle = '#6ab3ff';
+          ctx.lineWidth = 2;
+          ctx.strokeRect(screenX, screenY, cellSize, cellSize);
+          ctx.shadowColor = 'transparent';
+
+          // Рисуем игрока (эмодзи в центре)
+          ctx.font = 'bold 40px Arial';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText('🧙', screenX + cellSize / 2, screenY + cellSize / 2);
         } else {
-          // Проверяем расстояние от игрока до этой клетки (используем Евклидово расстояние для круглой видимости)
+          // Проверяем расстояние от игрока до этой клетки
           const dx = absX - visibleArea.playerAbsoluteX;
           const dy = absY - visibleArea.playerAbsoluteY;
           const distance = Math.sqrt(dx * dx + dy * dy);
@@ -620,58 +701,65 @@ class LocationUI {
           if (distance <= visibilityRadius) {
             const objectOnCell = visibleArea.objects.find(obj => obj.x === absX && obj.y === absY);
             if (objectOnCell) {
-              this.renderObjectInCell(cell, objectOnCell);
-              cell.style.background = '#2a3a2a';
+              ctx.fillStyle = '#2a3a2a';
+              ctx.fillRect(screenX, screenY, cellSize, cellSize);
+              
+              this.renderObjectOnCanvas(ctx, objectOnCell, screenX, screenY, cellSize);
+              
               // Сохраняем разведанную клетку
               this.exploredCells.set(cellKey, objectOnCell);
+            } else {
+              ctx.fillStyle = '#2a2a2a';
+              ctx.fillRect(screenX, screenY, cellSize, cellSize);
             }
           } else {
             // Проверяем, разведана ли эта клетка ранее
             if (this.exploredCells.has(cellKey)) {
               const exploredObject = this.exploredCells.get(cellKey);
-              this.renderObjectInCell(cell, exploredObject);
-              // Отображаем разведанные объекты с полупрозрачностью
-              cell.style.background = '#1a2a1a';
-              cell.style.opacity = '0.6';
+              ctx.fillStyle = '#1a2a1a';
+              ctx.fillRect(screenX, screenY, cellSize, cellSize);
+              ctx.globalAlpha = 0.6;
+              this.renderObjectOnCanvas(ctx, exploredObject, screenX, screenY, cellSize);
+              ctx.globalAlpha = 1;
             } else {
-              // Неразведанные области - темные пустые клетки
-              cell.style.background = '#1a1a1a';
-              cell.style.borderColor = '#333';
+              // Неразведанные области
+              ctx.fillStyle = '#1a1a1a';
+              ctx.fillRect(screenX, screenY, cellSize, cellSize);
             }
           }
         }
-
-        gridContainer.appendChild(cell);
       }
     }
 
-    viewport.appendChild(gridContainer);
     this.updateStats();
   }
 
   /**
-   * Рендерит объект в клетке (картинка или emoji)
+   * Рисует объект на canvas
    */
-  renderObjectInCell(cell, objectData) {
+  renderObjectOnCanvas(ctx, objectData, x, y, cellSize) {
+    if (!objectData) return;
+
     if (objectData.image) {
-      // Создаем img элемент если есть путь картинки
-      const img = document.createElement('img');
-      img.src = objectData.image;
-      img.alt = objectData.name || 'Object';
-      img.style.width = '100%';
-      img.style.height = '100%';
-      img.style.objectFit = 'cover';
-      img.style.objectPosition = 'center';
-      img.style.pointerEvents = 'none';
-      img.onerror = () => {
-        // Если картинка не загрузилась, показываем fallback
-        img.remove();
-        cell.textContent = '❓';
-      };
-      cell.appendChild(img);
-    } else if (objectData.emoji) {
-      // Fallback на emoji если нет картинки
-      cell.textContent = objectData.emoji;
+      const img = this.imageCache.getImage(objectData.image);
+      if (img) {
+        // Рисуем картинку в центре клетки с padding
+        const padding = 4;
+        const imgSize = cellSize - padding * 2;
+        ctx.drawImage(img, x + padding, y + padding, imgSize, imgSize);
+      } else {
+        // Загружаем картинку если ещё не загружена
+        this.imageCache.loadImage(objectData.image).then(() => {
+          this.render(); // Перерисовываем когда картинка загрузится
+        }).catch(() => {
+          // Fallback на текст если не смогли загрузить
+          ctx.font = 'bold 30px Arial';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillStyle = '#ccc';
+          ctx.fillText('❓', x + cellSize / 2, y + cellSize / 2);
+        });
+      }
     }
   }
 
@@ -691,8 +779,7 @@ class LocationUI {
       statsDiv.innerHTML = `
         <div class="stats-info">
           <span>👹 Враги: ${stats.enemies}</span>
-          <span>🌲 Деревья: ${stats.trees}</span>
-          <span>🪨 Камни: ${stats.stones}</span>
+          <span>🌲 Объекты: ${stats.trees + stats.stones}</span>
           <span>📍 Позиция: ${playerAbsoluteX},${playerAbsoluteY}</span>
           ${woundDisplay}
         </div>
