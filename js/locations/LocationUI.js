@@ -124,7 +124,7 @@ class LocationUI {
                   <div class="stat-row">
                     <span class="stat-label">Lvl <span id="playerLevel">1</span></span>
                     <div class="stat-bar exp-bar">
-                      <div id="playerExpBar" class="stat-fill" style="background: #f39c12;"></div>
+                      <div id="playerExpBar" class="stat-fill" style="background: #27ae60;"></div>
                     </div>
                     <span id="playerExpText" class="stat-text">0/100</span>
                   </div>

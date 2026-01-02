@@ -91,6 +91,10 @@
   height: 10px;
 }
 
+.stat-bar.exp-bar {
+  height: 5px;
+}
+
 .stat-fill {
   height: 100%;
   width: 100%;
