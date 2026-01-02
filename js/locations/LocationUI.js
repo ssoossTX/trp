@@ -662,6 +662,9 @@ class LocationUI {
     // Очищаем счетчик ранений при входе на локацию
     gameState.player.wounds = 0;
     
+    // Разрешаем движение при входе на локацию
+    this.isInBattle = false;
+    
     const screen = document.getElementById('location-screen');
     screen?.classList.remove('hidden');
     screen?.classList.add('visible');

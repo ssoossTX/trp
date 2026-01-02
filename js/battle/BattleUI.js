@@ -36,11 +36,9 @@ export class BattleUI {
   static update() {
     const enemy = gameState.battle.currentEnemy;
     
-    // Используем текущие ресурсы игрока (с учетом ранений)
-    const wounds = gameState.player.wounds || 0;
-    const hpPenalty = wounds * 10;
+    // Используем текущие значения из боевого состояния
     const maxHp = gameState.player.maxHp || 100;
-    const currentHp = Math.max(1, Math.round(maxHp * (100 - hpPenalty) / 100));
+    const currentHp = gameState.battle.playerHp || maxHp;
     const maxMana = gameState.player.maxMana || 50;
     const currentMana = gameState.player.mana || maxMana;
 
