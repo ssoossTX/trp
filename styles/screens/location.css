@@ -116,8 +116,11 @@
 .location-stats {
   margin-left: auto;
   color: #e74c3c;
-  font-size: 12px;
-  white-space: nowrap;
+  font-size: 11px;
+  word-wrap: break-word;
+  white-space: normal;
+  max-width: 150px;
+  text-align: right;
 }
 
 .location-screen__header h2 {
