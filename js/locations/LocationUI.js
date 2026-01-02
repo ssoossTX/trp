@@ -914,7 +914,11 @@ class LocationUI {
     const hpBar = document.getElementById('playerHpBar');
     const hpText = document.getElementById('playerHpText');
     if (hpBar) hpBar.style.width = Math.max(0, hpPercent) + '%';
-    if (hpText) hpText.textContent = `${currentHp}/${maxHp}`;
+    if (hpText) {
+      const newValue = `${currentHp}/${maxHp}`;
+      hpText.textContent = newValue;
+      console.log('[LocationUI] Set playerHpText to:', newValue);
+    }
     
     // Обновляем Mana полоску
     const manaPercent = (currentMana / maxMana) * 100;
