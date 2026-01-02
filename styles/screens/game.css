@@ -711,7 +711,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--spacing-sm);
+  gap: 0;
   padding: 0;
   width: 90px;
   height: 90px;
@@ -735,11 +735,18 @@
 }
 
 .menu__btn-image {
-  width: 100%;
-  height: 100%;
+  width: 90px;
+  height: 90px;
   object-fit: cover;
   border-radius: var(--radius-md);
   display: block;
+}
+
+.menu__btn-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
 }
 
 .menu__btn-label {
@@ -748,7 +755,6 @@
   font-weight: 600;
   font-size: 14px;
   text-align: center;
-  margin-top: 8px;
   text-transform: capitalize;
 }
 
