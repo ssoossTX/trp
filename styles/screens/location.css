@@ -25,12 +25,90 @@
 .location-screen__header {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 20px;
   padding: 15px;
   background: rgba(0, 0, 0, 0.3);
   border-radius: 8px;
   border: 1px solid #444;
+}
+
+.header-stats {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+}
+
+.player-portrait {
+  flex-shrink: 0;
+  width: 80px;
+  height: 80px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.5);
+  border: 2px solid #666;
+}
+
+.player-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.stats-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.stat-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+}
+
+.stat-label {
+  min-width: 50px;
+  color: #aaa;
+  font-weight: bold;
+}
+
+.stat-bar {
+  flex: 1;
+  height: 20px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+  border: 1px solid #555;
+  overflow: hidden;
   position: relative;
+  min-width: 100px;
+}
+
+.stat-bar.mana-bar {
+  height: 15px;
+}
+
+.stat-fill {
+  height: 100%;
+  width: 100%;
+  transition: width 0.3s ease;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.stat-text {
+  min-width: 50px;
+  color: #fff;
+  font-size: 11px;
+  text-align: right;
+}
+
+.location-stats {
+  margin-left: auto;
+  color: #e74c3c;
+  font-size: 12px;
+  white-space: nowrap;
 }
 
 .location-screen__header h2 {
@@ -38,23 +116,6 @@
   margin: 0;
   color: #fff;
   font-size: 24px;
-}
-
-.location-stats {
-  margin-left: auto;
-}
-
-.stats-info {
-  display: flex;
-  gap: 20px;
-  font-size: 14px;
-  color: #ffffff;
-}
-
-.stats-info span {
-  display: flex;
-  align-items: center;
-  gap: 5px;
 }
 
 /* Viewport для локации - фиксированная видимая область */

@@ -100,10 +100,37 @@ class LocationUI {
       locationScreen.innerHTML = `
         <div class="location-screen__container">
           <div class="location-screen__content">
-            <!-- Информация о локации -->
-            <div class="location-screen__header">
-              <h2>🗺️ Исследование локации</h2>
-              <div class="location-stats" id="locationStats"></div>
+            <!-- Информация о персонаже и статистике -->
+            <div class="location-screen__header" id="locationHeader">
+              <div class="header-stats">
+                <div class="player-portrait">
+                  <img id="playerPortraitImg" src="" alt="Character" style="width: 80px; height: 80px; object-fit: cover; border-radius: 4px;">
+                </div>
+                <div class="stats-container">
+                  <div class="stat-row">
+                    <span class="stat-label">HP:</span>
+                    <div class="stat-bar hp-bar">
+                      <div id="playerHpBar" class="stat-fill" style="background: #e74c3c;"></div>
+                    </div>
+                    <span id="playerHpText" class="stat-text">100/100</span>
+                  </div>
+                  <div class="stat-row">
+                    <span class="stat-label">Mana:</span>
+                    <div class="stat-bar mana-bar">
+                      <div id="playerManaBar" class="stat-fill" style="background: #3498db;"></div>
+                    </div>
+                    <span id="playerManaText" class="stat-text">50/50</span>
+                  </div>
+                  <div class="stat-row">
+                    <span class="stat-label">Lvl <span id="playerLevel">1</span></span>
+                    <div class="stat-bar exp-bar">
+                      <div id="playerExpBar" class="stat-fill" style="background: #f39c12;"></div>
+                    </div>
+                    <span id="playerExpText" class="stat-text">0/100</span>
+                  </div>
+                </div>
+                <div class="location-stats" id="locationStats"></div>
+              </div>
             </div>
 
             <!-- Canvas для отображения локации -->
@@ -859,13 +886,59 @@ class LocationUI {
    * Обновляет статистику локации
    */
   updateStats() {
-    const statsDiv = document.getElementById('locationStats');
-    const wounds = gameState.player.wounds;
+    const player = gameState.player;
+    const wounds = player.wounds || 0;
+    const hpPenalty = wounds * 10;
     
+    // Расчет эффективного HP с учетом ранений
+    const maxHp = player.hp || 100;
+    const currentHp = Math.max(1, Math.round(maxHp * (100 - hpPenalty) / 100));
+    const maxMana = player.mana || 50;
+    const currentMana = player.currentMana || maxMana;
+    
+    // Обновляем портрет игрока
+    const playerClass = player.class;
+    if (playerClass) {
+      const fileName = playerClass.toLowerCase().replace(/ /g, '_');
+      const imgPath = `/trp/assets/img/enemies/${fileName}.jpg`;
+      const portraitImg = document.getElementById('playerPortraitImg');
+      if (portraitImg) {
+        portraitImg.src = imgPath;
+      }
+    }
+    
+    // Обновляем HP полоску
+    const hpPercent = (currentHp / maxHp) * 100;
+    const hpBar = document.getElementById('playerHpBar');
+    const hpText = document.getElementById('playerHpText');
+    if (hpBar) hpBar.style.width = Math.max(0, hpPercent) + '%';
+    if (hpText) hpText.textContent = `${currentHp}/${maxHp}`;
+    
+    // Обновляем Mana полоску
+    const manaPercent = (currentMana / maxMana) * 100;
+    const manaBar = document.getElementById('playerManaBar');
+    const manaText = document.getElementById('playerManaText');
+    if (manaBar) manaBar.style.width = Math.max(0, manaPercent) + '%';
+    if (manaText) manaText.textContent = `${currentMana}/${maxMana}`;
+    
+    // Обновляем Level
+    const levelEl = document.getElementById('playerLevel');
+    if (levelEl) levelEl.textContent = player.level || 1;
+    
+    // Обновляем Experience полоску
+    const currentExp = player.experience || 0;
+    const requiredExp = player.requiredExperienceForLevel || 100;
+    const expPercent = (currentExp / requiredExp) * 100;
+    const expBar = document.getElementById('playerExpBar');
+    const expText = document.getElementById('playerExpText');
+    if (expBar) expBar.style.width = Math.max(0, expPercent) + '%';
+    if (expText) expText.textContent = `${currentExp}/${requiredExp}`;
+    
+    // Обновляем инфо о ранениях
+    const statsDiv = document.getElementById('locationStats');
     if (statsDiv) {
       if (wounds > 0) {
-        const woundPenalty = wounds * 10;
-        statsDiv.innerHTML = `<span>⚠️ Ранения: ${wounds}/5 (-${woundPenalty}% HP)</span>`;
+        statsDiv.innerHTML = `<span style="color: #e74c3c;">⚠️ Ранения: ${wounds}/5 (-${hpPenalty}% HP)</span>`;
       } else {
         statsDiv.innerHTML = '';
       }
