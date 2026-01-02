@@ -891,7 +891,7 @@ class LocationUI {
     const hpPenalty = wounds * 10;
     
     // Расчет эффективного HP с учетом ранений
-    const maxHp = player.hp || 100;
+    const maxHp = player.maxHp || 100;
     const currentHp = Math.max(1, Math.round(maxHp * (100 - hpPenalty) / 100));
     const maxMana = player.maxMana || 50;
     const currentMana = player.mana || maxMana;
