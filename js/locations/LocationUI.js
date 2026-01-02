@@ -685,6 +685,10 @@ class LocationUI {
     // Очищаем счетчик ранений при входе на локацию
     gameState.player.wounds = 0;
     
+    // Разрешаем движение при входе на новую боевую локацию
+    this.isInBattle = false;
+    this.enableMovementButtons();
+    
     // Генерируем боевую локацию с врагами из этой локации
     locationGenerator.generateBattleLocation(locationId, locationEnemies);
     
