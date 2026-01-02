@@ -80,7 +80,6 @@
 .stat-bar {
   flex: 1;
   height: 12px;
-  background: rgba(0, 0, 0, 0.5);
   border-radius: 3px;
   border: 1px solid #555;
   overflow: hidden;
