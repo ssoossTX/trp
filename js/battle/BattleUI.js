@@ -79,7 +79,6 @@ export class BattleUI {
     DOMManager.setWidth('playerHpFill', playerPercent + '%');
     const newHpValue = `${currentHp}/${maxHp}`;
     DOMManager.setText('playerHpText', newHpValue);
-    console.log('[BattleUI] Set playerHpText to:', newHpValue);
     
     const playerManaPercent = calculatePercent(currentMana, maxMana);
     DOMManager.setWidth('playerManaFill', playerManaPercent + '%');

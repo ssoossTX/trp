@@ -112,14 +112,14 @@ class LocationUI {
                     <div class="stat-bar hp-bar">
                       <div id="playerHpBar" class="stat-fill" style="background: #e74c3c;"></div>
                     </div>
-                    <span id="playerHpText" class="stat-text">100/100</span>
+                    <span id="playerHpTextLocation" class="stat-text">100/100</span>
                   </div>
                   <div class="stat-row">
                     <span class="stat-label">Mana:</span>
                     <div class="stat-bar mana-bar">
                       <div id="playerManaBar" class="stat-fill" style="background: #3498db;"></div>
                     </div>
-                    <span id="playerManaText" class="stat-text">50/50</span>
+                    <span id="playerManaTextLocation" class="stat-text">50/50</span>
                   </div>
                   <div class="stat-row">
                     <span class="stat-label">Lvl <span id="playerLevel">1</span></span>
@@ -896,8 +896,6 @@ class LocationUI {
     const maxMana = player.maxMana || 50;
     const currentMana = player.mana || maxMana;
     
-    console.log('[LocationUI.updateStats]', { 'player.maxHp': player.maxHp, 'player.maxMana': player.maxMana, 'player.mana': player.mana, maxHp, currentHp, maxMana, currentMana });
-    
     // Обновляем портрет игрока
     const playerClass = player.class;
     if (playerClass) {
@@ -912,18 +910,17 @@ class LocationUI {
     // Обновляем HP полоску
     const hpPercent = (currentHp / maxHp) * 100;
     const hpBar = document.getElementById('playerHpBar');
-    const hpText = document.getElementById('playerHpText');
+    const hpText = document.getElementById('playerHpTextLocation');
     if (hpBar) hpBar.style.width = Math.max(0, hpPercent) + '%';
     if (hpText) {
       const newValue = `${currentHp}/${maxHp}`;
       hpText.textContent = newValue;
-      console.log('[LocationUI] Set playerHpText to:', newValue);
     }
     
     // Обновляем Mana полоску
     const manaPercent = (currentMana / maxMana) * 100;
     const manaBar = document.getElementById('playerManaBar');
-    const manaText = document.getElementById('playerManaText');
+    const manaText = document.getElementById('playerManaTextLocation');
     if (manaBar) manaBar.style.width = Math.max(0, manaPercent) + '%';
     if (manaText) manaText.textContent = `${currentMana}/${maxMana}`;
     
