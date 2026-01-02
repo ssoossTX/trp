@@ -859,23 +859,16 @@ class LocationUI {
    * Обновляет статистику локации
    */
   updateStats() {
-    const stats = locationGenerator.getLocationStats();
     const statsDiv = document.getElementById('locationStats');
+    const wounds = gameState.player.wounds;
     
-    if (statsDiv && stats) {
-      const { playerAbsoluteX, playerAbsoluteY } = locationGenerator.getVisibleArea(this.viewWidth, this.viewHeight);
-      const wounds = gameState.player.wounds;
-      const woundPenalty = wounds * 10;
-      const woundDisplay = wounds > 0 ? `<span>⚠️ Ранения: ${wounds}/5 (-${woundPenalty}% HP)</span>` : '';
-      
-      statsDiv.innerHTML = `
-        <div class="stats-info">
-          <span>👹 Враги: ${stats.enemies}</span>
-          <span>🌲 Объекты: ${stats.trees + stats.stones}</span>
-          <span>📍 Позиция: ${playerAbsoluteX},${playerAbsoluteY}</span>
-          ${woundDisplay}
-        </div>
-      `;
+    if (statsDiv) {
+      if (wounds > 0) {
+        const woundPenalty = wounds * 10;
+        statsDiv.innerHTML = `<span>⚠️ Ранения: ${wounds}/5 (-${woundPenalty}% HP)</span>`;
+      } else {
+        statsDiv.innerHTML = '';
+      }
     }
   }
 
