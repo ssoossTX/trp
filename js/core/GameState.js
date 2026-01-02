@@ -85,7 +85,6 @@ class GameState {
     const manaMultiplier = this.getAbilityBonus('mana');
     this.player.maxMana = Math.round(baseMaxMana * manaMultiplier);
     this.player.mana = this.player.maxMana;
-    this.player.currentMana = this.player.maxMana; // Текущая мана равна максимальной при запуске
     
     // Инициализируем систему уровней
     this.player.level = 1;
@@ -166,7 +165,7 @@ class GameState {
     
     // Копируем уже рассчитанные (с бонусами) значения ресурсов
     this.battle.playerMaxHp = adjustedMaxHp;
-    this.battle.playerHp = adjustedMaxHp; // Используем полное HP в начале боя
+    this.battle.playerHp = Math.round(this.player.hp * hpPenaltyMultiplier);
     this.battle.playerMaxMana = this.player.maxMana;
     this.battle.playerMana = this.player.mana;
     this.battle.isInBattle = true;
@@ -213,8 +212,6 @@ class GameState {
    */
   endBattle() {
     this.player.hp = this.battle.playerHp;
-    this.player.mana = this.battle.playerMana;
-    this.player.currentMana = this.battle.playerMana;
     this.battle.isInBattle = false;
     this.battle.currentEnemy = null;
     this.battle.activeAbilities = [];
@@ -237,7 +234,6 @@ class GameState {
   restoreResources() {
     this.player.hp = this.player.maxHp;
     this.player.mana = this.player.maxMana;
-    this.player.currentMana = this.player.maxMana;
     Logger.log(`Ресурсы восстановлены: HP ${this.player.hp}/${this.player.maxHp}, Mana ${this.player.mana}/${this.player.maxMana}`);
   }
 
