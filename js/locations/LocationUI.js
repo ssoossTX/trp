@@ -896,8 +896,6 @@ class LocationUI {
     const maxMana = player.maxMana || 50;
     const currentMana = player.mana || maxMana;
     
-    console.log('updateStats:', { maxHp, currentHp, maxMana, currentMana, playerMaxHp: player.maxHp, playerMana: player.mana });
-    
     // Обновляем портрет игрока
     const playerClass = player.class;
     if (playerClass) {
@@ -913,12 +911,8 @@ class LocationUI {
     const hpPercent = (currentHp / maxHp) * 100;
     const hpBar = document.getElementById('playerHpBar');
     const hpText = document.getElementById('playerHpText');
-    console.log('HP elements:', { hpBar, hpText, found: !!hpBar && !!hpText });
     if (hpBar) hpBar.style.width = Math.max(0, hpPercent) + '%';
-    if (hpText) {
-      hpText.textContent = `${currentHp}/${maxHp}`;
-      console.log('Updated HP text to:', hpText.textContent);
-    }
+    if (hpText) hpText.textContent = `${currentHp}/${maxHp}`;
     
     // Обновляем Mana полоску
     const manaPercent = (currentMana / maxMana) * 100;

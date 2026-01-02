@@ -35,7 +35,14 @@ export class BattleUI {
    */
   static update() {
     const enemy = gameState.battle.currentEnemy;
-    const { playerHp, playerMaxHp, playerMana, playerMaxMana } = gameState.battle;
+    
+    // Используем текущие ресурсы игрока (с учетом ранений)
+    const wounds = gameState.player.wounds || 0;
+    const hpPenalty = wounds * 10;
+    const maxHp = gameState.player.maxHp || 100;
+    const currentHp = Math.max(1, Math.round(maxHp * (100 - hpPenalty) / 100));
+    const maxMana = gameState.player.maxMana || 50;
+    const currentMana = gameState.player.mana || maxMana;
 
     console.log(`[BattleUI] Обновляю интерфейс для врага: ${enemy.name}`);
     
@@ -68,13 +75,13 @@ export class BattleUI {
     DOMManager.setWidth('enemyHpFill', enemyPercent + '%');
     DOMManager.setText('enemyHpText', `${Math.max(0, enemy.currentHp)}/${enemy.hp}`);
 
-    const playerPercent = calculatePercent(playerHp, playerMaxHp);
+    const playerPercent = calculatePercent(currentHp, maxHp);
     DOMManager.setWidth('playerHpFill', playerPercent + '%');
-    DOMManager.setText('playerHpText', `${playerHp}/${playerMaxHp}`);
+    DOMManager.setText('playerHpText', `${currentHp}/${maxHp}`);
     
-    const playerManaPercent = calculatePercent(playerMana, playerMaxMana);
+    const playerManaPercent = calculatePercent(currentMana, maxMana);
     DOMManager.setWidth('playerManaFill', playerManaPercent + '%');
-    DOMManager.setText('playerManaText', `${playerMana}/${playerMaxMana}`);
+    DOMManager.setText('playerManaText', `${currentMana}/${maxMana}`);
     
     // Обновляем кулдауны зелий и способностей
     UIManager.updatePotionButtons();
