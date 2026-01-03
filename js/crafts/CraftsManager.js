@@ -251,40 +251,104 @@ window.CraftsManager = CraftsManager;
 
 // Дополнительная функция для показа информации о предмете
 export function showItemInfo(item) {
-  const modal = document.createElement('div');
-  modal.className = 'craft-item-modal';
+  const rarities = {
+    'common': 'Обычный',
+    'uncommon': 'Необычный',
+    'rare': 'Редкий',
+    'epic': 'Эпический',
+    'legendary': 'Легендарный'
+  };
+
+  const rarity = item.rarity || 'common';
+  const rarityName = rarities[rarity] || rarity;
+
+  let modal = document.getElementById('itemInfoModal');
+  
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'itemInfoModal';
+    modal.className = 'modal modal--item';
+    document.body.appendChild(modal);
+  }
+
   modal.innerHTML = `
-    <div class="modal__overlay" id="craftItemOverlay"></div>
-    <div class="modal__content craft-item-modal__content">
-      <button type="button" class="modal__close" id="craftItemCloseBtn">✕</button>
+    <div class="modal__overlay"></div>
+    <div class="modal__content modal__content--item">
+      <button class="modal__close" id="itemInfoClose">&times;</button>
       
-      <div class="craft-item-modal__body">
-        <div class="craft-item-modal__item">
-          ${item.image ? `<img src="/trp/assets/img/${item.image}" alt="${item.name}" class="craft-item-modal__image">` : `<span class="craft-item-modal__icon">${item.icon}</span>`}
+      <div class="item-info__header item-info__header--${rarity}">
+        <div class="item-info__icon">
+          ${item.image ? `<img src="/trp/assets/img/${item.image}" alt="${item.name}">` : `<span style="font-size: 3rem;">${item.icon}</span>`}
         </div>
-        <h2>${item.name}</h2>
-        ${item.description ? `<p>${item.description}</p>` : ''}
+        <div class="item-info__title">
+          <h2>${item.name}</h2>
+          <span class="item-info__rarity item-info__rarity--${rarity}">
+            ${rarityName}
+          </span>
+        </div>
       </div>
 
-      <div class="modal__buttons">
-        <button class="btn btn-secondary" id="craftItemCloseBtn2">Закрыть</button>
+      <div class="item-info__body">
+        <div class="item-info__section">
+          <h3>Информация</h3>
+          <div class="item-info__details">
+            ${item.quantity ? `
+              <div class="item-info__row">
+                <span class="label">Количество:</span>
+                <span class="value">x${item.quantity}</span>
+              </div>
+            ` : ''}
+            ${item.type ? `
+              <div class="item-info__row">
+                <span class="label">Тип:</span>
+                <span class="value">${item.type}</span>
+              </div>
+            ` : ''}
+            ${item.description ? `
+              <div class="item-info__row item-info__row--full">
+                <span class="label">Описание:</span>
+                <p class="value">${item.description}</p>
+              </div>
+            ` : ''}
+            ${item.damage ? `
+              <div class="item-info__row">
+                <span class="label">Урон:</span>
+                <span class="value item-info__stat--damage">+${item.damage}</span>
+              </div>
+            ` : ''}
+            ${item.defense ? `
+              <div class="item-info__row">
+                <span class="label">Защита:</span>
+                <span class="value item-info__stat--defense">+${item.defense}</span>
+              </div>
+            ` : ''}
+            ${item.hp ? `
+              <div class="item-info__row">
+                <span class="label">HP:</span>
+                <span class="value item-info__stat--hp">+${item.hp}</span>
+              </div>
+            ` : ''}
+          </div>
+        </div>
+      </div>
+
+      <div class="modal__footer">
+        <button class="btn btn-secondary" id="itemInfoClose2">Закрыть</button>
       </div>
     </div>
   `;
 
-  document.body.appendChild(modal);
-  modal.classList.add('visible');
-
-  const closeBtn = modal.querySelector('#craftItemCloseBtn');
-  const closeBtn2 = modal.querySelector('#craftItemCloseBtn2');
-  const overlay = modal.querySelector('#craftItemOverlay');
-
-  const closeModal = () => {
-    modal.classList.remove('visible');
-    setTimeout(() => modal.remove(), 300);
+  modal.style.display = 'flex';
+  
+  const closeBtn = document.getElementById('itemInfoClose');
+  const closeBtn2 = document.getElementById('itemInfoClose2');
+  const overlay = modal.querySelector('.modal__overlay');
+  
+  const close = () => {
+    modal.style.display = 'none';
   };
-
-  if (closeBtn) closeBtn.addEventListener('click', closeModal);
-  if (closeBtn2) closeBtn2.addEventListener('click', closeModal);
-  if (overlay) overlay.addEventListener('click', closeModal);
+  
+  closeBtn?.addEventListener('click', close);
+  closeBtn2?.addEventListener('click', close);
+  overlay?.addEventListener('click', close);
 }
