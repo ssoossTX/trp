@@ -165,6 +165,23 @@ export class CraftsManager {
           }
         });
       }
+
+      // Добавляем обработчик клика на ингредиент
+      const ingredientBox = DOMManager.getElementById(`craftIngredient-${craft.id}`);
+      if (ingredientBox) {
+        ingredientBox.addEventListener('click', () => {
+          const ingredient = craft.ingredients[0];
+          showItemInfo(ingredient);
+        });
+      }
+
+      // Добавляем обработчик клика на выходной предмет
+      const outputBox = DOMManager.getElementById(`craftOutput-${craft.id}`);
+      if (outputBox) {
+        outputBox.addEventListener('click', () => {
+          showItemInfo(craft.output);
+        });
+      }
     });
   }
 
@@ -172,15 +189,18 @@ export class CraftsManager {
    * Создает карточку крафта
    */
   static createCraftCard(craft, canCraft) {
-    const ingredientsHtml = craft.ingredients.map(ing => `
-      <div class="craft-ingredient">
-        <span class="craft-ingredient__icon">${ing.icon}</span>
-        <span class="craft-ingredient__name">${ing.name}</span>
-        <span class="craft-ingredient__quantity">
-          ${this.countItemInInventory(ing.name)}/${ing.quantity}
-        </span>
-      </div>
-    `).join('');
+    // Берём только первый ингредиент для отображения
+    const firstIngredient = craft.ingredients[0];
+    const firstIngredientCount = this.countItemInInventory(firstIngredient.name);
+    const firstIngredientImage = firstIngredient.image || null;
+
+    const ingredientDisplay = firstIngredientImage 
+      ? `<img src="/trp/assets/img/${firstIngredientImage}" alt="${firstIngredient.name}" class="craft-card__item-image" id="craftIngredient-${craft.id}">`
+      : `<span class="craft-card__item-icon">${firstIngredient.icon}</span>`;
+
+    const outputImage = craft.output.image 
+      ? `<img src="/trp/assets/img/${craft.output.image}" alt="${craft.output.name}" class="craft-card__item-image" id="craftOutput-${craft.id}">`
+      : `<span class="craft-card__item-icon">${craft.output.icon}</span>`;
 
     return `
       <div class="craft-card" data-craft-id="${craft.id}">
@@ -189,26 +209,23 @@ export class CraftsManager {
         </div>
 
         <div class="craft-card__content">
-          <div class="craft-card__ingredients">
-            <div class="craft-card__section-label">Ингредиенты:</div>
-            ${ingredientsHtml}
+          <div class="craft-card__ingredient-box">
+            ${ingredientDisplay}
+            <span class="craft-card__count">${firstIngredientCount}/${firstIngredient.quantity}</span>
+          </div>
+
+          <div class="craft-card__plus">+</div>
+
+          <div class="craft-card__cost">
+            <span class="craft-cost__gold">💰 ${craft.cost.gold}</span>
           </div>
 
           <div class="craft-card__arrow">→</div>
 
-          <div class="craft-card__output">
-            <div class="craft-card__output-item">
-              ${craft.output.image ? `<img src="/trp/assets/img/${craft.output.image}" alt="${craft.output.name}" class="craft-card__output-image">` : `<span class="craft-card__output-icon">${craft.output.icon}</span>`}
-              <div class="craft-card__output-info">
-                <div class="craft-card__output-name">${craft.output.name}</div>
-                <div class="craft-card__output-quantity">x${craft.output.quantity}</div>
-              </div>
-            </div>
+          <div class="craft-card__output-box">
+            ${outputImage}
+            <span class="craft-card__count">x${craft.output.quantity}</span>
           </div>
-        </div>
-
-        <div class="craft-card__cost">
-          <span class="craft-cost__gold">💰 ${craft.cost.gold}</span>
         </div>
 
         <button 
@@ -225,3 +242,43 @@ export class CraftsManager {
 
 // Экспортируем для глобального доступа
 window.CraftsManager = CraftsManager;
+
+// Дополнительная функция для показа информации о предмете
+export function showItemInfo(item) {
+  const modal = document.createElement('div');
+  modal.className = 'craft-item-modal';
+  modal.innerHTML = `
+    <div class="modal__overlay" id="craftItemOverlay"></div>
+    <div class="modal__content craft-item-modal__content">
+      <button type="button" class="modal__close" id="craftItemCloseBtn">✕</button>
+      
+      <div class="craft-item-modal__body">
+        <div class="craft-item-modal__item">
+          ${item.image ? `<img src="/trp/assets/img/${item.image}" alt="${item.name}" class="craft-item-modal__image">` : `<span class="craft-item-modal__icon">${item.icon}</span>`}
+        </div>
+        <h2>${item.name}</h2>
+        ${item.description ? `<p>${item.description}</p>` : ''}
+      </div>
+
+      <div class="modal__buttons">
+        <button class="btn btn-secondary" id="craftItemCloseBtn2">Закрыть</button>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+  modal.classList.add('visible');
+
+  const closeBtn = modal.querySelector('#craftItemCloseBtn');
+  const closeBtn2 = modal.querySelector('#craftItemCloseBtn2');
+  const overlay = modal.querySelector('#craftItemOverlay');
+
+  const closeModal = () => {
+    modal.classList.remove('visible');
+    setTimeout(() => modal.remove(), 300);
+  };
+
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+  if (closeBtn2) closeBtn2.addEventListener('click', closeModal);
+  if (overlay) overlay.addEventListener('click', closeModal);
+}

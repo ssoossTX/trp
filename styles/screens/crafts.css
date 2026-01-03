@@ -68,113 +68,69 @@
   align-items: center;
   gap: 6px;
   margin-bottom: 6px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
 }
 
-.craft-card__ingredients {
-  flex: 1;
-  min-width: 100px;
-}
-
-.craft-card__section-label {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 0.65rem;
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 3px;
-  display: block;
-}
-
-.craft-ingredient {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding: 4px;
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 6px;
-  margin-bottom: 3px;
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 0.75rem;
-}
-
-.craft-ingredient__icon {
-  font-size: 0.9rem;
-  flex-shrink: 0;
-}
-
-.craft-ingredient__name {
-  flex: 1;
-}
-
-.craft-ingredient__quantity {
-  background: rgba(52, 152, 219, 0.2);
-  color: #3498db;
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-weight: bold;
-  font-size: 0.65rem;
-}
-
-.craft-card__arrow {
-  color: #f39c12;
-  font-size: 1rem;
-  font-weight: bold;
-  flex-shrink: 0;
-}
-
-.craft-card__output {
-  flex: 1;
-  min-width: 100px;
-}
-
-.craft-card__output-item {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px;
-  background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+.craft-card__ingredient-box {
+  width: 40px;
+  height: 40px;
+  background: rgba(0, 0, 0, 0.3);
   border-radius: 8px;
-  border: 2px solid #1e8449;
-}
-
-.craft-card__output-icon {
-  font-size: 1.3rem;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
   flex-shrink: 0;
 }
 
-.craft-card__output-image {
-  width: 35px;
-  height: 35px;
+.craft-card__ingredient-box:hover {
+  border-color: #3498db;
+  background: rgba(52, 152, 219, 0.2);
+}
+
+.craft-card__item-icon {
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.craft-card__item-image {
+  width: 36px;
+  height: 36px;
   object-fit: contain;
-  flex-shrink: 0;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 4px;
-  padding: 3px;
-  border: 2px solid rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  border-radius: 6px;
 }
 
-.craft-card__output-info {
+.craft-card__count {
+  position: absolute;
+  bottom: -8px;
+  right: -8px;
+  background: #e74c3c;
   color: white;
-}
-
-.craft-card__output-name {
+  font-size: 0.65rem;
   font-weight: bold;
-  font-size: 0.75rem;
-  margin-bottom: 2px;
+  padding: 1px 3px;
+  border-radius: 3px;
+  min-width: 24px;
+  text-align: center;
+  border: 1px solid rgba(0, 0, 0, 0.3);
 }
 
-.craft-card__output-quantity {
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 0.7rem;
+.craft-card__plus {
+  color: #f39c12;
+  font-weight: bold;
+  font-size: 1.2rem;
+  flex-shrink: 0;
 }
 
 .craft-card__cost {
-  margin-bottom: 4px;
-  padding: 4px;
-  background: rgba(243, 156, 18, 0.1);
-  border-left: 3px solid #f39c12;
-  border-radius: 4px;
+  flex-shrink: 0;
 }
 
 .craft-cost__gold {
@@ -183,24 +139,39 @@
   font-size: 0.8rem;
 }
 
+.craft-card__arrow {
+  color: #f39c12;
+  font-size: 1.2rem;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.craft-card__output-box {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+  border-radius: 8px;
+  border: 2px solid #1e8449;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.craft-card__output-box:hover {
+  border-color: #3498db;
+  background: linear-gradient(135deg, #229954 0%, #1e8449 100%);
+}
+
 .craft-card .btn {
-  width: 100%;
-  transition: all var(--transition-normal);
-}
-
-.craft-card .btn-primary {
-  background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
-}
-
-.craft-card .btn-primary:hover {
-  background: linear-gradient(135deg, #2980b9 0%, #1f618d 100%);
-  box-shadow: 0 6px 20px rgba(52, 152, 219, 0.3);
-  transform: translateY(-2px);
-}
-
-.craft-card .btn-secondary:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+  width: auto;
+  margin-left: auto;
+  flex-shrink: 0;
+  padding: 6px 12px !important;
+  font-size: 0.8rem !important;
 }
 
 /* ===== УВЕДОМЛЕНИЕ О ЗАВЕРШЕНИИ КРАФТА ===== */
@@ -289,4 +260,123 @@
   .craft-card__arrow {
     transform: rotate(90deg);
   }
+}
+
+/* ===== МОДАЛЬНОЕ ОКНО ИНФОРМАЦИИ О ПРЕДМЕТЕ ===== */
+.craft-item-modal {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 9999 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-normal);
+}
+
+.craft-item-modal.visible {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+.craft-item-modal .modal__overlay {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: rgba(0, 0, 0, 0.7) !important;
+  z-index: 9990 !important;
+}
+
+.craft-item-modal .modal__content {
+  position: relative !important;
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%) !important;
+  color: white !important;
+  border-radius: var(--radius-lg) !important;
+  padding: 24px !important;
+  max-width: 90% !important;
+  width: 90% !important;
+  max-width: 400px !important;
+  max-height: 90vh !important;
+  overflow-y: auto !important;
+  box-shadow: var(--shadow-lg) !important;
+  z-index: 10000 !important;
+}
+
+.craft-item-modal .modal__close {
+  position: absolute !important;
+  top: var(--spacing-md) !important;
+  right: var(--spacing-md) !important;
+  width: 40px !important;
+  height: 40px !important;
+  background: transparent !important;
+  border: none !important;
+  font-size: 1.5em !important;
+  cursor: pointer !important;
+  color: #3498db !important;
+  transition: all var(--transition-normal) !important;
+  border-radius: 50% !important;
+}
+
+.craft-item-modal .modal__close:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  transform: scale(1.1) !important;
+}
+
+.craft-item-modal__body {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.craft-item-modal__item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.craft-item-modal__image {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 8px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.craft-item-modal__icon {
+  font-size: 4rem;
+}
+
+.craft-item-modal .modal__content h2 {
+  margin: 0 0 12px 0;
+  font-size: 1.5rem;
+  color: white;
+}
+
+.craft-item-modal .modal__content p {
+  margin: 0 0 16px 0;
+  color: #d3d3d3;
+  line-height: 1.5;
+  font-size: 0.95rem;
+}
+
+.craft-item-modal .modal__buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.craft-item-modal .btn {
+  min-width: 120px;
 }
