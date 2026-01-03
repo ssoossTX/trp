@@ -313,8 +313,8 @@ export class QuestsManager {
     console.log('[QuestsManager] HTML установлен в модальное окно');
 
     // Показываем модальное окно
-    modal.classList.remove('hidden');
-    console.log('[QuestsManager] Класс hidden удалён. Модальное окно должно быть видно');
+    modal.classList.add('active');
+    console.log('[QuestsManager] Класс active добавлен. Модальное окно должно быть видно');
 
     // Закрытие модального окна
     const closeBtn = DOMManager.getElementById('questModalCloseBtn');
@@ -323,7 +323,7 @@ export class QuestsManager {
     
     const closeModal = () => {
       console.log('[QuestsManager] Закрываю модальное окно');
-      modal.classList.add('hidden');
+      modal.classList.remove('active');
     };
     
     if (closeBtn) closeBtn.addEventListener('click', closeModal);
