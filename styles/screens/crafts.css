@@ -254,19 +254,6 @@
     max-width: none;
     transform: translateX(500px);
   }
-
-  .craft-card__content {
-    flex-direction: column;
-  }
-
-  .craft-card__ingredients,
-  .craft-card__output {
-    width: 100%;
-  }
-
-  .craft-card__arrow {
-    transform: rotate(90deg);
-  }
 }
 
 /* ===== МОДАЛЬНОЕ ОКНО ИНФОРМАЦИИ О ПРЕДМЕТЕ ===== */
