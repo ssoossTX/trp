@@ -202,6 +202,12 @@ export class CraftsManager {
       ? `<img src="/trp/assets/img/${craft.output.image}" alt="${craft.output.name}" class="craft-card__item-image" id="craftOutput-${craft.id}">`
       : `<span class="craft-card__item-icon">${craft.output.icon}</span>`;
 
+    const playerGold = gameState.player.gold;
+    const requiredGold = craft.cost.gold;
+    const goldDisplay = playerGold >= requiredGold 
+      ? `💰 ${playerGold}/${requiredGold}`
+      : `<span style="color: #e74c3c;">💰 ${playerGold}/${requiredGold}</span>`;
+
     return `
       <div class="craft-card" data-craft-id="${craft.id}">
         <div class="craft-card__header">
@@ -217,7 +223,7 @@ export class CraftsManager {
           <div class="craft-card__plus">+</div>
 
           <div class="craft-card__cost">
-            <span class="craft-cost__gold">💰 ${craft.cost.gold}</span>
+            <span class="craft-cost__gold">${goldDisplay}</span>
           </div>
 
           <div class="craft-card__arrow">→</div>
