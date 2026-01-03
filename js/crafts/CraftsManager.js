@@ -171,7 +171,11 @@ export class CraftsManager {
       if (ingredientBox) {
         ingredientBox.addEventListener('click', () => {
           const ingredient = craft.ingredients[0];
-          showItemInfo(ingredient);
+          const ingredientWithCount = {
+            ...ingredient,
+            quantity: this.countItemInInventory(ingredient.name)
+          };
+          showItemInfo(ingredientWithCount);
         });
       }
 
@@ -179,7 +183,11 @@ export class CraftsManager {
       const outputBox = DOMManager.getElementById(`craftOutput-${craft.id}`);
       if (outputBox) {
         outputBox.addEventListener('click', () => {
-          showItemInfo(craft.output);
+          const outputWithCount = {
+            ...craft.output,
+            quantity: this.countItemInInventory(craft.output.name)
+          };
+          showItemInfo(outputWithCount);
         });
       }
     });
