@@ -43,6 +43,8 @@
   transition: all var(--transition-normal);
   animation: slideIn 0.4s ease-out;
   min-height: 80px;
+  display: flex;
+  flex-direction: column;
 }
 
 .craft-card:hover {
@@ -176,7 +178,9 @@
 
 .craft-card .btn {
   width: auto;
-  margin-left: 20px;
+  margin-left: 0;
+  margin-top: 12px;
+  align-self: flex-start;
   flex-shrink: 0;
   padding: 8px 16px !important;
   font-size: 0.9rem !important;
