@@ -38,12 +38,12 @@
   background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
   border: 2px solid #34495e;
   border-radius: 12px;
-  padding: 12px;
-  margin-bottom: 8px;
+  padding: 6px 12px;
+  margin-bottom: 4px;
   transition: all var(--transition-normal);
   animation: slideIn 0.4s ease-out;
   cursor: pointer;
-  min-height: 60px;
+  min-height: 40px;
   display: flex;
   flex-direction: column;
   justify-content: center;
