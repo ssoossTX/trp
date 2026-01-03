@@ -393,12 +393,15 @@
 .quest-modal__footer {
   display: flex;
   gap: 6px;
+  flex-wrap: nowrap;
+  width: 100%;
 }
 
 .quest-modal__footer .btn {
-  flex: 1;
+  flex: 1 1 auto;
   padding: 8px 12px !important;
   font-size: 0.85rem !important;
+  min-width: 0;
 }
 
 /* ===== СТИЛИ МОДАЛЬНОГО ОКНА КВЕСТА ===== */
@@ -511,10 +514,12 @@
   }
 
   .quest-modal__footer {
-    flex-direction: column !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
   }
 
   .quest-modal__footer .btn {
-    width: 100% !important;
+    flex: 1 1 auto !important;
+    width: auto !important;
   }
 }
