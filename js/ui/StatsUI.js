@@ -77,16 +77,11 @@ export class StatsUI {
     stats.forEach(stat => {
       const value = player.stats[stat] || 0;
       const element = DOMManager.getElementById(`stat-${stat}-value`);
-      const displayElement = DOMManager.getElementById(`stat-${stat}-display`);
       const row = document.querySelector(`.stat-row:has([data-stat="${stat}"])`);
       const button = document.querySelector(`[data-stat="${stat}"]`);
       
       if (element) {
         element.textContent = value;
-      }
-      
-      if (displayElement) {
-        displayElement.textContent = value;
       }
       
       // Обновляем состояние кнопки

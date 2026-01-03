@@ -333,7 +333,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 6px var(--spacing-lg);
-  background: #e8e8e8;
+  background: rgba(128, 128, 128, 0.5);
   border-radius: 8px;
   transition: all var(--transition-normal);
   border: none;
