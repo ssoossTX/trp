@@ -258,6 +258,12 @@ export class QuestsManager {
       return;
     }
 
+    const modalContent = modal.querySelector('.modal__content');
+    if (!modalContent) {
+      console.error('[QuestsManager] Элемент modal__content не найден!');
+      return;
+    }
+
     let statusHtml = '';
     if (isRewardClaimed) {
       statusHtml = '<div class="quest-modal__badge quest-modal__badge--claimed">✅ Награда получена</div>';
@@ -313,8 +319,9 @@ export class QuestsManager {
     console.log('[QuestsManager] HTML установлен в модальное окно');
 
     // Показываем модальное окно
-    modal.classList.add('active');
-    console.log('[QuestsManager] Класс active добавлен. Модальное окно должно быть видно');
+    modal.classList.remove('hidden');
+    modal.classList.add('visible');
+    console.log('[QuestsManager] Класс visible добавлен. Модальное окно должно быть видно');
 
     // Закрытие модального окна
     const closeBtn = DOMManager.getElementById('questModalCloseBtn');
@@ -323,7 +330,8 @@ export class QuestsManager {
     
     const closeModal = () => {
       console.log('[QuestsManager] Закрываю модальное окно');
-      modal.classList.remove('active');
+      modal.classList.remove('visible');
+      modal.classList.add('hidden');
     };
     
     if (closeBtn) closeBtn.addEventListener('click', closeModal);
