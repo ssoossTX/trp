@@ -195,11 +195,11 @@ export class CraftsManager {
     const firstIngredientImage = firstIngredient.image || null;
 
     const ingredientDisplay = firstIngredientImage 
-      ? `<img src="/trp/assets/img/${firstIngredientImage}" alt="${firstIngredient.name}" class="craft-card__item-image" id="craftIngredient-${craft.id}">`
+      ? `<img src="/trp/assets/img/${firstIngredientImage}" alt="${firstIngredient.name}" class="craft-card__item-image">`
       : `<span class="craft-card__item-icon">${firstIngredient.icon}</span>`;
 
     const outputImage = craft.output.image 
-      ? `<img src="/trp/assets/img/${craft.output.image}" alt="${craft.output.name}" class="craft-card__item-image" id="craftOutput-${craft.id}">`
+      ? `<img src="/trp/assets/img/${craft.output.image}" alt="${craft.output.name}" class="craft-card__item-image">`
       : `<span class="craft-card__item-icon">${craft.output.icon}</span>`;
 
     const playerGold = gameState.player.gold;
@@ -215,7 +215,7 @@ export class CraftsManager {
         </div>
 
         <div class="craft-card__content">
-          <div class="craft-card__ingredient-box">
+          <div class="craft-card__ingredient-box" id="craftIngredient-${craft.id}">
             ${ingredientDisplay}
             <span class="craft-card__count">${firstIngredientCount}/${firstIngredient.quantity}</span>
           </div>
@@ -228,7 +228,7 @@ export class CraftsManager {
 
           <div class="craft-card__arrow">→</div>
 
-          <div class="craft-card__output-box">
+          <div class="craft-card__output-box" id="craftOutput-${craft.id}">
             ${outputImage}
             <span class="craft-card__count">x${craft.output.quantity}</span>
           </div>
