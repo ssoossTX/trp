@@ -198,8 +198,12 @@ export class QuestsManager {
     // Прикрепляем обработчики клика на карточку
     quests.forEach(quest => {
       const card = DOMManager.getElementById(`questCard-${quest.id}`);
+      console.log(`[QuestsManager] Поиск карточки для квеста ${quest.id}:`, card);
       if (card) {
-        card.addEventListener('click', () => this.showQuestModal(quest));
+        card.addEventListener('click', () => {
+          console.log(`[QuestsManager] Клик по квесту: ${quest.title}`);
+          this.showQuestModal(quest);
+        });
       }
     });
   }
@@ -241,12 +245,18 @@ export class QuestsManager {
    * Открывает модальное окно квеста
    */
   static showQuestModal(quest) {
+    console.log(`[QuestsManager] Открываю модальное окно для квеста: ${quest.title}`);
+    
     const status = this.getQuestStatus(quest.id);
     const isCompleted = status.completed;
     const isRewardClaimed = status.rewardClaimed;
 
     const modal = DOMManager.getElementById('questModal');
-    if (!modal) return;
+    console.log('[QuestsManager] Поиск элемента questModal:', modal);
+    if (!modal) {
+      console.error('[QuestsManager] Элемент questModal не найден!');
+      return;
+    }
 
     let statusHtml = '';
     if (isRewardClaimed) {
@@ -300,15 +310,21 @@ export class QuestsManager {
       </div>
     `;
 
+    console.log('[QuestsManager] HTML установлен в модальное окно');
+
     // Показываем модальное окно
     modal.classList.remove('hidden');
+    console.log('[QuestsManager] Класс hidden удалён. Модальное окно должно быть видно');
 
     // Закрытие модального окна
     const closeBtn = DOMManager.getElementById('questModalCloseBtn');
     const closeBtn2 = DOMManager.getElementById('questModalCloseBtn2');
     const overlay = DOMManager.getElementById('questModalOverlay');
     
-    const closeModal = () => modal.classList.add('hidden');
+    const closeModal = () => {
+      console.log('[QuestsManager] Закрываю модальное окно');
+      modal.classList.add('hidden');
+    };
     
     if (closeBtn) closeBtn.addEventListener('click', closeModal);
     if (closeBtn2) closeBtn2.addEventListener('click', closeModal);
@@ -318,6 +334,7 @@ export class QuestsManager {
     const claimBtn = DOMManager.getElementById(`claimQuestBtn-modal-${quest.id}`);
     if (claimBtn) {
       claimBtn.addEventListener('click', () => {
+        console.log('[QuestsManager] Собираю награду');
         this.claimQuestReward(quest.id);
         closeModal();
         this.renderQuestsList();
