@@ -280,6 +280,7 @@
   align-items: center;
   gap: 0;
   width: 100%;
+  padding-right: 40px;
 }
 
 .quest-modal__icon {
@@ -293,6 +294,8 @@
   font-size: 1rem;
   margin: 0;
   flex: 1;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .quest-modal__difficulty {
