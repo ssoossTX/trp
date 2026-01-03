@@ -149,38 +149,6 @@
   margin-bottom: var(--spacing-lg);
 }
 
-.stats-display-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: var(--spacing-md);
-  margin-top: var(--spacing-lg);
-}
-
-.stat-display-item {
-  background-color: rgba(128, 128, 128, 0.5);
-  border-radius: 8px;
-  padding: var(--spacing-md);
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 80px;
-}
-
-.stat-display-name {
-  color: #ecf0f1;
-  font-size: 0.9rem;
-  font-weight: 600;
-  margin-bottom: var(--spacing-sm);
-}
-
-.stat-display-value {
-  color: #3498db;
-  font-size: 1.8rem;
-  font-weight: bold;
-}
-
 .profile-section {
   background: rgba(52, 73, 94, 0.5);
   border: 2px solid #34495e;
@@ -219,4 +187,46 @@
   color: #3498db;
   font-weight: bold;
   font-size: 1.1rem;
+}
+
+/* ===== ОТОБРАЖЕНИЕ БАЗОВЫХ ХАРАКТЕРИСТИК ===== */
+.stats-display-container {
+  background: rgba(128, 128, 128, 0.5);
+  border-radius: 12px;
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-md);
+}
+
+.stat-display-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-md);
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat-display-name {
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.stat-display-value {
+  color: #f39c12;
+  font-weight: bold;
+  font-size: 1.3rem;
+  min-width: 40px;
+  text-align: right;
+}
+
+/* ===== КОНТЕЙНЕР ПРОКАЧКИ ===== */
+.stats-upgrade-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
 }
