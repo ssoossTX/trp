@@ -268,16 +268,24 @@
 
 .quest-modal__header {
   display: flex;
-  align-items: center;
-  gap: 8px;
+  flex-direction: column;
+  gap: 0;
   margin-bottom: 12px;
   padding-bottom: 8px;
   border-bottom: 2px solid rgba(52, 152, 219, 0.3);
 }
 
+.quest-modal__header-top {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  width: 100%;
+}
+
 .quest-modal__icon {
   font-size: 1.5rem;
   flex-shrink: 0;
+  display: none;
 }
 
 .quest-modal__title {
@@ -294,6 +302,8 @@
   font-weight: bold;
   text-transform: uppercase;
   white-space: nowrap;
+  align-self: flex-start;
+  margin-top: 4px;
 }
 
 .quest-modal__difficulty--easy {

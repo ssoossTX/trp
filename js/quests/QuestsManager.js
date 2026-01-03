@@ -288,8 +288,9 @@ export class QuestsManager {
         <button type="button" class="modal__close" id="questModalCloseBtn">✕</button>
         
         <div class="quest-modal__header">
-          <span class="quest-modal__icon">${quest.icon}</span>
-          <h2 class="quest-modal__title">${quest.title}</h2>
+          <div class="quest-modal__header-top">
+            <h2 class="quest-modal__title">${quest.title}</h2>
+          </div>
           <span class="quest-modal__difficulty quest-modal__difficulty--${quest.difficulty}">${this.getDifficultyLabel(quest.difficulty)}</span>
         </div>
 

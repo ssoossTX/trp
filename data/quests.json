@@ -5,7 +5,7 @@
     "description": "Исследуй старые развалины в лесу и победи всех врагов",
     "type": "dungeon",
     "requiredDungeonId": "forest_ruins",
-    "icon": "🗺️",
+    "icon": "�",
     "rewards": {
       "experience": 100,
       "gold": 100
