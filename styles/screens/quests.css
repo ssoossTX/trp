@@ -269,28 +269,28 @@
 .quest-modal__header {
   display: flex;
   align-items: center;
-  gap: 16px;
-  margin-bottom: 24px;
-  padding-bottom: 16px;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
   border-bottom: 2px solid rgba(52, 152, 219, 0.3);
 }
 
 .quest-modal__icon {
-  font-size: 3rem;
+  font-size: 1.5rem;
   flex-shrink: 0;
 }
 
 .quest-modal__title {
   color: white;
-  font-size: 1.8rem;
+  font-size: 1rem;
   margin: 0;
   flex: 1;
 }
 
 .quest-modal__difficulty {
-  padding: 6px 16px;
+  padding: 3px 8px;
   border-radius: 20px;
-  font-size: 0.85rem;
+  font-size: 0.65rem;
   font-weight: bold;
   text-transform: uppercase;
   white-space: nowrap;
@@ -317,25 +317,25 @@
 }
 
 .quest-modal__body {
-  margin-bottom: 24px;
+  margin-bottom: 12px;
 }
 
 .quest-modal__description {
   color: #d3d3d3;
-  font-size: 1rem;
-  line-height: 1.6;
-  margin-bottom: 24px;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  margin-bottom: 12px;
 }
 
 .quest-modal__status {
-  margin-bottom: 24px;
+  margin-bottom: 12px;
 }
 
 .quest-modal__badge {
   display: inline-block;
-  padding: 8px 16px;
+  padding: 4px 8px;
   border-radius: 8px;
-  font-size: 0.95rem;
+  font-size: 0.75rem;
   font-weight: bold;
 }
 
@@ -355,28 +355,28 @@
 }
 
 .quest-modal__rewards {
-  margin-bottom: 24px;
+  margin-bottom: 12px;
 }
 
 .quest-modal__rewards h3 {
   color: white;
-  font-size: 1.1rem;
-  margin: 0 0 12px 0;
+  font-size: 0.9rem;
+  margin: 0 0 6px 0;
 }
 
 .quest-modal__rewards-list {
   display: flex;
-  gap: 12px;
+  gap: 6px;
   flex-wrap: wrap;
 }
 
 .quest-reward {
-  padding: 8px 16px;
+  padding: 4px 8px;
   border-radius: 8px;
-  font-size: 0.95rem;
+  font-size: 0.75rem;
   font-weight: bold;
   flex: 1;
-  min-width: 120px;
+  min-width: 100px;
   text-align: center;
 }
 
@@ -392,11 +392,13 @@
 
 .quest-modal__footer {
   display: flex;
-  gap: 12px;
+  gap: 6px;
 }
 
 .quest-modal__footer .btn {
   flex: 1;
+  padding: 8px 12px !important;
+  font-size: 0.85rem !important;
 }
 
 /* ===== СТИЛИ МОДАЛЬНОГО ОКНА КВЕСТА ===== */
@@ -439,7 +441,7 @@
   background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%) !important;
   color: white !important;
   border-radius: var(--radius-lg) !important;
-  padding: 24px !important;
+  padding: 12px !important;
   max-width: 90% !important;
   width: 90% !important;
   max-height: 90vh !important;
