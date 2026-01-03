@@ -195,13 +195,11 @@ export class QuestsManager {
       return this.createQuestCard(quest, status);
     }).join('');
 
-    // Прикрепляем обработчики
+    // Прикрепляем обработчики клика на карточку
     quests.forEach(quest => {
-      const claimBtn = DOMManager.getElementById(`claimQuestBtn-${quest.id}`);
-      if (claimBtn) {
-        claimBtn.addEventListener('click', () => {
-          this.claimQuestReward(quest.id);
-        });
+      const card = DOMManager.getElementById(`questCard-${quest.id}`);
+      if (card) {
+        card.addEventListener('click', () => this.showQuestModal(quest));
       }
     });
   }
@@ -214,7 +212,7 @@ export class QuestsManager {
     const isRewardClaimed = status.rewardClaimed;
     
     return `
-      <div class="quest-card quest-card--${isRewardClaimed ? 'completed' : isCompleted ? 'ready' : 'active'}" data-quest-id="${quest.id}">
+      <div class="quest-card quest-card--${isRewardClaimed ? 'completed' : isCompleted ? 'ready' : 'active'}" data-quest-id="${quest.id}" id="questCard-${quest.id}">
         <div class="quest-card__header">
           <span class="quest-card__icon">${quest.icon}</span>
           <div class="quest-card__title-group">
@@ -222,31 +220,6 @@ export class QuestsManager {
             <span class="quest-card__difficulty quest-card__difficulty--${quest.difficulty}">${this.getDifficultyLabel(quest.difficulty)}</span>
           </div>
         </div>
-        
-        <p class="quest-card__description">${quest.description}</p>
-        
-        <div class="quest-card__status">
-          ${isRewardClaimed ? `
-            <div class="quest-card__badge quest-card__badge--claimed">✅ Награда получена</div>
-          ` : isCompleted ? `
-            <div class="quest-card__badge quest-card__badge--ready">🎉 Готово к сбору</div>
-          ` : `
-            <div class="quest-card__badge quest-card__badge--active">⏳ В процессе</div>
-          `}
-        </div>
-        
-        <div class="quest-card__rewards">
-          ${quest.rewards.experience > 0 ? `<div class="quest-reward quest-reward--xp">⭐ ${quest.rewards.experience} опыта</div>` : ''}
-          ${quest.rewards.gold > 0 ? `<div class="quest-reward quest-reward--gold">💰 ${quest.rewards.gold} золота</div>` : ''}
-        </div>
-        
-        ${isRewardClaimed ? `
-          <button class="btn btn-secondary" disabled>Награда получена</button>
-        ` : isCompleted ? `
-          <button class="btn btn-primary" id="claimQuestBtn-${quest.id}">Собрать награду</button>
-        ` : `
-          <button class="btn btn-secondary" disabled>В процессе</button>
-        `}
       </div>
     `;
   }
@@ -262,6 +235,94 @@ export class QuestsManager {
       'nightmare': 'Кошмар'
     };
     return labels[difficulty] || difficulty;
+  }
+
+  /**
+   * Открывает модальное окно квеста
+   */
+  static showQuestModal(quest) {
+    const status = this.getQuestStatus(quest.id);
+    const isCompleted = status.completed;
+    const isRewardClaimed = status.rewardClaimed;
+
+    const modal = DOMManager.getElementById('questModal');
+    if (!modal) return;
+
+    let statusHtml = '';
+    if (isRewardClaimed) {
+      statusHtml = '<div class="quest-modal__badge quest-modal__badge--claimed">✅ Награда получена</div>';
+    } else if (isCompleted) {
+      statusHtml = '<div class="quest-modal__badge quest-modal__badge--ready">🎉 Готово к сбору</div>';
+    } else {
+      statusHtml = '<div class="quest-modal__badge quest-modal__badge--active">⏳ В процессе</div>';
+    }
+
+    let buttonHtml = '';
+    if (isRewardClaimed) {
+      buttonHtml = '<button class="btn btn-secondary" disabled>Награда получена</button>';
+    } else if (isCompleted) {
+      buttonHtml = `<button class="btn btn-primary" id="claimQuestBtn-modal-${quest.id}">Собрать награду</button>`;
+    } else {
+      buttonHtml = '<button class="btn btn-secondary" disabled>В процессе</button>';
+    }
+
+    modal.innerHTML = `
+      <div class="modal__overlay" id="questModalOverlay"></div>
+      <div class="modal__content quest-modal__content">
+        <button type="button" class="modal__close" id="questModalCloseBtn">✕</button>
+        
+        <div class="quest-modal__header">
+          <span class="quest-modal__icon">${quest.icon}</span>
+          <h2 class="quest-modal__title">${quest.title}</h2>
+          <span class="quest-modal__difficulty quest-modal__difficulty--${quest.difficulty}">${this.getDifficultyLabel(quest.difficulty)}</span>
+        </div>
+
+        <div class="quest-modal__body">
+          <p class="quest-modal__description">${quest.description}</p>
+
+          <div class="quest-modal__status">
+            ${statusHtml}
+          </div>
+
+          <div class="quest-modal__rewards">
+            <h3>Награды:</h3>
+            <div class="quest-modal__rewards-list">
+              ${quest.rewards.experience > 0 ? `<div class="quest-reward quest-reward--xp">⭐ ${quest.rewards.experience} опыта</div>` : ''}
+              ${quest.rewards.gold > 0 ? `<div class="quest-reward quest-reward--gold">💰 ${quest.rewards.gold} золота</div>` : ''}
+            </div>
+          </div>
+        </div>
+
+        <div class="quest-modal__footer">
+          ${buttonHtml}
+          <button class="btn btn-secondary" id="questModalCloseBtn2">Закрыть</button>
+        </div>
+      </div>
+    `;
+
+    // Показываем модальное окно
+    modal.classList.remove('hidden');
+
+    // Закрытие модального окна
+    const closeBtn = DOMManager.getElementById('questModalCloseBtn');
+    const closeBtn2 = DOMManager.getElementById('questModalCloseBtn2');
+    const overlay = DOMManager.getElementById('questModalOverlay');
+    
+    const closeModal = () => modal.classList.add('hidden');
+    
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    if (closeBtn2) closeBtn2.addEventListener('click', closeModal);
+    if (overlay) overlay.addEventListener('click', closeModal);
+
+    // Кнопка сбора награды
+    const claimBtn = DOMManager.getElementById(`claimQuestBtn-modal-${quest.id}`);
+    if (claimBtn) {
+      claimBtn.addEventListener('click', () => {
+        this.claimQuestReward(quest.id);
+        closeModal();
+        this.renderQuestsList();
+      });
+    }
   }
 }
 

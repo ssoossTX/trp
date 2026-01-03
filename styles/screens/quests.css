@@ -38,10 +38,15 @@
   background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
   border: 2px solid #34495e;
   border-radius: 12px;
-  padding: 6px;
-  margin-bottom: 3px;
+  padding: 12px;
+  margin-bottom: 8px;
   transition: all var(--transition-normal);
   animation: slideIn 0.4s ease-out;
+  cursor: pointer;
+  min-height: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .quest-card:hover {
@@ -69,13 +74,12 @@
 /* Заголовок квеста */
 .quest-card__header {
   display: flex;
-  gap: 4px;
-  margin-bottom: 4px;
-  align-items: flex-start;
+  gap: 12px;
+  align-items: center;
 }
 
 .quest-card__icon {
-  font-size: 1.2rem;
+  font-size: 2rem;
   flex-shrink: 0;
 }
 
@@ -83,21 +87,21 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 4px;
+  gap: 12px;
   width: 100%;
 }
 
 .quest-card__title {
   color: white;
-  font-size: 0.85rem;
+  font-size: 1.1rem;
   margin: 0;
   flex: 1;
 }
 
 .quest-card__difficulty {
-  padding: 3px 8px;
+  padding: 4px 12px;
   border-radius: 20px;
-  font-size: 0.6rem;
+  font-size: 0.75rem;
   font-weight: bold;
   text-transform: uppercase;
   white-space: nowrap;
@@ -121,80 +125,6 @@
 .quest-card__difficulty--nightmare {
   background: #8e44ad;
   color: white;
-}
-
-/* Описание квеста */
-.quest-card__description {
-  color: #d3d3d3 !important;
-  font-size: 0.75rem;
-  margin: 0 0 4px 0;
-  line-height: 1.3;
-}
-
-/* Статус квеста */
-.quest-card__status {
-  margin-bottom: 4px;
-}
-
-.quest-card__badge {
-  display: inline-block;
-  padding: 4px 8px;
-  border-radius: 6px;
-  font-size: 0.65rem;
-  font-weight: bold;
-}
-
-.quest-card__badge--active {
-  background: rgba(52, 152, 219, 0.2);
-  color: #3498db;
-}
-
-.quest-card__badge--ready {
-  background: rgba(243, 156, 18, 0.2);
-  color: #f39c12;
-}
-
-.quest-card__badge--claimed {
-  background: rgba(39, 174, 96, 0.2);
-  color: #27ae60;
-}
-
-/* Награды квеста */
-.quest-card__rewards {
-  display: flex;
-  gap: 4px;
-  margin-bottom: 4px;
-  flex-wrap: wrap;
-}
-
-.quest-reward {
-  padding: 4px 8px;
-  border-radius: 6px;
-  font-size: 0.65rem;
-  font-weight: bold;
-  flex: 1;
-  min-width: 80px;
-  text-align: center;
-}
-
-.quest-reward--xp {
-  background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
-  color: white;
-}
-
-.quest-reward--gold {
-  background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
-  color: white;
-}
-
-/* Кнопка сбора награды */
-.quest-card .btn {
-  width: 100%;
-  transition: all var(--transition-normal);
-}
-
-.quest-card .btn-primary {
-  background: linear-gradient(135deg, #27ae60 0%, #16a085 100%);
 }
 
 .quest-card .btn-primary:hover {
@@ -328,4 +258,143 @@
   .quest-card__difficulty {
     align-self: flex-start;
   }
+}
+
+/* ===== МОДАЛЬНОЕ ОКНО КВЕСТА ===== */
+.quest-modal__content {
+  max-width: 600px;
+  width: 90%;
+}
+
+.quest-modal__header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid rgba(52, 152, 219, 0.3);
+}
+
+.quest-modal__icon {
+  font-size: 3rem;
+  flex-shrink: 0;
+}
+
+.quest-modal__title {
+  color: white;
+  font-size: 1.8rem;
+  margin: 0;
+  flex: 1;
+}
+
+.quest-modal__difficulty {
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.quest-modal__difficulty--easy {
+  background: #27ae60;
+  color: white;
+}
+
+.quest-modal__difficulty--medium {
+  background: #f39c12;
+  color: white;
+}
+
+.quest-modal__difficulty--hard {
+  background: #e74c3c;
+  color: white;
+}
+
+.quest-modal__difficulty--nightmare {
+  background: #8e44ad;
+  color: white;
+}
+
+.quest-modal__body {
+  margin-bottom: 24px;
+}
+
+.quest-modal__description {
+  color: #d3d3d3;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.quest-modal__status {
+  margin-bottom: 24px;
+}
+
+.quest-modal__badge {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: bold;
+}
+
+.quest-modal__badge--active {
+  background: rgba(52, 152, 219, 0.2);
+  color: #3498db;
+}
+
+.quest-modal__badge--ready {
+  background: rgba(243, 156, 18, 0.2);
+  color: #f39c12;
+}
+
+.quest-modal__badge--claimed {
+  background: rgba(39, 174, 96, 0.2);
+  color: #27ae60;
+}
+
+.quest-modal__rewards {
+  margin-bottom: 24px;
+}
+
+.quest-modal__rewards h3 {
+  color: white;
+  font-size: 1.1rem;
+  margin: 0 0 12px 0;
+}
+
+.quest-modal__rewards-list {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.quest-reward {
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: bold;
+  flex: 1;
+  min-width: 120px;
+  text-align: center;
+}
+
+.quest-reward--xp {
+  background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+  color: white;
+}
+
+.quest-reward--gold {
+  background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+  color: white;
+}
+
+.quest-modal__footer {
+  display: flex;
+  gap: 12px;
+}
+
+.quest-modal__footer .btn {
+  flex: 1;
 }
