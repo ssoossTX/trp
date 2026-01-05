@@ -671,7 +671,7 @@ export class DungeonsManager {
     // Скрываем боевой интерфейс используя BattleUI
     BattleUI.hide();
     
-    // Переключаемся на вкладку подземелий
+    // Переключаемся на вкладку подземелий (не на сохраненную точку, т.к. мы выходим из подземелья)
     UIManager.switchTab('dungeons');
     
     // Обновляем список подземелий и статистику
@@ -702,6 +702,9 @@ export class DungeonsManager {
         }
       }
     }
+    
+    // Очищаем состояние подземелья
+    gameState.dungeonState = null;
   }
 
   /**
