@@ -19,6 +19,9 @@ export class BattleEngine {
    * @param {Array} activeAbilities - Активные способности
    */
   static initiateBattle(enemy, locationId, activeAbilities = []) {
+    // Очищаем callbacks от боев на локациях при входе в подземелье
+    this.locationBattleCallbacks = { onVictory: null, onDefeat: null, onFlee: null };
+    
     gameState.initializeBattle(enemy, locationId, activeAbilities);
     BattleUI.show();
     BattleUI.update();
